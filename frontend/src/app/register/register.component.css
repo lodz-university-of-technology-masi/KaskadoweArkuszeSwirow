@@ -1,0 +1,14 @@
+.dataBackground {
+    padding: 5vh 5vw 5vh 5vw;
+    margin: auto;
+}
+
+h1,
+h3 {
+    margin: auto;
+    margin-bottom: 2vw;
+}
+
+.message-row {
+    margin-top: 2vh;
+}

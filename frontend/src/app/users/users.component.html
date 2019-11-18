@@ -1,0 +1,30 @@
+<div class="container col-lg-10">
+    <div class="row header">
+        <h1 class="col-lg-8">Tutaj możesz przeglądać oraz dodawać nowych użytkowników</h1>
+    </div>
+    <div class="dataBackground col-lg-12 row rounded">
+        <div class="row col-lg-12">
+            <table class="table table-striped col-lg-11">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Imię</th>
+                        <th scope="col">Nazwisko</th>
+                        <th scope="col">Wiek</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let element of dataSource; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ element.name }}</td>
+                        <td>{{ element.surname }}</td>
+                        <td>{{ element.age }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row col-lg-12">
+            <button class="btn btn-success" mat-raised-button (click)="openDialog()">Dodaj użytkownika</button>
+        </div>
+    </div>
+</div>

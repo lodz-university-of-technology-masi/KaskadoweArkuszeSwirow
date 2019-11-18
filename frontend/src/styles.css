@@ -1,0 +1,21 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-image: url("assets/images/background.jpg");
+    background-size: cover;
+}
+
+.dataBackground {
+    margin: auto;
+    background: rgb(245, 245, 255);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.59);
+}
+
+.container {
+    text-align: center;
+}
