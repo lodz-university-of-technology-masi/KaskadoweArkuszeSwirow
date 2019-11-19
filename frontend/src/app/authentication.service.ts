@@ -32,7 +32,6 @@ export class AuthenticationService {
         observer.complete();
       });
     });
-
   }
 
   confirmAuthCode(code) {
