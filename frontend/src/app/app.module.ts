@@ -18,9 +18,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { AuthenticationService } from "./authentication.service";
+import { AuthenticationService } from './authentication.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { HomePageComponent } from './home-page/home-page.component';
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
-    HomePageComponent
+    HomePageComponent,
+    UsersListComponent
   ],
   imports: [
     BrowserModule,

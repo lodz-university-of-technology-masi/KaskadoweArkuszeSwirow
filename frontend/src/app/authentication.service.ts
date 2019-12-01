@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { AuthenticationDetails, CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {AuthenticationDetails, CognitoUser, CognitoUserPool} from 'amazon-cognito-identity-js';
+import {Observable} from 'rxjs';
 
 const poolData = {
   UserPoolId: 'us-east-1_IBVZb8BoB', // Your user pool id here
-  ClientId: '5iks8ifh2vbo8g6upr1qg9l4bt' // Your client id here  
+  ClientId: '5iks8ifh2vbo8g6upr1qg9l4bt' // Your client id here
 };
 
 const userPool = new CognitoUserPool(poolData);
@@ -12,8 +12,10 @@ const userPool = new CognitoUserPool(poolData);
 @Injectable()
 export class AuthenticationService {
   cognitoUser: any;
+  attr: any;
 
-  constructor() { }
+  constructor() {
+  }
 
   register(email, password) {
 
@@ -22,12 +24,12 @@ export class AuthenticationService {
     return Observable.create(observer => {
       userPool.signUp(email, password, attributeList, null, (err, result) => {
         if (err) {
-          console.log("signUp error", err);
+          console.log('signUp error', err);
           observer.error(err);
         }
 
         this.cognitoUser = result.user;
-        console.log("signUp success", result);
+        console.log('signUp success', result);
         observer.next(result);
         observer.complete();
       });
@@ -36,8 +38,8 @@ export class AuthenticationService {
 
   confirmAuthCode(code) {
     const user = {
-      Username : this.cognitoUser.username,
-      Pool : userPool
+      Username: this.cognitoUser.username,
+      Pool: userPool
     };
     return Observable.create(observer => {
       const cognitoUser = new CognitoUser(user);
@@ -46,33 +48,30 @@ export class AuthenticationService {
           console.log(err);
           observer.error(err);
         }
-        console.log("confirmAuthCode() success", result);
+        console.log('confirmAuthCode() success', result);
         observer.next(result);
         observer.complete();
       });
     });
   }
 
-  signIn(email, password) { 
+  signIn(email, password) {
 
     const authenticationData = {
-      Username : email,
-      Password : password,
+      Username: email,
+      Password: password,
     };
     const authenticationDetails = new AuthenticationDetails(authenticationData);
 
     const userData = {
-      Username : email,
-      Pool : userPool
+      Username: email,
+      Pool: userPool
     };
     const cognitoUser = new CognitoUser(userData);
-    
     return Observable.create(observer => {
 
       cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: function (result) {
-          
-          //console.log(result);
+        onSuccess: function(result) {
           observer.next(result);
           observer.complete();
         },
@@ -84,7 +83,7 @@ export class AuthenticationService {
     });
   }
 
-  isLoggedIn() {    
+  isLoggedIn() {
     return userPool.getCurrentUser() != null;
   }
 

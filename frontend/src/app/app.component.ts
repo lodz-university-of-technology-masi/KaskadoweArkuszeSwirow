@@ -9,6 +9,6 @@ import { AuthenticationService } from './authentication.service';
 export class AppComponent {
   title = 'forms';
   constructor(private auth: AuthenticationService) {
-    
+
   }
 }
