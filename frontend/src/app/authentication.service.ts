@@ -55,7 +55,7 @@ export class AuthenticationService {
     });
   }
 
-  signIn(email, password) {
+  signIn(email, password, newPassword = null) {
 
     const authenticationData = {
       Username: email,
@@ -69,16 +69,26 @@ export class AuthenticationService {
     };
     const cognitoUser = new CognitoUser(userData);
     return Observable.create(observer => {
-
       cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: function(result) {
-          observer.next(result);
+        onSuccess: () => {
+          observer.next(null);
           observer.complete();
         },
-        onFailure: function(err) {
+        onFailure: (err) => {
           console.log(err);
           observer.error(err);
         },
+        newPasswordRequired: function(userAttributes) {
+          if (newPassword == null) {
+            observer.next(userAttributes);
+          } else {
+            delete userAttributes.email_verified;
+            cognitoUser.completeNewPasswordChallenge(newPassword, userAttributes, this);
+            observer.next();
+          }
+          observer.complete();
+
+        }
       });
     });
   }

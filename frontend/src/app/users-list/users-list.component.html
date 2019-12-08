@@ -2,21 +2,33 @@
   <div class="row header">
     <h1 class="col-lg-8">Tutaj możesz przeglądać oraz dodawać nowych użytkowników</h1>
   </div>
+  <div>
+    <button (click)="testKlik()" class="btn btn-success">login</button>
+    <button (click)="testKlik2()" class="btn btn-success">logout</button>
+    <button (click)="testKlik3()" class="btn btn-success">test</button>
+
+
+  </div>
   <div class="dataBackground col-lg-12 row rounded">
     <div class="row col-lg-12">
       <table id="usersTable" class="table table-striped col-lg-11">
         <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">ID</th>
+          <th scope="col">Imię</th>
+          <th scope="col">Nazwisko</th>
           <th scope="col">Email</th>
+          <th scope="col">Usuń</th>
+
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let element of usersListCognito; index as i">
           <th scope="row">{{ i + 1 }}</th>
-          <td>{{ element.Username }}</td>
           <td>{{ element.Attributes[0].Value }}</td>
+          <td>{{ element.Attributes[3].Value }}</td>
+          <td>{{ element.Attributes[4].Value }}</td>
+          <td><button class="btn-danger" (click)="delete(element.Username)">X</button></td>
         </tr>
         </tbody>
       </table>

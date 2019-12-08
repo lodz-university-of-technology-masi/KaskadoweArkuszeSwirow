@@ -1,6 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {AuthenticationService} from '../authentication.service';
+import {Router} from '@angular/router';
+import {UsersManagementService} from '../users-management.service';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {ChangePasswordDialog, DialogData} from '../login/login.component';
 
-const AWS = require('aws-sdk');
+
+export interface DialogNewUserData {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
 
 @Component({
   selector: 'app-users-list',
@@ -9,92 +19,77 @@ const AWS = require('aws-sdk');
 })
 export class UsersListComponent implements OnInit {
   usersListCognito = [];
+  cognitoidentityserviceprovider;
 
-  constructor() {
+  constructor(private auth: AuthenticationService,
+              private _router: Router,
+              private userService: UsersManagementService,
+              public dialog: MatDialog) {
   }
+
+  testKlik() {
+    this.auth.signIn('lord360@wp.pl', 'Qwerty123!').subscribe((data) => {
+      console.log('zalogowano');
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  testKlik2() {
+    if (this.auth.isLoggedIn()) {
+      this.auth.logOut();
+      console.log('wylogowano');
+    }
+    this._router.navigateByUrl('/login');
+  }
+
+  testKlik3() {
+    if (this.auth.isLoggedIn()) {
+      this.openDialog();
+
+    }
+  }
+
 
   ngOnInit(): void {
-
-    AWS.config.update({
-      region: 'us-east-1',
-      accessKeyId: 'AKIAXHL3HMQ2CE3EBWJS',
-      secretAccessKey: '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'
-    });
-
-    const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
-    const params = {
-      UserPoolId: 'us-east-1_IBVZb8BoB',
-      AttributesToGet: [
-        'email'
-
-      ]
-    };
-
-    cognitoidentityserviceprovider.listUsers(params, (err, data) => {
-      if (err) {
-        console.log(err, err.stack);
-      } else {
-        this.usersListCognito = data.Users;
-        console.log(data.Users);
-      }           // successful response
-    });
-
-    /* const params3 = {
-       UserPoolId: 'us-east-1_IBVZb8BoB',
-       Username: '17355856-1c01-4210-ba24-57a293265f34'
-     };
-
-     cognitoidentityserviceprovider.adminGetUser(params3, (err, data) => {
-       if (err) {
-         console.log(err, err.stack);
-       } else {
-         console.log(data);
-       }           // successful response
-     });*/
-    /*const params2 = {
-      CustomAttributes: [
-        {
-          AttributeDataType: 'Number',
-          Mutable: true,
-          Name: 'role',
-          NumberAttributeConstraints: {
-            MaxValue: '1',
-            MinValue: '0'
-          },
-          Required: false
-        },
-
-      ],
-      UserPoolId: 'us-east-1_IBVZb8BoB'
-    };
-    cognitoidentityserviceprovider.addCustomAttributes(params2, (err, data) => {
-      if (err) {
-        console.log(err, err.stack);
-      } else {
-        console.log(data);
-      }           // successful response
-    });*/
-
-    /*const params2 = {
-      UserAttributes: [
-        {
-          Name: 'custom:role',
-          Value: '0'
-        },
-
-      ],
-      UserPoolId: 'us-east-1_IBVZb8BoB',
-      Username: '17355856-1c01-4210-ba24-57a293265f34'
-    };*/
-
-    /* cognitoidentityserviceprovider.adminUpdateUserAttributes(params2, (err, data) => {
-       if (err) {
-         console.log(err, err.stack);
-       } else {
-         console.log(data);
-       }           // successful response
-     });*/
+    if (this.auth.isLoggedIn()) {
+      this.userService.getUsers(this.auth.getAuthenticatedUser().getUsername()).subscribe((data) => {
+          this.usersListCognito = data;
+        }
+      );
+    }
   }
 
+  delete(username) {
+    this.userService.deleteUser(username);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreateNewUserDialog, {
+      width: '250px',
+      data: {email: '', firstName: '', lastName: ''}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.userService.createCandidate(result.email, result.firstName, result.lastName, this.auth.getAuthenticatedUser().getUsername());
+    });
+  }
+}
+
+@Component({
+  selector: 'create-new-user-dialog',
+  templateUrl: 'create-new-user-dialog.html'
+})
+export class CreateNewUserDialog {
+  constructor(
+    public dialogRef: MatDialogRef<CreateNewUserDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogNewUserData
+  ) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }
