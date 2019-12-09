@@ -10,9 +10,10 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material';
-import {DialogOverviewExampleDialog} from './users/users.component';
+import {AddUserDialog} from './users/users.component';
+import {AddQuestionDialog} from './questions/questions.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {MatMenuModule, MatMenu} from '@angular/material/menu';
+import {MatMenuModule} from '@angular/material/menu';
 import {MenuComponent} from './menu/menu.component';
 import {MatIconModule} from '@angular/material/icon';
 import {HttpClientModule} from '@angular/common/http';
@@ -24,13 +25,16 @@ import {HomePageComponent} from './home-page/home-page.component';
 import {UsersListComponent} from './users-list/users-list.component';
 import {ChangePasswordDialog} from './login/login.component';
 import {CreateNewUserDialog} from './users-list/users-list.component';
+import { QuestionsComponent } from './questions/questions.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
-    DialogOverviewExampleDialog,
+    AddUserDialog,
+    AddQuestionDialog,
     MenuComponent,
     LoginComponent,
     RegisterComponent,
@@ -38,7 +42,8 @@ import {CreateNewUserDialog} from './users-list/users-list.component';
     HomePageComponent,
     UsersListComponent,
     ChangePasswordDialog,
-    CreateNewUserDialog
+    CreateNewUserDialog,
+    QuestionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,10 +59,12 @@ import {CreateNewUserDialog} from './users-list/users-list.component';
     MatMenuModule,
     MatIconModule,
     HttpClientModule,
+    MatExpansionModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],
-  entryComponents: [DialogOverviewExampleDialog,
+  entryComponents: [AddUserDialog,
+    AddQuestionDialog,
     ChangePasswordDialog,
     CreateNewUserDialog]
 })
