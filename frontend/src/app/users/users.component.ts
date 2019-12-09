@@ -1,18 +1,13 @@
-import {Component, OnInit, Inject, ApplicationRef, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, Inject, ApplicationRef} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormBuilder} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Subscription} from 'rxjs';
 import {RefresherService} from '../refresher.service';
-
-export interface User {
-  id: number;
-  name: string;
-  surname: string;
-  age: number;
-}
+import {User} from '../models/User.model';
 
 let ELEMENT_DATA: User[] = [];
+const uuidv4 = require('../../../node_modules/uuid');
 
 @Component({
   selector: 'app-users',
@@ -28,8 +23,7 @@ export class UsersComponent implements OnInit {
   constructor(public dialog: MatDialog,
               private http: HttpClient,
               private ref: ApplicationRef,
-              private refresher: RefresherService
-  ) {
+              private refresher: RefresherService) {
     this.ticker = new Subscription();
     this.getUsers();
   }
@@ -52,6 +46,7 @@ export class UsersComponent implements OnInit {
     if (params.length === 0 || params[0] === 0 || params[0] === undefined) {
       this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/dev/users')
         .subscribe(data => {
+          console.log(data)
             this.addToList(data);
           },
           () => {
@@ -68,7 +63,7 @@ export class UsersComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+    const dialogRef = this.dialog.open(AddUserDialog, {
       width: '250px'
     });
 
@@ -89,16 +84,18 @@ export class UsersComponent implements OnInit {
 
 }
 
+
+
 @Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html',
+  selector: 'addUserDialog',
+  templateUrl: 'addUserDialog.html',
 })
-export class DialogOverviewExampleDialog {
+export class AddUserDialog {
 
   newUserForm;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    public dialogRef: MatDialogRef<AddUserDialog>,
     @Inject(MAT_DIALOG_DATA) public data: User,
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -116,7 +113,7 @@ export class DialogOverviewExampleDialog {
   }
 
   onSubmit(customerData) {
-    const newUserId = Math.max.apply(Math, ELEMENT_DATA.map(element => element.id)) + 1;
+    const newUserId = uuidv4();
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/dev/users',
       {'id': newUserId, 'firstName': customerData.name, 'lastName': customerData.surname, 'age': customerData.age}).subscribe(
       res => {

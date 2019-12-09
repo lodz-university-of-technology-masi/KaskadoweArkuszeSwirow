@@ -1,0 +1,24 @@
+.panel {
+    background-color: #f5f5ff;
+}
+
+mat-panel-title,
+p {
+    color: black;
+    border-bottom: 0;
+}
+
+.correct {
+    background-color: green;
+}
+
+.dataBackground {
+    padding: 5vh 5vw 5vh 5vw;
+    margin: auto;
+    margin-bottom: 5vh;
+}
+
+h1 {
+    margin: auto;
+    margin-bottom: 2vw;
+}
