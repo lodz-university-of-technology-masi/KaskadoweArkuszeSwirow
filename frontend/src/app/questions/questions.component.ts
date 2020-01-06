@@ -65,7 +65,7 @@ export class QuestionsComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddQuestionDialog, {
-      width: '250px'
+      width: '300px'
     });
 
     dialogRef.afterClosed().subscribe(result => {

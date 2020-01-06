@@ -27,6 +27,9 @@ import {ChangePasswordDialog} from './login/login.component';
 import {CreateNewUserDialog} from './users-list/users-list.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { TestsComponent } from './tests/tests.component';
+import { TestDetailsComponent } from './test-details/test-details.component';
+import { TestCreateComponent } from './test-create/test-create.component';
 
 
 @NgModule({
@@ -44,6 +47,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ChangePasswordDialog,
     CreateNewUserDialog,
     QuestionsComponent,
+    TestsComponent,
+    TestDetailsComponent,
+    TestCreateComponent,
   ],
   imports: [
     BrowserModule,
