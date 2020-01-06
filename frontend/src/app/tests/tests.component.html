@@ -2,15 +2,13 @@
     <div class="row header">
         <h1 class="col-lg-8">Tutaj możesz przeglądać, dodawać, usuwać i modyfikować testy</h1>
     </div>
-    <div class="col-lg-12 row rounded">
-        <div class="row col-lg-12">
-            <div *ngFor="let test of dataSource; index as i" class="mat-elevation-z0 ">
-                <p>
-                    {{ i + 1 }}. 
-                    <a [routerLink]="['/test-details', test.id]">{{ test.title }}</a>
-                    <button class="btn btn-danger"  mat-raised-button (click)="deleteTest(test)">Usuń</button>
-                </p>
-            </div>
+    <div class="row col-lg-8" id="panel">
+        <div *ngFor="let test of dataSource; index as i" class="mat-elevation-z0 ">
+            <p>
+                {{ i + 1 }}. 
+                <a [routerLink]="['/test-details', test.id]">{{ test.title }}</a>
+                <button class="btn btn-danger"  mat-raised-button (click)="deleteTest(test)">Usuń</button>
+            </p>
         </div>
         <div class="row col-lg-12">
             <button class="btn btn-success" mat-raised-button (click)="createTest()">Dodaj test</button>
