@@ -43,6 +43,7 @@ export class TestsComponent implements OnInit {
     let position = ELEMENT_DATA.indexOf(test);
     if (position >= 0)
       ELEMENT_DATA.splice(position, 1);
+    this.ref.tick();
   }
 
   getTests(...params: number[]): void {
