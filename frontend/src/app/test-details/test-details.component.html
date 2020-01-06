@@ -12,7 +12,7 @@
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{ i + 1 }}. {{ question.question}}
-                                <button class="btn btn-danger" *ngIf="editing" mat-raised-button (click)="deleteQuestion(question.id)">Usuń</button> 
+                                <button class="btn btn-danger" *ngIf="editing" mat-raised-button (click)="deleteQuestion(question)">Usuń</button> 
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <p *ngFor="let answer of question.answer; index as j" [className]="answer.isCorrect ? 'correct' : 'incorrect'">{{ j + 1 }}. {{ answer.content }}</p>

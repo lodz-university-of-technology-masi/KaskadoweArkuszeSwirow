@@ -1,0 +1,10 @@
+<form [formGroup]="newTestForm" (ngSubmit)="onSubmit(newTestForm.value)">
+
+    <div>
+        <label for="title">Tytuł testu:</label>
+        <input id="title" type="text" formControlName="title">
+    </div>
+
+    <button class="button" type="submit">Dodaj</button>
+
+</form>

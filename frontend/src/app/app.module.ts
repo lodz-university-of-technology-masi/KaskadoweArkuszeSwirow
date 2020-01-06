@@ -27,10 +27,10 @@ import {ChangePasswordDialog} from './login/login.component';
 import {CreateNewUserDialog} from './users-list/users-list.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { TestsComponent } from './tests/tests.component';
+import { TestsComponent, CreateNewTestDialog } from './tests/tests.component';
 import { TestDetailsComponent } from './test-details/test-details.component';
-import { TestCreateComponent } from './test-create/test-create.component';
-
+import { AddQuestionToTestDialog } from './test-details/test-details.component'
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,8 @@ import { TestCreateComponent } from './test-create/test-create.component';
     QuestionsComponent,
     TestsComponent,
     TestDetailsComponent,
-    TestCreateComponent,
+    CreateNewTestDialog,
+    AddQuestionToTestDialog
   ],
   imports: [
     BrowserModule,
@@ -65,14 +66,17 @@ import { TestCreateComponent } from './test-create/test-create.component';
     MatMenuModule,
     MatIconModule,
     HttpClientModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],
   entryComponents: [AddUserDialog,
     AddQuestionDialog,
     ChangePasswordDialog,
-    CreateNewUserDialog]
+    CreateNewUserDialog,
+    CreateNewTestDialog,
+    AddQuestionToTestDialog]
 })
 export class AppModule {
 }

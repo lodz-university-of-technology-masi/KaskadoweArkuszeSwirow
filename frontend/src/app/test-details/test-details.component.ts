@@ -102,7 +102,7 @@ export class TestDetailsComponent implements OnInit {
 })
 export class AddQuestionToTestDialog {
 
-  newQuestionForm;
+  newQuestionToTestForm;
   correctA = true;
   correctB = false;
   correctC = false;
@@ -115,7 +115,7 @@ export class AddQuestionToTestDialog {
     private http: HttpClient,
     private refresher: RefresherService
   ) {
-    this.newQuestionForm = this.formBuilder.group({
+    this.newQuestionToTestForm = this.formBuilder.group({
       question: '',
       answerA: '',
       answerB: '',
