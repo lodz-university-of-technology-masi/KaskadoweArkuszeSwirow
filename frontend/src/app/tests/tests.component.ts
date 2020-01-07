@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormBuilder } from '@angular/forms';
 import { AddQuestionDialog } from '../questions/questions.component';
+import { DataSource } from '@angular/cdk/table';
 
 let ELEMENT_DATA: Test[] = [];
 
@@ -24,7 +25,7 @@ export class TestsComponent implements OnInit {
     private http: HttpClient,
     private ref: ApplicationRef,
     private refresher: RefresherService) {
-      this.getTests(0);
+      this.getTests();
       this.ticker = new Subscription();
     }
 
@@ -32,7 +33,7 @@ export class TestsComponent implements OnInit {
     let i = 0;
     while (true) {
       if (data[i] !== undefined) {
-        const test: Test = {id: data[i].id, title: data[i].title, questions: JSON.parse(data[i].questions)};
+        const test: Test = {id: data[i].id, title: data[i].title, questions: data[i].questions};
         ELEMENT_DATA.push(test);
       } else {
         break;
@@ -51,17 +52,10 @@ export class TestsComponent implements OnInit {
 
   getTests(...params: number[]): void {
     if (params.length === 0 || params[0] === 0 || params[0] === undefined) {
-      this.http.get('lambda zwracajaca wszystkie testy <--- tu')
+      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests')
         .subscribe(data => {
           console.log(data)
             this.addToList(data);
-          },
-          () => {
-            console.log('Failed to GET. Retrieving...');
-            this.http.get('lambda zwracajaca wszystkie testy <--- tu')
-              .subscribe(data => this.addToList(data),
-                err => console.log(err)
-              );
           }
         );
     } else {
