@@ -33,19 +33,21 @@ export class QuestionsComponent implements OnInit {
     let i = 0;
     while (true) {
       if (data[i] !== undefined) {
-        const question: Question = {id: data[i].id, question: data[i].question, answer: JSON.parse(data[i].answer)};
+        const question: Question = {id: data[i].id, question: data[i].question, answer: data[i].answer};
         ELEMENT_DATA.push(question);
       } else {
         break;
       }
       i++;
     }
+    console.log("cocos");
+    console.log(ELEMENT_DATA);
     this.ref.tick();
   }
 
   getQuestions(...params: number[]): void {
     if (params.length === 0 || params[0] === 0 || params[0] === undefined) {
-      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/dev/question')
+      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question')
         .subscribe(data => {
           console.log(data)
             this.addToList(data);
@@ -115,18 +117,16 @@ export class AddQuestionDialog {
   }
 
   onSubmit(customerData) {
-    const newQuestionId = uuidv4();
     const answers = [
       new Answer(customerData.answerA, true),
       new Answer(customerData.answerB, false),
       new Answer(customerData.answerC, false),
       new Answer(customerData.answerD, false)
     ];
-    console.log({'id': newQuestionId, 'question': customerData.question, 'answer': JSON.stringify(answers)})
-    this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/dev/question',
-      {'id': newQuestionId, 'question': customerData.question, 'answer': JSON.stringify(answers)}).subscribe(
+    this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question',
+      {'question': customerData.question, 'answer': answers}).subscribe(
       res => {
-        this.refresher.questionRefreshSubject$.next(newQuestionId);
+        this.refresher.questionRefreshSubject$.next(1);
         console.log(res);
       }, err => console.log(err)
     );
