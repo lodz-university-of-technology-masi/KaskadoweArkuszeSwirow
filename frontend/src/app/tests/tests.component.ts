@@ -31,6 +31,7 @@ export class TestsComponent implements OnInit {
 
   addToList(data: Object): void {
     let i = 0;
+    ELEMENT_DATA.splice(0, ELEMENT_DATA.length);
     while (true) {
       if (data[i] !== undefined) {
         const test: Test = {id: data[i].id, title: data[i].title, questions: data[i].questions};
@@ -64,9 +65,8 @@ export class TestsComponent implements OnInit {
   }
 
   deleteTest(test: Test): void {
-    this.http.delete(`lambda usuwajaca test z podanym id ! /${test.id}`)
+    this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${test.id}`)
     .subscribe(s => {
-      console.log(s);
       this.removeFromList(test);
     })
   }
@@ -120,20 +120,19 @@ export class CreateNewTestDialog {
   }
 
   onSubmit(customerData) {
-    const id = uuidv4();
     const title = customerData.title;
     const questions = [];
-    console.log({'id': id, 'title': title, 'questions': JSON.stringify(questions)});
+    console.log({'title': title, 'questions': questions});
 
-    this.http.post('lambda tworzaca test<--- tu',
-      {'id' : id, 'title': title, 'questions': JSON.stringify(questions)}).subscribe(
+    this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
+      {'title': title, 'questions': questions}).subscribe(
       res => {
-        this.refresher.questionRefreshSubject$.next(id);
+        this.refresher.questionRefreshSubject$.next(1);
         console.log(res);
       }, err => console.log(err)
     );
     this.dialogRef.close();
-    this.router.navigate(['/test-details', id]);
+    // this.router.navigate(['/test-details', id]);
   }
 
 }

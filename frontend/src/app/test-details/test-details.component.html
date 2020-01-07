@@ -1,26 +1,46 @@
-<div class="container col-lg-10">
+<div class="container col-lg-12">
     <div class="row header">
-        <h1 class="col-lg-8">{{test.title}}</h1>
+        <h1 class="col-lg-8">"{{test.title}}"</h1>
     </div>
-    <div id="panel">
-        <div class="col-lg-12 row">
-            <button class="btn btn-warning" mat-raised-button (click)="changeEditing()">{{ editing ? 'Włącz edycję' : 'Wyłącz edycję' }}</button>
+    <div id="panel" class="row col-lg-6">
+        <div class="row col-lg-12">
+            <button class="btn btn-warning" mat-raised-button (click)="changeEditing()">{{ editing ? 'Wyłącz edycję' : 'Włącz edycję' }}</button>
         </div>
-            <div class="row col-lg-12">
-                <mat-accordion class="col-lg-12 ">
-                    <mat-expansion-panel *ngFor="let question of test.questions; index as i" class="mat-elevation-z0 ">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{ i + 1 }}. {{ question.question}}
-                                <button class="btn btn-danger" *ngIf="editing" mat-raised-button (click)="deleteQuestion(question)">Usuń</button> 
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <p *ngFor="let answer of question.answer; index as j" [className]="answer.isCorrect ? 'correct' : 'incorrect'">{{ j + 1 }}. {{ answer.content }}</p>
-                    </mat-expansion-panel>
-                </mat-accordion>
-                <div class="row col-lg-12">
-                    <button class="btn btn-success" *ngIf="editing" mat-raised-button (click)="openDialog()">Dodaj pytanie</button>
-                </div>
+
+        <div class="row col-lg-12">
+            <table class="table col-lg-12" *ngIf="!isQuestionsEmpty">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width: 10%" scope="col">#</th>
+                        <th scope="col">Pytanie</th>
+                        <th style="width: 10% "scope="col" *ngIf="editing">Akcja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let question of test.questions; index as i">
+                        <th scope="row">{{ i + 1 }}.</th>
+                        <td>
+                            <h5>{{ question.question}}</h5>
+                            <div>
+                                <mat-chip-list >
+                                    <mat-chip class="correct" *ngFor="let answer of question.answer; index as j" color="warn" selected="{{!answer.isCorrect ? 'true' : 'false'}}">
+                                        {{ j + 1 }}. {{ answer.content }}
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+                        </td>
+                        <td *ngIf="editing">
+                            <button class="btn btn-danger" *ngIf="editing" mat-raised-button (click)="deleteQuestion(question)">Usuń</button> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="isQuestionsEmpty">
+            <p> Brak pytań!</p>
+       </div>
+        <div class="row col-lg-12">
+            <button class="btn btn-success" *ngIf="editing" mat-raised-button (click)="openDialog()">Dodaj pytanie</button>
         </div>
     </div>
 </div>

@@ -20,6 +20,7 @@ let idOfTest: String;
 })
 export class TestDetailsComponent implements OnInit {
   test: Test;
+  isQuestionsEmpty: Boolean = true;
   editing: Boolean = false;
   private routeSub: Subscription;
   private ticker: Subscription;
@@ -31,32 +32,41 @@ export class TestDetailsComponent implements OnInit {
     private http: HttpClient,
     private ref: ApplicationRef,
     private refresher: RefresherService) {
-      this.getTestWithID();
+      this.getTestWithID(idOfTest);
       this.ticker = new Subscription();
     }
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       idOfTest = params['id'];
-      this.getTestWithID();
+      this.getTestWithID(idOfTest);
+    });
+    this.ticker = this.refresher.questionRefreshSubject$.asObservable().subscribe(no => {
+      this.getTestWithID(idOfTest);
     });
   }
 
-  getTestWithID(): void {
-    this.http.get(`lambda z getem na test o danym id /${idOfTest}`)
+  getTestWithID(id: String): void {
+    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${id}`)
       .subscribe(data => {
-        console.log(data);
-       this.test = {id: data[0].id, title: data[0].title, questions: JSON.parse(data[0].questions)};
-        },
-        () => {
-          console.log('Failed to GET. Retrieving...');
-          this.http.get(`lambda z getem na test o danym id /${idOfTest}`)
-            .subscribe(data => {
-              console.log(data);
-              this.test = {id: data[0].id, title: data[0].title, questions: JSON.parse(data[0].questions)};
-            }
-            );
-        }
+        if (!('errorMessage' in data)){
+          console.log(data);
+          this.setLocalTestToData(data);
+        }else 
+          this.getTestWithID(id);
+      }
+
       );
+  }
+
+
+  setLocalTestToData(data: any): void {
+    const tmp: Test = {id: data.id, title: data.title, questions: data.questions};
+    this.test = tmp;
+    if (this.test.questions.length > 0)
+      this.isQuestionsEmpty = false;
+    else
+      this.isQuestionsEmpty = true;
+    this.ref.tick();
   }
 
   changeEditing() {
@@ -64,25 +74,25 @@ export class TestDetailsComponent implements OnInit {
   }
 
   deleteQuestion(question: Question): void {
-    this.http.post('lambda usuwajaca question z testu!',
-    {'testId': idOfTest, 'questionId': question.id}).subscribe(
-      res => {
-        console.log(res);
-        this.removeQuestionFromList(question);
-      }, err => console.log(err)
-    );
+    // this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${idOfTest}`,
+    // {"id": "question.id" }).subscribe(
+    //   res => {
+    //     console.log(res);
+    //     this.removeQuestionFromList(question);
+    //   }, err => console.log(err)
+    // );
   }
 
   removeQuestionFromList(question: Question): void {
     let position = this.test.questions.indexOf(question);
     if (position >= 0)
-      this.test.questions.splice(position, 1);
+    this.test.questions.splice(position, 1);
     console.log(this.test.questions);
     this.ref.tick();
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddQuestionDialog, {
+    const dialogRef = this.dialog.open(AddQuestionToTestDialog, {
       width: '350px'
     });
 
@@ -93,6 +103,7 @@ export class TestDetailsComponent implements OnInit {
 
   ngOnDestroy() {
     this.routeSub.unsubscribe();
+    this.ticker.unsubscribe();
   }
 }
 
@@ -103,10 +114,6 @@ export class TestDetailsComponent implements OnInit {
 export class AddQuestionToTestDialog {
 
   newQuestionToTestForm;
-  correctA = true;
-  correctB = false;
-  correctC = false;
-  correctD = false;
 
   constructor(
     public dialogRef: MatDialogRef<AddQuestionToTestDialog>,
@@ -118,9 +125,13 @@ export class AddQuestionToTestDialog {
     this.newQuestionToTestForm = this.formBuilder.group({
       question: '',
       answerA: '',
+      correctA: '',
       answerB: '',
+      correctB: '',
       answerC: '',
-      answerD: ''
+      correctC: '',
+      answerD: '',
+      correctD: ''
     });
   }
 
@@ -131,18 +142,19 @@ export class AddQuestionToTestDialog {
   onSubmit(customerData) {
     const newQuestionId = uuidv4();
     const answers = [
-      new Answer(customerData.answerA, this.correctA),
-      new Answer(customerData.answerB, this.correctB),
-      new Answer(customerData.answerC, this.correctC),
-      new Answer(customerData.answerD, this.correctD)
+      new Answer(customerData.answerA, customerData.correctA),
+      new Answer(customerData.answerB, customerData.correctB),
+      new Answer(customerData.answerC, customerData.correctC),
+      new Answer(customerData.answerD, customerData.correctD)
     ];
-    console.log({'id': newQuestionId, 'question': customerData.question, 'answer': JSON.stringify(answers)});
 
-    this.http.post('lambda dodajaca pytanie do testu',
-      {'testId' : idOfTest,'questionId': newQuestionId, 'question': customerData.question, 'answer': JSON.stringify(answers)}).subscribe(
+    this.http.post(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/edit/${idOfTest}`,
+      {"id": newQuestionId, "question": customerData.question, "answer": answers
+    }).subscribe(
       res => {
-        this.refresher.questionRefreshSubject$.next(newQuestionId);
+        this.refresher.questionRefreshSubject$.next(1);
         console.log(res);
+        this.dialogRef.close();
       }, err => console.log(err)
     );
   }
