@@ -1,24 +1,19 @@
-.panel {
-    background-color: silver;
-}
-
-mat-panel-title,
-p {
-    color: black;
-    border-bottom: 0;
-}
-
-.correct {
-    background-color: green;
-}
-
-.dataBackground {
-    padding: 5vh 5vw 5vh 5vw;
-    margin: auto;
-    margin-bottom: 5vh;
-}
-
 h1 {
     margin: auto;
-    margin-bottom: 2vw;
+ }
+ 
+ #panel {
+     border-radius: 15px;
+     box-shadow: inset 0 0 6px rgba(0,0,0,.5);
+     margin: auto;
+     margin-top: 50px;
+     padding: 20px;
+     background: #f5f5ff;;
+ }
+ 
+ table {
+     text-align: left;
+ }
+.correct {
+    background: green;
 }

@@ -31,6 +31,7 @@ export class QuestionsComponent implements OnInit {
 
   addToList(data: Object): void {
     let i = 0;
+    ELEMENT_DATA.splice(0, ELEMENT_DATA.length);
     while (true) {
       if (data[i] !== undefined) {
         const question: Question = {id: data[i].id, question: data[i].question, answer: data[i].answer};
@@ -40,8 +41,23 @@ export class QuestionsComponent implements OnInit {
       }
       i++;
     }
-    console.log("cocos");
     console.log(ELEMENT_DATA);
+    this.ref.tick();
+  }
+
+  deleteQuestion(question: Question) {
+    this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question/${question.id}`)
+        .subscribe(data => {
+          console.log(data)
+            this.removeFromList(question);
+          }
+        );
+  }
+
+  removeFromList(question: Question): void {
+    let position = ELEMENT_DATA.indexOf(question);
+    if (position >= 0)
+      ELEMENT_DATA.splice(position, 1);
     this.ref.tick();
   }
 
@@ -51,13 +67,6 @@ export class QuestionsComponent implements OnInit {
         .subscribe(data => {
           console.log(data)
             this.addToList(data);
-          },
-          () => {
-            console.log('Failed to GET. Retrieving...');
-            this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/dev/question')
-              .subscribe(data => this.addToList(data),
-                err => console.log(err)
-              );
           }
         );
     } else {
