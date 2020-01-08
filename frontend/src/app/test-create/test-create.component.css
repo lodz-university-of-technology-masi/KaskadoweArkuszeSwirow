@@ -1,0 +1,23 @@
+
+h1 {
+    margin: auto;
+ }
+ 
+ #panel {
+     border-radius: 15px;
+     box-shadow: inset 0 0 6px rgba(0,0,0,.5);
+     margin: auto;
+     margin-top: 50px;
+     margin-bottom: 50px;
+     padding: 20px;
+     background: #f5f5ff;;
+ }
+ table {
+     text-align: left;
+ }
+.correct {
+    background: green;
+}
+h4 {
+    margin: auto;
+}

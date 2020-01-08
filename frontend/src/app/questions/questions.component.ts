@@ -106,9 +106,13 @@ export class AddQuestionDialog {
     this.newQuestionForm = this.formBuilder.group({
       question: '',
       answerA: '',
+      correctA: '',
       answerB: '',
+      correctB: '',
       answerC: '',
-      answerD: ''
+      correctC: '',
+      answerD: '',
+      correctD: ''
     });
   }
 
@@ -118,16 +122,17 @@ export class AddQuestionDialog {
 
   onSubmit(customerData) {
     const answers = [
-      new Answer(customerData.answerA, true),
-      new Answer(customerData.answerB, false),
-      new Answer(customerData.answerC, false),
-      new Answer(customerData.answerD, false)
+      new Answer(customerData.answerA, customerData.correctA),
+      new Answer(customerData.answerB, customerData.correctB),
+      new Answer(customerData.answerC, customerData.correctC),
+      new Answer(customerData.answerD, customerData.correctD)
     ];
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question',
       {'question': customerData.question, 'answer': answers}).subscribe(
       res => {
         this.refresher.questionRefreshSubject$.next(1);
         console.log(res);
+        this.dialogRef.close();
       }, err => console.log(err)
     );
   }

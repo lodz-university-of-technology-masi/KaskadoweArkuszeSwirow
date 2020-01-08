@@ -77,62 +77,52 @@ export class TestsComponent implements OnInit {
     });
   }
 
-  createTest() {
-    const dialogRef = this.dialog.open(CreateNewTestDialog, {
-      width: '300px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
   ngOnDestroy() {
     this.ticker.unsubscribe();
   }
 }
 
-const uuidv4 = require('../../../node_modules/uuid');
+//const uuidv4 = require('../../../node_modules/uuid');
 
-@Component({
-  selector: 'create-new-test-dialog',
-  templateUrl: 'create-new-test-dialog.html',
-})
-export class CreateNewTestDialog {
+// @Component({
+//   selector: 'create-new-test-dialog',
+//   templateUrl: 'create-new-test-dialog.html',
+// })
+// export class CreateNewTestDialog {
 
-  newTestForm;
+//   newTestForm;
 
-  constructor(
-    private router: Router,
-    public dialogRef: MatDialogRef<CreateNewTestDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Test,
-    private formBuilder: FormBuilder,
-    private http: HttpClient,
-    private refresher: RefresherService
-  ) {
-    this.newTestForm = this.formBuilder.group({
-      title: '',
-    });
-  }
+//   constructor(
+//     private router: Router,
+//     public dialogRef: MatDialogRef<CreateNewTestDialog>,
+//     @Inject(MAT_DIALOG_DATA) public data: Test,
+//     private formBuilder: FormBuilder,
+//     private http: HttpClient,
+//     private refresher: RefresherService
+//   ) {
+//     this.newTestForm = this.formBuilder.group({
+//       title: '',
+//     });
+//   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+//   onNoClick(): void {
+//     this.dialogRef.close();
+//   }
 
-  onSubmit(customerData) {
-    const title = customerData.title;
-    const questions = [];
-    console.log({'title': title, 'questions': questions});
+//   onSubmit(customerData) {
+//     const title = customerData.title;
+//     const questions = [];
+//     console.log({'title': title, 'questions': questions});
 
-    this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
-      {'title': title, 'questions': questions}).subscribe(
-      res => {
-        this.refresher.questionRefreshSubject$.next(1);
-        console.log(res);
-      }, err => console.log(err)
-    );
-    this.dialogRef.close();
-    // this.router.navigate(['/test-details', id]);
-  }
+//     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
+//       {'title': title, 'questions': questions}).subscribe(
+//       res => {
+//         this.refresher.questionRefreshSubject$.next(1);
+//         console.log(res);
+//       }, err => console.log(err)
+//     );
+//     this.dialogRef.close();
+//     // this.router.navigate(['/test-details', id]);
+//   }
 
-}
+// }

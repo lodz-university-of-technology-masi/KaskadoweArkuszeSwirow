@@ -1,6 +1,6 @@
 <div class="container col-lg-12">
     <div class="row header">
-        <h1 class="col-lg-8">"{{test.title}}"</h1>
+        <h1 class="display-4">"{{test.title}}"</h1>
     </div>
     <div id="panel" class="row col-lg-6">
         <div class="row col-lg-12">
@@ -40,7 +40,7 @@
             <p> Brak pytań!</p>
        </div>
         <div class="row col-lg-12">
-            <button class="btn btn-success" *ngIf="editing" mat-raised-button (click)="openDialog()">Dodaj pytanie</button>
+            <button class="btn btn-success" *ngIf="editing" mat-raised-button (click)="addQuestion()">Dodaj pytanie</button>
         </div>
     </div>
 </div>

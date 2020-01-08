@@ -8,6 +8,7 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { TestsComponent } from './tests/tests.component';
 import { TestDetailsComponent } from './test-details/test-details.component';
+import { TestCreateComponent } from './test-create/test-create.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'usersList', component: UsersListComponent},
-  {path: 'questions', component: QuestionsComponent}
+  {path: 'questions', component: QuestionsComponent},
+  {path: 'test-create', component: TestCreateComponent}
 
 ];
 
