@@ -32,6 +32,8 @@ import { TestDetailsComponent } from './test-details/test-details.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TestCreateComponent } from './test-create/test-create.component';
 import { TestAddQuestionDialogComponent } from './test-add-question-dialog/test-add-question-dialog.component';
+import { TestsForUserComponent } from './tests-for-user/tests-for-user.component';
+import { SolveTestComponent } from './solve-test/solve-test.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { TestAddQuestionDialogComponent } from './test-add-question-dialog/test-
     TestsComponent,
     TestDetailsComponent,
     TestCreateComponent,
-    TestAddQuestionDialogComponent
+    TestAddQuestionDialogComponent,
+    TestsForUserComponent,
+    SolveTestComponent
   ],
   imports: [
     BrowserModule,
