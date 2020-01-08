@@ -1,5 +1,5 @@
 import { Test } from '../models/Test.model';
-import { Question, ChooseQuestion, OpenQuestion, NumericalQuestion } from '../models/Question.model';
+import { Question, ChooseQuestion, OpenQuestion, NumericalQuestion, DisplayQuestion } from '../models/Question.model';
 import { Answer } from '../models/Answer.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -45,14 +45,15 @@ export class TestDetailsComponent implements OnInit {
     });
   }
 
-  addQuestion() {
-    const dialogRef = this.dialog.open(TestAddQuestionDialogComponent, {
-      width: '300px'
-    });
+  showAddQuestionDialog() {
+    const dialogRef = this.dialog.open(TestAddQuestionDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log(result);
+      for (let it of result) {
+        this.addQuestion(it);
+      }
     });
-  }
+    }
 
   getTestWithID(id: String): void {
     this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${id}`)
@@ -62,9 +63,7 @@ export class TestDetailsComponent implements OnInit {
           this.setLocalTestToData(data);
         }else 
           this.getTestWithID(id);
-      }
-
-      );
+      });
   }
 
   setLocalTestToData(data: any): void {
@@ -94,8 +93,23 @@ export class TestDetailsComponent implements OnInit {
   removeQuestionFromList(question: Question): void {
     let position = this.test.questions.indexOf(question);
     if (position >= 0)
-    this.test.questions.splice(position, 1);
+      this.test.questions.splice(position, 1);
     console.log(this.test.questions);
+    this.ref.tick();
+  }
+
+  addQuestion(question: Question) {
+    this.http.post(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/edit/${idOfTest}`,
+    {"id": question.id, "question": question.question, "answer": question.answer}).subscribe(
+      res => {
+        console.log(res);
+        this.addQuestionToList(question);
+      }, err => console.log(err)
+    );
+  }
+
+  addQuestionToList(question: Question): void {
+    this.test.questions.push(question);
     this.ref.tick();
   }
 

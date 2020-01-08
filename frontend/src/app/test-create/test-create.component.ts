@@ -13,8 +13,8 @@ import { TestAddQuestionDialogComponent } from '../test-add-question-dialog/test
 })
 export class TestCreateComponent implements OnInit {
   test: Test = {'id': null, 'title': null, 'questions' : []};
+  isEmpty: boolean = true;
   numberOfRandomQuestions: number = 1;
-
 
   constructor(
     public dialog: MatDialog,
@@ -36,12 +36,21 @@ export class TestCreateComponent implements OnInit {
       }
       i++;
     }
+    this.setIsEmpty();
   }
 
   deleteFromList(question: Question): void {
     let position = this.test.questions.indexOf(question);
     if (position >= 0)
       this.test.questions.splice(position, 1);
+    this.setIsEmpty();
+  }
+
+  setIsEmpty(){
+    if (this.test.questions.length > 0)
+      this.isEmpty = false;
+    else
+      this.isEmpty = true;
   }
 
   generateRandomQuestions(number: number=2): void {
@@ -64,14 +73,11 @@ export class TestCreateComponent implements OnInit {
       );
   }
 
-  addQuestion() {
-  const dialogRef = this.dialog.open(TestAddQuestionDialogComponent, {
-    width: '300px'
-  });
+  showAddQuestionDialog() {
+  const dialogRef = this.dialog.open(TestAddQuestionDialogComponent);
   dialogRef.afterClosed().subscribe(result => {
-    console.log('The dialog was closed');
+    console.log(result);
+    this.addToList(result);
   });
-
-
   }
 }

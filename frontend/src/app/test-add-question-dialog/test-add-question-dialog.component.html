@@ -1,5 +1,6 @@
-<div class="container col-lg-12">
-    <table class="table col-lg-12">
+<div class="container" id="dialog"> 
+    <h2 class="display-4">Wybierz pytania do dodania</h2>
+    <table class="table row col-lg-12" id="qustionsTable" >
         <thead class="thead-light">
             <tr>
                 <th style="width: 10%" scope="col">#</th>
@@ -21,12 +22,12 @@
                     </div>
                 </td>
                 <td>
-                    <mat-checkbox formControlName="isSelected"></mat-checkbox>
+                <mat-checkbox [checked]="question.selected" (change)="changeQuestionSelected(question)"></mat-checkbox>
                 </td>
             </tr>
         </tbody>
     </table>
-    <div class="row col-lg-12">
-        <button class="btn btn-success"  mat-raised-button >Zatwierdź</button>
+    <div class="row col-lg-12 ">
+        <button class="btn btn-success" (click)="onSubmit()">Zatwierdź</button>
     </div>
 </div>

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormBuilder } from '@angular/forms';
 import { DataSource } from '@angular/cdk/table';
-import { Question } from '../models/Question.model';
+import { Question, DisplayQuestion } from '../models/Question.model';
 
 @Component({
   selector: 'app-test-add-question-dialog',
@@ -15,11 +15,12 @@ import { Question } from '../models/Question.model';
   styleUrls: ['./test-add-question-dialog.component.css']
 })
 export class TestAddQuestionDialogComponent implements OnInit {
+
   ngOnInit(): void {
-    throw new Error("Method not implemented.");
   }
 
-  questions: Question[] = [];
+  
+  questions: DisplayQuestion[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<TestAddQuestionDialogComponent>,
@@ -38,7 +39,8 @@ export class TestAddQuestionDialogComponent implements OnInit {
     let i = 0;
     while (true) {
       if (data[i] !== undefined) {
-        const question: Question = {id: data[i].id, question: data[i].question, answer: data[i].answer};
+        const question: DisplayQuestion = {id: data[i].id, question: data[i].question, answer: data[i].answer,
+                                  selected: false};
         this.questions.push(question);
       } else {
         break;
@@ -53,26 +55,28 @@ export class TestAddQuestionDialogComponent implements OnInit {
     this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question',
       ).subscribe(
       res => {
-        //this.refresher.questionRefreshSubject$.next(1);
+
         this.addToList(res);
         console.log(res);
       }, err => console.log(err)
     );
   }
 
-  onSubmit(customerData) {
-    const title = customerData.title;
-    const questions = [];
-    console.log({'title': title, 'questions': questions});
+  onSubmit() {
+    const selectedQuestions: DisplayQuestion[] = [];
+    for (let it of this.questions) {
+      if (it.selected == true)
+        selectedQuestions.push(it);
+    }
 
-    this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
-      {'title': title, 'questions': questions}).subscribe(
-      res => {
-        //this.refresher.questionRefreshSubject$.next(1);
-        console.log(res);
-      }, err => console.log(err)
-    );
-    this.dialogRef.close();
+    console.log("dialog:")
+    console.log(selectedQuestions);
+    this.dialogRef.close(selectedQuestions);
+
+  }
+
+  changeQuestionSelected(question: DisplayQuestion) {
+    question.selected = !question.selected;
   }
 
 }

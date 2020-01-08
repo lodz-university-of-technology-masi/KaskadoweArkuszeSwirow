@@ -19,3 +19,12 @@ export class OpenQuestion extends Question {
 
 export class ChooseQuestion extends Question {
 }
+
+export class DisplayQuestion extends Question {
+    constructor(question: string, answer: Answer[], selected: boolean){
+        super(question, answer);
+        this.selected = selected; 
+    }
+
+    selected: boolean;
+}

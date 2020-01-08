@@ -10,12 +10,12 @@
                 <small id="testTitleHelp" class="form-text text-muted">Prostota to klucz do dobrej nazwy!</small>
             </div>
             <div class="row col-lg-12">
-                <button class="btn btn-warning" mat-raised-button (click)="generateRandomQuestions(numberOfRandomQuestions)">Wygeneruj losowy zestaw pytań</button>
+                <button class="btn btn-warning" mat-raised-button (click)="generateRandomQuestions(numberOfRandomQuestions)">Dodaj losowe pytania</button>
                 <input [(ngModel)]="numberOfRandomQuestions" type="number" min="1" max="100" class="form-control col-lg-1">
             </div>
             
             <div class="row col-lg-12">
-                <table class="table col-lg-12" *ngIf="test.questions">
+                <table class="table col-lg-12">
                     <thead class="thead-light">
                         <tr>
                             <th style="width: 10%" scope="col">#</th>
@@ -43,14 +43,14 @@
                     </tbody>
                 </table>
             </div>
-            <div *ngIf="test.questions" class="row col-lg-12">
+            <div *ngIf="isEmpty" class="row col-lg-12">
                 <h4 class="lead">
                     <b>Brak pytań!</b>
                 </h4>
            </div>
             <div class="row col-lg-12">
                 <div class="row col-lg-6">
-                    <button class="btn btn-info float-lg-left" mat-raised-button (click)="addQuestion()">Dodaj pytanie</button>
+                    <button class="btn btn-info float-lg-left" mat-raised-button (click)="showAddQuestionDialog()">Dodaj pytanie</button>
                 </div>
                 <div class="col-lg-6">
                     <button class="btn btn-success float-lg-right" mat-raised-button (click)="saveTest()">Zapisz test</button>

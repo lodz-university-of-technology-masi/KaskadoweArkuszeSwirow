@@ -1,11 +1,28 @@
+#dialog {
+}
 
 h1 {
     margin: auto;
  }
 
- table {
-     text-align: left;
- }
+table {
+    display: block;
+    height: 400px;
+    overflow-y: scroll;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+     
+#qustionsTable {
+    text-align: left;
+    background: #f5f5ff;
+}
+
 .correct {
     background: green;
 }
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: #c3c3c3;
+  }
