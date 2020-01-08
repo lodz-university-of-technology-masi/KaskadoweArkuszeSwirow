@@ -1,0 +1,14 @@
+<div class="container col-lg-10">
+    <div class="row header">
+        <h1 class="col-lg-8">Twoje testy</h1>
+    </div>
+    <div class="dataBackground col-lg-12 row rounded">
+        <div class="col-lg-11 row tests-row">
+            <div class="col-lg-3 testDiv" *ngFor="let test of dataSource">
+                <div class="test">
+                    <img src="http://www.liberaldictionary.com/wp-content/uploads/2018/11/test.png" class="test-image"> {{test.title}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
