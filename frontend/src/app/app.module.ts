@@ -9,7 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatInputModule, MatChipsModule} from '@angular/material';
+import {MatInputModule, MatChipsModule, MatTabsModule} from '@angular/material';
 import {AddUserDialog} from './users/users.component';
 import {AddQuestionDialog} from './questions/questions.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -73,7 +73,8 @@ import { SolveTestComponent } from './solve-test/solve-test.component';
     HttpClientModule,
     MatExpansionModule,
     MatCheckboxModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTabsModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],

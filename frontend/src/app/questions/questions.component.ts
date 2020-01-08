@@ -75,9 +75,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddQuestionDialog, {
-      width: '300px'
-    });
+    const dialogRef = this.dialog.open(AddQuestionDialog);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -100,10 +98,13 @@ export class QuestionsComponent implements OnInit {
 @Component({
   selector: 'addQuestionDialog',
   templateUrl: 'addQuestionDialog.html',
+  styleUrls: ['questions.component.css']
 })
 export class AddQuestionDialog {
 
-  newQuestionForm;
+  newChooseQuestionForm;
+  newNumericalQuestionForm;
+  newOpenQuestionForm;
 
   constructor(
     public dialogRef: MatDialogRef<AddQuestionDialog>,
@@ -112,16 +113,23 @@ export class AddQuestionDialog {
     private http: HttpClient,
     private refresher: RefresherService
   ) {
-    this.newQuestionForm = this.formBuilder.group({
+    // this.newChooseQuestionForm = this.formBuilder.group({
+    //   question: '',
+    //   answerA: '',
+    //   correctA: '',
+    //   answerB: '',
+    //   correctB: '',
+    //   answerC: '',
+    //   correctC: '',
+    //   answerD: '',
+    //   correctD: ''
+    // });
+    this.newNumericalQuestionForm = this.formBuilder.group({
       question: '',
-      answerA: '',
-      correctA: '',
-      answerB: '',
-      correctB: '',
-      answerC: '',
-      correctC: '',
-      answerD: '',
-      correctD: ''
+      answer: ''
+    });
+    this.newOpenQuestionForm = this.formBuilder.group({
+      question: ''
     });
   }
 
