@@ -34,7 +34,7 @@ export class QuestionsComponent implements OnInit {
     ELEMENT_DATA.splice(0, ELEMENT_DATA.length);
     while (true) {
       if (data[i] !== undefined) {
-        const question: Question = {id: data[i].id, question: data[i].question, answer: data[i].answer};
+        const question: Question = {id: data[i].id, question: data[i].question, answer: data[i].answer, type: data[i].type};
         ELEMENT_DATA.push(question);
       } else {
         break;
@@ -113,17 +113,17 @@ export class AddQuestionDialog {
     private http: HttpClient,
     private refresher: RefresherService
   ) {
-    // this.newChooseQuestionForm = this.formBuilder.group({
-    //   question: '',
-    //   answerA: '',
-    //   correctA: '',
-    //   answerB: '',
-    //   correctB: '',
-    //   answerC: '',
-    //   correctC: '',
-    //   answerD: '',
-    //   correctD: ''
-    // });
+    this.newChooseQuestionForm = this.formBuilder.group({
+      question: '',
+      answerA: '',
+      correctA: '',
+      answerB: '',
+      correctB: '',
+      answerC: '',
+      correctC: '',
+      answerD: '',
+      correctD: ''
+    });
     this.newNumericalQuestionForm = this.formBuilder.group({
       question: '',
       answer: ''
@@ -137,15 +137,24 @@ export class AddQuestionDialog {
     this.dialogRef.close();
   }
 
-  onSubmit(customerData) {
-    const answers = [
-      new Answer(customerData.answerA, customerData.correctA),
-      new Answer(customerData.answerB, customerData.correctB),
-      new Answer(customerData.answerC, customerData.correctC),
-      new Answer(customerData.answerD, customerData.correctD)
-    ];
+  onSubmit(customerData, type) {
+    let answers: Answer[] = [];
+    if (type === 'W') {
+      answers = [
+        new Answer(customerData.answerA, customerData.correctA, null, customerData.type),
+        new Answer(customerData.answerB, customerData.correctB, null, customerData.type),
+        new Answer(customerData.answerC, customerData.correctC, null, customerData.type),
+        new Answer(customerData.answerD, customerData.correctD, null, customerData.type)
+      ];
+    } else if (type === 'L') {
+      answers = [
+        new Answer(customerData.answer, null, null, null)
+      ];
+    } else if (type === 'O') {
+      answers = [];
+    }
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question',
-      {'question': customerData.question, 'answer': answers}).subscribe(
+      {'question': customerData.question, 'answer': answers, 'type': customerData.type}).subscribe(
       res => {
         this.refresher.questionRefreshSubject$.next(1);
         console.log(res);

@@ -2,7 +2,7 @@
 <h2 class="display-4">Tworzenie pytania</h2>
 <mat-tab-group>
     <mat-tab label="Wielokrotnego Wyboru">
-        <form class="form-group" [formGroup]="newChooseQuestionForm" (ngSubmit)="onSubmit(newChooseQuestionForm.value)">
+        <form class="form-group" [formGroup]="newChooseQuestionForm" (ngSubmit)="onSubmit(newChooseQuestionForm.value, 'W')">
             <div>
                 <label for="question">Pytanie</label>
                 <input id="question" type="text" formControlName="question" class="form-control" placeholder="Treść pytania"/>
@@ -40,7 +40,7 @@
         </form>
     </mat-tab>
     <mat-tab label="Typu liczbowego">
-        <form class="form-group" [formGroup]="newNumericalQuestionForm" (ngSubmit)="onSubmit(newNumericalQuestionForm.value)">
+        <form class="form-group" [formGroup]="newNumericalQuestionForm" (ngSubmit)="onSubmit(newNumericalQuestionForm.value, 'L')">
             <div>
                 <label for="question">Pytanie</label>
                 <input id="question" type="text" formControlName="question" class="form-control" placeholder="Treść pytania"/>
@@ -53,14 +53,10 @@
         </form>
     </mat-tab>
     <mat-tab label="Otwarte"> 
-        <form class="form-group" [formGroup]="newOpenQuestionForm" (ngSubmit)="onSubmit(newOpenQuestionForm.value)">
+        <form class="form-group" [formGroup]="newOpenQuestionForm" (ngSubmit)="onSubmit(newOpenQuestionForm.value, 'O')">
                 <div>
                     <label for="question">Pytanie</label>
                     <input id="question" type="text" formControlName="question" class="form-control" placeholder="Treść pytania"/>
-                </div>
-                <div>
-                    <label for="answer">Odpowiedź</label>
-                    <input id="answer" type="number" formControlName="answer" class="form-control"/>
                 </div>
                 <button class="btn btn-success" type="submit">Dodaj</button>
             </form>

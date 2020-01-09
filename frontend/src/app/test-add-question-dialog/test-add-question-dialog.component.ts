@@ -39,7 +39,7 @@ export class TestAddQuestionDialogComponent implements OnInit {
     let i = 0;
     while (true) {
       if (data[i] !== undefined) {
-        const question: DisplayQuestion = {id: data[i].id, question: data[i].question, answer: data[i].answer,
+        const question: DisplayQuestion = {id: data[i].id, question: data[i].question, answer: data[i].answer, type: data[i].type,
                                   selected: false};
         this.questions.push(question);
       } else {
