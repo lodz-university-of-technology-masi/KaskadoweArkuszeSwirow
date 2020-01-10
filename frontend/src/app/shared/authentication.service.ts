@@ -1,15 +1,20 @@
 import {Injectable} from '@angular/core';
 import {AuthenticationDetails, CognitoUser, CognitoUserPool} from 'amazon-cognito-identity-js';
 import {Observable} from 'rxjs';
+import decode from 'jwt-decode';
+import {codes} from '../codes';
+
+// require('dotenv').load();
 
 const poolData = {
-  UserPoolId: 'us-east-1_IBVZb8BoB', // Your user pool id here
-  ClientId: '5iks8ifh2vbo8g6upr1qg9l4bt' // Your client id here
+  UserPoolId: codes.USER_POOL_ID, // Your user pool id here
+  ClientId: codes.CLIENT_ID // Your client id here
 };
 
 const userPool = new CognitoUserPool(poolData);
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthenticationService {
   cognitoUser: any;
   attr: any;
@@ -105,5 +110,19 @@ export class AuthenticationService {
   logOut() {
     this.getAuthenticatedUser().signOut();
     this.cognitoUser = null;
+  }
+
+  getAuthenticatedUserRole() {
+    const userDecodedToken = this.decode();
+    console.log('codes userpool');
+    console.log(codes.USER_POOL_ID);
+    // console.log(userDecodedToken['custom:role']);
+    // return userDecodedToken['custom:role'];
+    return userDecodedToken['custom:role'];
+  }
+
+  decode() {
+    const userId = localStorage.getItem('CognitoIdentityServiceProvider.' + poolData.ClientId +'.LastAuthUser');
+    return decode(localStorage.getItem('CognitoIdentityServiceProvider.' + poolData.ClientId + '.' + userId + '.idToken'));
   }
 }

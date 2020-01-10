@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AuthenticationService} from './authentication.service';
 import {Observable} from 'rxjs';
+import {codes} from '../codes';
 
 const AWS = require('aws-sdk');
 
@@ -18,9 +19,9 @@ export class UsersManagementService {
 
   constructor() {
     AWS.config.update({
-      region: 'us-east-1',
-      accessKeyId: 'AKIAXHL3HMQ2CE3EBWJS',
-      secretAccessKey: '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'
+      region: codes.REGION,
+      accessKeyId: codes.ACCESS_KEY_ID,
+      secretAccessKey: codes.SECRET_ACCESS_KEY
     });
     this.cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
   }
