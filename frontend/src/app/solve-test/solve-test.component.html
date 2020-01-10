@@ -4,11 +4,42 @@
     </div>
     <div class="dataBackground col-lg-12 row rounded">
         <div class="col-lg-11 row">
-            <table style="width:100%" *ngIf="test">
-                <tr *ngFor="let question of test.questions">
-                    {{question.question}}
-                </tr>
-            </table>
+            <form [formGroup]="testForm" *ngIf="test">
+                <div *ngFor="let question of test.questions">
+                    <div>{{question.question}}</div>
+                    <div *ngIf="question.type=='numerical'">
+                        <label for="answerA">Twoja odpowiedź</label>
+                        <input id="answerA" type="number" formControlName="answerA">
+                    </div>
+
+                    <div *ngIf="question.type=='open'">
+                        <label for="answerA">Twoja odpowiedź</label>
+                        <input id="answerA" type="text" formControlName="answerA">
+                    </div>
+
+                    <!-- <div *ngIf="question.type=='choose'"> -->
+                    <!--zakomentowałem, aby pokazywało cokolwiek. Jak zostaną poprawione typy pytań to podmienię z divem poniżej-->
+                    <div>
+                        <div>
+                            <input id="answerA" type="checkbox" formControlName="answerA" name="{{question.answerA}}">
+                            <label for="answerA">{{question.answer[0].content}}</label>
+                        </div>
+                        <div>
+                            <input id="answerB" type="checkbox" formControlName="answerB" name="{{question.answerB}}">
+                            <label for="answerB">{{question.answer[1].content}}</label>
+                        </div>
+                        <div>
+                            <input id="answerC" type="checkbox" formControlName="answerC" name="{{question.answerC}}">
+                            <label for="answerC">{{question.answer[2].content}}</label>
+                        </div>
+                        <div>
+                            <input id="answerD" type="checkbox" formControlName="answerD" name="{{question.answerD}}">
+                            <label for="answerD">{{question.answer[3].content}}</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="button" type="submit">Zatwierdź test</button>
+            </form>
         </div>
     </div>
 </div>
