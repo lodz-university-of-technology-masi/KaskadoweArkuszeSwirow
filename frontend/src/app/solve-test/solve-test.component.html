@@ -3,23 +3,23 @@
         <h1 class="col-lg-8">Rozwiąż test!</h1>
     </div>
     <div class="dataBackground col-lg-12 row rounded">
-        <div class="col-lg-11 row">
+        <div class="col-lg-11 row form-holder">
             <form [formGroup]="testForm" *ngIf="test">
-                <div *ngFor="let question of test.questions">
-                    <div>{{question.question}}</div>
-                    <div *ngIf="question.type=='numerical'">
+                <div *ngFor="let question of test.questions" class="question">
+                    <div class="question_content">{{question.question}}</div>
+                    <div *ngIf="question.type=='L'" class="answer">
                         <label for="answerA">Twoja odpowiedź</label>
                         <input id="answerA" type="number" formControlName="answerA">
                     </div>
 
-                    <div *ngIf="question.type=='open'">
+                    <div *ngIf="question.type=='O'" class="answer">
                         <label for="answerA">Twoja odpowiedź</label>
                         <input id="answerA" type="text" formControlName="answerA">
                     </div>
 
-                    <!-- <div *ngIf="question.type=='choose'"> -->
-                    <!--zakomentowałem, aby pokazywało cokolwiek. Jak zostaną poprawione typy pytań to podmienię z divem poniżej-->
-                    <div>
+                    <div *ngIf="question.type=='W'" class="answer">
+                        <!--zakomentowałem, aby pokazywało cokolwiek. Jak zostaną poprawione typy pytań to podmienię z divem poniżej-->
+                        <!-- <div> -->
                         <div>
                             <input id="answerA" type="checkbox" formControlName="answerA" name="{{question.answerA}}">
                             <label for="answerA">{{question.answer[0].content}}</label>
