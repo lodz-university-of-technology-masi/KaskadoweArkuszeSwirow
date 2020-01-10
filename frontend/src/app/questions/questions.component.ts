@@ -141,10 +141,10 @@ export class AddQuestionDialog {
     let answers: Answer[] = [];
     if (type === 'W') {
       answers = [
-        new Answer(customerData.answerA, customerData.correctA, null, customerData.type),
-        new Answer(customerData.answerB, customerData.correctB, null, customerData.type),
-        new Answer(customerData.answerC, customerData.correctC, null, customerData.type),
-        new Answer(customerData.answerD, customerData.correctD, null, customerData.type)
+        new Answer(customerData.answerA, customerData.correctA, null, null),
+        new Answer(customerData.answerB, customerData.correctB, null, null),
+        new Answer(customerData.answerC, customerData.correctC, null, null),
+        new Answer(customerData.answerD, customerData.correctD, null, null)
       ];
     } else if (type === 'L') {
       answers = [
@@ -154,7 +154,7 @@ export class AddQuestionDialog {
       answers = [];
     }
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question',
-      {'question': customerData.question, 'answer': answers, 'type': customerData.type}).subscribe(
+      {'question': customerData.question, 'answer': answers, 'type': type}).subscribe(
       res => {
         this.refresher.questionRefreshSubject$.next(1);
         console.log(res);
