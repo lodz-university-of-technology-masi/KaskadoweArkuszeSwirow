@@ -27,29 +27,12 @@ export class UsersListComponent implements OnInit {
               public dialog: MatDialog) {
   }
 
-  testKlik() {
-    this.auth.signIn('lord360@wp.pl', 'Qwerty123!').subscribe((data) => {
-      console.log('zalogowano');
-    }, (err) => {
-      console.log(err);
-    });
-  }
-
-  testKlik2() {
-    if (this.auth.isLoggedIn()) {
-      this.auth.logOut();
-      console.log('wylogowano');
-    }
-    this._router.navigateByUrl('/login');
-  }
-
-  testKlik3() {
+  addCandidate() {
     if (this.auth.isLoggedIn()) {
       this.openDialog();
 
     }
   }
-
 
   ngOnInit(): void {
     if (this.auth.isLoggedIn()) {

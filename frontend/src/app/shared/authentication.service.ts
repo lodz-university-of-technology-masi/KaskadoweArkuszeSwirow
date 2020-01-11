@@ -88,11 +88,19 @@ export class AuthenticationService {
             observer.next(userAttributes);
           } else {
             delete userAttributes.email_verified;
-            cognitoUser.completeNewPasswordChallenge(newPassword, userAttributes, this);
+            cognitoUser.completeNewPasswordChallenge(newPassword, userAttributes, {
+              onSuccess: () =>{
+                observer.next();
+                observer.complete();
+              },
+              onFailure: (err: any) => {
+                console.log(err);
+                observer.error(err);
+              }
+            });
             observer.next();
           }
           observer.complete();
-
         }
       });
     });

@@ -4,7 +4,6 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../shared/authentication.service';
 
 
-
 @Component({
   selector: 'recruiter-navbar',
   templateUrl: './navbar.component.html',

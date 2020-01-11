@@ -20,6 +20,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
+import {ChangePasswordDialog} from './login/login.component';
+
 // import {RegisterComponent} from './register/register.component';
 // import {AuthGuard} from './shared/authentication.service';
 // import {NavbarComponent} from './navbar/navbar.component';
@@ -47,7 +49,7 @@ import { CandidateModule } from './candidate/candidate.module';
     // NavbarComponent,
     // HomePageComponent,
     // UsersListComponent,
-    // ChangePasswordDialog,
+    ChangePasswordDialog,
     // CreateNewUserDialog,
     // QuestionsComponent,
     PageNotFoundComponent,
@@ -75,6 +77,9 @@ import { CandidateModule } from './candidate/candidate.module';
   providers: [],
   // providers: [AuthenticationService],
   bootstrap: [AppComponent],
+  entryComponents: [
+    ChangePasswordDialog
+  ]
   // entryComponents: [AddUserDialog,
   //   AddQuestionDialog,
   //   ChangePasswordDialog,

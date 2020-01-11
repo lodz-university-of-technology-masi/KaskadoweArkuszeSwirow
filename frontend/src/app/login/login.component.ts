@@ -49,21 +49,26 @@ export class LoginComponent {
     this.logIn(form.value.email, form.value.password, this.newPassword);
   }
 
+  //TODO: CHANGE IT TO WORK PROPERLY AFTER NEW CANDIDATE PASSWORD CHANGE
   logIn(email, password, newPassword) {
     this.auth.signIn(email, password, newPassword).subscribe((data) => {
+      
       if(data != null) {
         this.openDialog();
       }
+      else{
+        console.log('Redirecting');
 
-      //make it like in constructor also with throw
-      if(this.auth.getAuthenticatedUserRole() == '0') {
-        console.log('nooo');
-        this._router.navigate(['/recruiter']);
+        //make it like in constructor also with throw
+        if(this.auth.getAuthenticatedUserRole() == '0') {
+          console.log('Moving to /recruiter');
+          this._router.navigate(['/recruiter']);
+        }
+        else {
+          console.log('Moving to /candidate');
+          this._router.navigate(['/candidate']);
+        }
       }
-      else {
-        this._router.navigate(['/candidate']);
-      }
-      
     }, (err) => {
       console.log(err);
       this.emailVerificationMessage = true;
@@ -77,7 +82,6 @@ export class LoginComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       this.newPassword = result;
       this.logIn(this.email, this.password, result);
     });
