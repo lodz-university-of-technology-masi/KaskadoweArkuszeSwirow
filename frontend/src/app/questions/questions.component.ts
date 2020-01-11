@@ -101,6 +101,9 @@ export class QuestionsComponent implements OnInit {
   styleUrls: ['questions.component.css']
 })
 export class AddQuestionDialog {
+  noQuestion: boolean = false;
+  noCorrectAnswer: boolean = false;
+  noAnswer: boolean = false;
 
   newChooseQuestionForm;
   newNumericalQuestionForm;
@@ -138,6 +141,32 @@ export class AddQuestionDialog {
   }
 
   onSubmit(customerData, type) {
+    if (!customerData.question)
+      this.noQuestion = true;
+    else 
+      this.noQuestion = false;
+    if (type === 'W') {
+      if (!customerData.answerA || !customerData.answerB || !customerData.answerC || !customerData.answerD)
+        this.noAnswer = true;
+      else
+        this.noAnswer = false;
+      if (!customerData.correctA && !customerData.correctB && !customerData.correctC && !customerData.correctD)
+        this.noCorrectAnswer = true;
+      else 
+        this.noCorrectAnswer = false;
+    } else if (type === 'L') {
+      this.noCorrectAnswer = false;
+      if (!customerData.answer)
+        this.noAnswer = true;
+      else
+        this.noAnswer = false;
+    } else if (type === 'O') {
+      this.noAnswer = false;
+      this.noCorrectAnswer = false;
+    }
+    if (this.noQuestion || this.noAnswer || this.noCorrectAnswer)
+      return;
+
     let answers: Answer[] = [];
     if (type === 'W') {
       answers = [
@@ -148,7 +177,7 @@ export class AddQuestionDialog {
       ];
     } else if (type === 'L') {
       answers = [
-        new Answer(customerData.answer, null, null, null)
+        new Answer(customerData.answer, true, null, null)
       ];
     } else if (type === 'O') {
       answers = [];

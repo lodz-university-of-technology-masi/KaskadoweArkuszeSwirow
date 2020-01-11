@@ -1,5 +1,28 @@
 <div id="dialog">
 <h2 class="display-4">Tworzenie pytania</h2>
+
+<div class="row message-row col-lg-12" *ngIf="noQuestion">
+    <div class="col-lg-12">
+        <div class="alert alert-danger">
+            Nie podano treści pytania !!
+        </div>
+    </div>
+</div>
+<div class="row message-row col-lg-12" *ngIf="noAnswer">
+    <div class="col-lg-12">
+        <div class="alert alert-danger">
+            Odpowiedź/odpowiedzi są puste !!
+        </div>
+    </div>
+</div>
+<div class="row message-row col-lg-12" *ngIf="noCorrectAnswer">
+    <div class="col-lg-12">
+        <div class="alert alert-danger">
+            Nie zaznaczono żadnej poprawnej odpowiedzi !!
+        </div>
+    </div>
+</div>
+
 <mat-tab-group>
     <mat-tab label="Wielokrotnego Wyboru">
         <form class="form-group" [formGroup]="newChooseQuestionForm" (ngSubmit)="onSubmit(newChooseQuestionForm.value, 'W')">

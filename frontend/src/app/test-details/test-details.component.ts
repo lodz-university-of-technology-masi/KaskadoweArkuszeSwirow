@@ -1,16 +1,12 @@
 import { Test } from '../models/Test.model';
-import { Question, ChooseQuestion, OpenQuestion, NumericalQuestion, DisplayQuestion } from '../models/Question.model';
-import { Answer } from '../models/Answer.model';
+import { Question } from '../models/Question.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, Inject, ApplicationRef } from '@angular/core';
+import { Component, OnInit, ɵisDefaultChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RefresherService } from '../refresher.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, throwToolbarMixedModesError } from '@angular/material';
-import { FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material';
 import { TestAddQuestionDialogComponent } from '../test-add-question-dialog/test-add-question-dialog.component';
 
-const uuidv4 = require('../../../node_modules/uuid');
 let idOfTest: String;
 
 @Component({
@@ -20,40 +16,28 @@ let idOfTest: String;
 })
 export class TestDetailsComponent implements OnInit {
   test: Test;
-  isQuestionsEmpty: Boolean = true;
-  editing: Boolean = false;
+  isEmpty: boolean = true;
+  editing: boolean = false;
+  pressedSaveButton: boolean = false;
   private routeSub: Subscription;
-  private ticker: Subscription;
-  
+
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient,
-    private ref: ApplicationRef,
-    private refresher: RefresherService) {
-      this.getTestWithID(idOfTest);
-      this.ticker = new Subscription();
+    private http: HttpClient){
     }
+
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       idOfTest = params['id'];
       this.getTestWithID(idOfTest);
     });
-    this.ticker = this.refresher.questionRefreshSubject$.asObservable().subscribe(no => {
-      this.getTestWithID(idOfTest);
-    });
   }
 
-  showAddQuestionDialog() {
-    const dialogRef = this.dialog.open(TestAddQuestionDialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      for (let it of result) {
-        this.addQuestion(it);
-      }
-    });
-    }
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
+  }
 
   getTestWithID(id: String): void {
     this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${id}`)
@@ -66,55 +50,72 @@ export class TestDetailsComponent implements OnInit {
       });
   }
 
+  showAddQuestionDialog() {
+    const dialogRef = this.dialog.open(TestAddQuestionDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.addToList(result);
+    });
+  }
+
   setLocalTestToData(data: any): void {
-    const tmp: Test = {id: data.id, title: data.title, questions: data.questions};
-    this.test = tmp;
-    if (this.test.questions.length > 0)
-      this.isQuestionsEmpty = false;
-    else
-      this.isQuestionsEmpty = true;
-    this.ref.tick();
+    this.test = {id: data.id, title: data.title, questions: data.questions};
+    this.changeIsEmpty();
   }
 
   changeEditing() {
     this.editing = !this.editing;
   }
 
-  deleteQuestion(question: Question): void {
-    // this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${idOfTest}`,
-    // {"id": "question.id" }).subscribe(
-    //   res => {
-    //     console.log(res);
-    //     this.removeQuestionFromList(question);
-    //   }, err => console.log(err)
-    // );
+  changeIsEmpty(){
+    if (this.test.questions.length > 0)
+      this.isEmpty = false;
+    else
+      this.isEmpty = true;
   }
 
-  removeQuestionFromList(question: Question): void {
+  addToList(data: Object): void {
+    let i = 0;
+    while (true) {
+      if (data[i] !== undefined) {
+        const tmp: Question = {id: data[i].id, question: data[i].question, answer: data[i].answer, type: data[i].type};
+        this.test.questions.push(tmp);
+      } else {
+        break;
+      }
+      i++;
+    }
+    this.changeIsEmpty();
+  }
+  
+  deleteFromList(question: Question): void {
     let position = this.test.questions.indexOf(question);
     if (position >= 0)
       this.test.questions.splice(position, 1);
-    console.log(this.test.questions);
-    this.ref.tick();
+    this.changeIsEmpty();
   }
 
-  addQuestion(question: Question) {
-    this.http.post(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/edit/${idOfTest}`,
-    {"id": question.id, "question": question.question, "answer": question.answer}).subscribe(
-      res => {
-        console.log(res);
-        this.addQuestionToList(question);
-      }, err => console.log(err)
-    );
+  saveTest(): void {
+    this.pressedSaveButton = true;
+    if (this.test.questions.length === 0)
+      this.deleteTest();
+    else {
+      this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
+          {'id': this.test.id, 'title': this.test.title, 'questions': this.test.questions}).subscribe(
+          res => {
+            console.log(res);
+            this.router.navigate(['/tests']);
+          }, err => console.log(err)
+        );
+    }
   }
 
-  addQuestionToList(question: Question): void {
-    this.test.questions.push(question);
-    this.ref.tick();
+  deleteTest(): void {
+    this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${this.test.id}`)
+    .subscribe(s => {
+      console.log(s);
+      this.router.navigate(['/tests']);
+    })
   }
 
-  ngOnDestroy() {
-    this.routeSub.unsubscribe();
-    this.ticker.unsubscribe();
-  }
 }

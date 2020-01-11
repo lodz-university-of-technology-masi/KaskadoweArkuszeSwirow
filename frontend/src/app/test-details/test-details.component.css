@@ -15,6 +15,11 @@ h1 {
  table {
      text-align: left;
  }
+ 
 .correct {
     background: green;
+}
+
+h4 {
+    margin: auto;
 }

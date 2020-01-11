@@ -15,6 +15,7 @@ export class TestCreateComponent implements OnInit {
   test: Test = {'id': null, 'title': null, 'questions' : []};
   isEmpty: boolean = true;
   numberOfRandomQuestions: number = 1;
+  pressedSaveButton: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -36,17 +37,17 @@ export class TestCreateComponent implements OnInit {
       }
       i++;
     }
-    this.setIsEmpty();
+    this.changeIsEmpty();
   }
 
   deleteFromList(question: Question): void {
     let position = this.test.questions.indexOf(question);
     if (position >= 0)
       this.test.questions.splice(position, 1);
-    this.setIsEmpty();
+    this.changeIsEmpty();
   }
 
-  setIsEmpty(){
+  changeIsEmpty(){
     if (this.test.questions.length > 0)
       this.isEmpty = false;
     else
@@ -64,6 +65,9 @@ export class TestCreateComponent implements OnInit {
   }
 
   saveTest(): void {
+    this.pressedSaveButton = true;
+    if (!this.test.title || this.test.questions.length === 0)
+      return;
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
         {'title': this.test.title, 'questions': this.test.questions}).subscribe(
         res => {
