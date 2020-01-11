@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject, ApplicationRef } from '@angular/core';
-import {Question, ChooseQuestion, OpenQuestion, NumericalQuestion} from '../models/Question.model';
-import { Answer } from '../models/Answer.model';
+import {Question, ChooseQuestion, OpenQuestion, NumericalQuestion} from '../../models/Question.model';
+import { Answer } from '../../models/Answer.model';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormBuilder } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import { RefresherService } from '../refresher.service';
+import { RefresherService } from '../../refresher.service';
 import { Subscription } from 'rxjs';
 
 let ELEMENT_DATA: Question[] = [];

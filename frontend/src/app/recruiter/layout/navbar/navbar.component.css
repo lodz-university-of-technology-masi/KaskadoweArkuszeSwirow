@@ -1,0 +1,8 @@
+mat-toolbar-row {
+    align-content: center;
+}
+
+button {
+    position: absolute;
+    right: 1%;
+}

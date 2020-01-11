@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../shared/guards/auth-guard.service';
 import { RecruiterGuard } from '../shared/guards/recruiter-guard.service'
 import {SampleComponent} from './sample/sample.component'
+import { LayoutComponent } from './layout/layout.component';
+
 
 export const recruiterRoutes: Routes = [
   {
     path: 'recruiter',
-    component: SampleComponent,
+    component: LayoutComponent,
     canActivate: [AuthGuard, RecruiterGuard],
   }
 ];

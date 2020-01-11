@@ -6,7 +6,6 @@ import { CandidateGuard } from '../shared/guards/candidate-guard.service'
 import {SampleComponent} from './sample/sample.component'
 
 
-
 export const candidateRoutes: Routes = [
   {
     path: 'candidate',

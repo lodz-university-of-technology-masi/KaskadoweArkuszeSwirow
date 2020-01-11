@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import { UsersListComponent } from './users-list/users-list.component';
-import { QuestionsComponent } from './questions/questions.component';
+import { RegisterComponent } from './recruiter/register/register.component';
+// import { UsersListComponent } from './recruiter/users-list/users-list.component';
+// import { QuestionsComponent } from './recruiter/questions/questions.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
