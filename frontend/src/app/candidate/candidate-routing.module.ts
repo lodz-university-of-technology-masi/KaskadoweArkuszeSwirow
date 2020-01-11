@@ -12,16 +12,18 @@ export const candidateRoutes: Routes = [
   {
     path: 'candidate',
     component: LayoutComponent,
-    canActivate: [AuthGuard, CandidateGuard]
-  },
-  {
-    path: 'solve-test/:id',
-    component: SolveTestComponent,
-    canActivate: [AuthGuard, CandidateGuard]
-  },
-  {
-    path: 'my-tests',
-    component: TestsForUserComponent,
-    canActivate: [AuthGuard, CandidateGuard]
+    canActivate: [AuthGuard, CandidateGuard],
+    children: [
+      {
+        path: 'solve-test/:id',
+        component: SolveTestComponent,
+        canActivate: [AuthGuard, CandidateGuard]
+      },
+      {
+        path: 'my-tests',
+        component: TestsForUserComponent,
+        canActivate: [AuthGuard, CandidateGuard]
+      }
+    ]
   }
 ];
