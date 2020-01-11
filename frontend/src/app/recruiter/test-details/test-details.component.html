@@ -1,0 +1,60 @@
+<div class="container col-lg-12">
+    <div class="row header">
+        <h1 class="display-4">"{{test.title}}"</h1>
+    </div>
+    <div id="panel" class="row col-lg-6">
+        <div class="row message-row col-lg-12" *ngIf="editing && test.questions.length === 0">
+            <div class="col-lg-12">
+                <div class="alert alert-danger">
+                    Zapisanie testu bez żadnych pytań spowoduje jego usunięcie !!
+                </div>
+            </div>
+        </div>
+        <div class="row col-lg-12">
+            <button class="btn btn-warning" mat-raised-button (click)="changeEditing()">{{ editing ? 'Wyłącz edycję' : 'Włącz edycję' }}</button>
+        </div>
+
+        <div class="row col-lg-12">
+            <table class="table col-lg-12">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width: 10%" scope="col">#</th>
+                        <th scope="col">Pytanie</th>
+                        <th style="width: 10% "scope="col" *ngIf="editing">Akcja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let question of test.questions; index as i">
+                        <th scope="row">{{ i + 1 }}.</th>
+                        <td>
+                            <h5>{{ question.question}}</h5>
+                            <div>
+                                <mat-chip-list >
+                                    <mat-chip class="correct" *ngFor="let answer of question.answer; index as j" color="warn" selected="{{!answer.isCorrect ? 'true' : 'false'}}">
+                                        {{ j + 1 }}. {{ answer.content }}
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+                        </td>
+                        <td *ngIf="editing">
+                            <button class="btn btn-danger" *ngIf="editing" mat-raised-button (click)="deleteFromList(question)">Usuń</button> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="isEmpty" class="row col-lg-12">
+            <h4 class="lead" >
+                <b>Brak pytań!</b>
+            </h4>
+        </div>
+        <div class="row col-lg-12" *ngIf="editing">
+            <div class="row col-lg-6">
+                <button class="btn btn-info float-lg-left" mat-raised-button (click)="showAddQuestionDialog()">Dodaj pytanie</button>
+            </div>
+            <div class="col-lg-6">
+                <button class="btn btn-success float-lg-right" mat-raised-button (click)="saveTest()">Zapisz test</button>
+            </div>
+        </div>
+    </div>
+</div>

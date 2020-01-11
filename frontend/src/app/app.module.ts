@@ -11,7 +11,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material';
+// import {AddUserDialog} from './users/users.component';
+// import {AddQuestionDialog} from './questions/questions.component';
+import {MatInputModule, MatChipsModule, MatTabsModule} from '@angular/material';
 // import {AddUserDialog} from './users/users.component';
 // import {AddQuestionDialog} from './questions/questions.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -36,6 +38,13 @@ import { RecruiterModule } from './recruiter/recruiter.module';
 import { CandidateModule } from './candidate/candidate.module';
 
 
+import { TestsComponent } from './recruiter/tests/tests.component';
+import { TestDetailsComponent } from './recruiter/test-details/test-details.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TestCreateComponent } from './recruiter/test-create/test-create.component';
+import { TestAddQuestionDialogComponent } from './recruiter/test-add-question-dialog/test-add-question-dialog.component';
+import { TestsForUserComponent } from './candidate/tests-for-user/tests-for-user.component';
+import { SolveTestComponent } from './candidate/solve-test/solve-test.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +52,14 @@ import { CandidateModule } from './candidate/candidate.module';
     LoginComponent,
     ChangePasswordDialog,
     PageNotFoundComponent,
+    // CreateNewUserDialog,
+    // QuestionsComponent,
+    TestsComponent,
+    TestDetailsComponent,
+    TestCreateComponent,
+    TestAddQuestionDialogComponent,
+    TestsForUserComponent,
+    SolveTestComponent
   ],
   imports: [
     BrowserModule,
@@ -63,16 +80,18 @@ import { CandidateModule } from './candidate/candidate.module';
     RouterModule.forRoot(APP_ROUTES),
     CandidateModule,
     RecruiterModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
-    ChangePasswordDialog
-  ]
-  // entryComponents: [AddUserDialog,
-  //   AddQuestionDialog,
-  //   ChangePasswordDialog,
-  //   CreateNewUserDialog]
+    // AddUserDialog,
+    // AddQuestionDialog,
+    ChangePasswordDialog,
+    // CreateNewUserDialog,
+    TestAddQuestionDialogComponent]
 })
 export class AppModule {
 }

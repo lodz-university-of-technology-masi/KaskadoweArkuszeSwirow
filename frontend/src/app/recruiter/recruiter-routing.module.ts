@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../shared/guards/auth-guard.service';
 import { RecruiterGuard } from '../shared/guards/recruiter-guard.service'
-import {SampleComponent} from './sample/sample.component'
+// import {SampleComponent} from './sample/sample.component'
 import { LayoutComponent } from './layout/layout.component';
 import { UsersListComponent } from './users-list/users-list.component';
 

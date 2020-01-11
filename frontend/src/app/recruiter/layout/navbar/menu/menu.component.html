@@ -13,7 +13,7 @@
 </mat-menu>
 
 <mat-menu #Testy="matMenu">
-    <button mat-menu-item>Pokaż testy</button>
+    <button mat-menu-item [routerLink]="['/tests']" routerLinkActive="active">Pokaż testy</button>
     <button mat-menu-item>Zarządzaj testami</button>
     <button mat-menu-item>Podsumowania</button>
 </mat-menu>
