@@ -1,5 +1,5 @@
-import { Test } from '../../models/Test.model';
-import { Question } from '../../models/Question.model';
+import { Test } from '../../../models/Test.model';
+import { Question } from '../../../models/Question.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, ɵisDefaultChangeDetectionStrategy } from '@angular/core';
@@ -104,7 +104,7 @@ export class TestDetailsComponent implements OnInit {
           {'id': this.test.id, 'title': this.test.title, 'questions': this.test.questions}).subscribe(
           res => {
             console.log(res);
-            this.router.navigate(['/tests']);
+            this.router.navigate(['/recruiter/tests']);
           }, err => console.log(err)
         );
     }
@@ -114,7 +114,7 @@ export class TestDetailsComponent implements OnInit {
     this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${this.test.id}`)
     .subscribe(s => {
       console.log(s);
-      this.router.navigate(['/tests']);
+      this.router.navigate(['/recruiter/tests']);
     })
   }
 

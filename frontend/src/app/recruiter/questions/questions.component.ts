@@ -9,8 +9,6 @@ import { Subscription } from 'rxjs';
 
 let ELEMENT_DATA: Question[] = [];
 
-const uuidv4 = require('../../../node_modules/uuid');
-
 @Component({
   selector: 'app-questions',
   templateUrl: './questions.component.html',
@@ -92,7 +90,6 @@ export class QuestionsComponent implements OnInit {
     this.ticker.unsubscribe();
   }
 }
-
 
 
 @Component({

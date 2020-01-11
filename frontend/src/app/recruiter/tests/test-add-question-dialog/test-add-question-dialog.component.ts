@@ -1,13 +1,13 @@
 import { Component, OnInit, Inject, ApplicationRef } from '@angular/core';
-import { Test } from '../../models/Test.model'
+import { Test } from '../../../models/Test.model'
 import { HttpClient } from '@angular/common/http';
-import { RefresherService } from '../../refresher.service';
+import { RefresherService } from '../../../refresher.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormBuilder } from '@angular/forms';
 import { DataSource } from '@angular/cdk/table';
-import { Question, DisplayQuestion } from '../../models/Question.model';
+import { Question, DisplayQuestion } from '../../../models/Question.model';
 
 @Component({
   selector: 'app-test-add-question-dialog',

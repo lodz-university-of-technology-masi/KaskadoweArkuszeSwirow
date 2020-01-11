@@ -15,7 +15,7 @@
                 <tr *ngFor="let test of dataSource; index as i" class="">
                     <th scope="row">{{ i + 1 }}.</th>
                     <td>
-                        <a [routerLink]="['/test-details', test.id]" class="testlist-item">{{ test.title }}</a>
+                        <a [routerLink]="['/recruiter/test-details', test.id]" class="testlist-item">{{ test.title }}</a>
                     </td>
                     <td>
                         <button class="btn btn-danger delete-button"  mat-raised-button (click)="deleteTest(test)">Usuń</button>
@@ -24,7 +24,7 @@
             </tbody>
         </table>
         <div class="row col-lg-12">
-            <button class="btn btn-success" mat-raised-button [routerLink]="['/test-create']">Dodaj test</button>
+            <button class="btn btn-success" mat-raised-button [routerLink]="['/recruiter/test-create']">Dodaj test</button>
         </div>
     </div>
 </div>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Test } from '../../models/Test.model';
+import { Test } from '../../../models/Test.model';
 import { Router } from '@angular/router';
-import { Question } from '../../models/Question.model';
+import { Question } from '../../../models/Question.model';
 import { MatDialog } from '@angular/material';
 import { TestAddQuestionDialogComponent } from '../test-add-question-dialog/test-add-question-dialog.component';
 
@@ -72,7 +72,7 @@ export class TestCreateComponent implements OnInit {
         {'title': this.test.title, 'questions': this.test.questions}).subscribe(
         res => {
           console.log(res);
-          this.router.navigate(['/tests']);
+          this.router.navigate(['/recruiter/tests']);
         }, err => console.log(err)
       );
   }

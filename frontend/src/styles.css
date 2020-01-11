@@ -6,8 +6,9 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-image: url("assets/images/background.jpg");
-    background-size: cover;
+    background: linear-gradient(#f7a902, #9e0dd8);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .dataBackground {
