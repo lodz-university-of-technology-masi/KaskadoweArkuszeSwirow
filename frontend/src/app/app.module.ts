@@ -40,18 +40,8 @@ import { CandidateModule } from './candidate/candidate.module';
 @NgModule({
   declarations: [
     AppComponent,
-    // UsersComponent,
-    // AddUserDialog,
-    // AddQuestionDialog,
-    // MenuComponent,
     LoginComponent,
-    // RegisterComponent,
-    // NavbarComponent,
-    // HomePageComponent,
-    // UsersListComponent,
     ChangePasswordDialog,
-    // CreateNewUserDialog,
-    // QuestionsComponent,
     PageNotFoundComponent,
   ],
   imports: [
@@ -75,7 +65,6 @@ import { CandidateModule } from './candidate/candidate.module';
     RecruiterModule,
   ],
   providers: [],
-  // providers: [AuthenticationService],
   bootstrap: [AppComponent],
   entryComponents: [
     ChangePasswordDialog

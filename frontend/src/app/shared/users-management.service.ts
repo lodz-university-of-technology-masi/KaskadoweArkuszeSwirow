@@ -14,7 +14,7 @@ export class UsersManagementService {
   private CANDIDATE_ROLE = '1';
   private RECRUITER_OWNER = '0';
   private auth: AuthenticationService;
-  private UserPoolId = 'us-east-1_IBVZb8BoB';
+  private UserPoolId = codes.USER_POOL_ID;
   private cognitoidentityserviceprovider: any;
 
   constructor() {

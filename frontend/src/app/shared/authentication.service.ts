@@ -4,11 +4,10 @@ import {Observable} from 'rxjs';
 import decode from 'jwt-decode';
 import {codes} from '../codes';
 
-// require('dotenv').load();
 
 const poolData = {
-  UserPoolId: codes.USER_POOL_ID, // Your user pool id here
-  ClientId: codes.CLIENT_ID // Your client id here
+  UserPoolId: codes.USER_POOL_ID,
+  ClientId: codes.CLIENT_ID
 };
 
 const userPool = new CognitoUserPool(poolData);
@@ -120,12 +119,9 @@ export class AuthenticationService {
     this.cognitoUser = null;
   }
 
+  //TODO: BEFORE DECODING, CHECK IF USER IS LOGGED
   getAuthenticatedUserRole() {
     const userDecodedToken = this.decode();
-    console.log('codes userpool');
-    console.log(codes.USER_POOL_ID);
-    // console.log(userDecodedToken['custom:role']);
-    // return userDecodedToken['custom:role'];
     return userDecodedToken['custom:role'];
   }
 

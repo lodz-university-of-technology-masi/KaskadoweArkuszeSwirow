@@ -13,9 +13,3 @@ export const candidateRoutes: Routes = [
     canActivate: [AuthGuard, CandidateGuard],
   }
 ];
-
-// @NgModule({
-//   imports: [RouterModule.forChild(routes)],
-//   exports: [RouterModule]
-// })
-// export class CandidateRoutingModule { }
