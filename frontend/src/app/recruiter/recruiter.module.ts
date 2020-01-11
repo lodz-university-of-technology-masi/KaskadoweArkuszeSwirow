@@ -14,7 +14,6 @@ import { AuthGuard } from '../shared/guards/auth-guard.service';
 import { RecruiterGuard } from '../shared/guards/recruiter-guard.service'
 
 import { recruiterRoutes } from './recruiter-routing.module';
-import { SampleComponent } from './sample/sample.component';
 import { MenuComponent } from './layout/navbar/menu/menu.component';
 import { LayoutComponent } from './layout/layout.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
@@ -25,7 +24,6 @@ import { CreateNewUserDialog } from './users-list/users-list.component'
 
 @NgModule({
   declarations: [
-    SampleComponent, 
     MenuComponent, 
     LayoutComponent, 
     NavbarComponent, 
