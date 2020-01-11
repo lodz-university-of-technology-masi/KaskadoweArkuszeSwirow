@@ -1,4 +1,4 @@
-h1 {
+ h1 {
     margin: auto;
  }
  
@@ -10,14 +10,7 @@ h1 {
      padding: 20px;
      background: #f5f5ff;;
  }
- 
- table {
-     text-align: left;
+ .testlist-item {
  }
-.correct {
-    background: green;
-}
-
-#dialog {
-
-}
+ .delete-button {
+ }

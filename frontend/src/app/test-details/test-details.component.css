@@ -1,3 +1,4 @@
+
 h1 {
     margin: auto;
  }
@@ -14,10 +15,11 @@ h1 {
  table {
      text-align: left;
  }
+ 
 .correct {
     background: green;
 }
 
-#dialog {
-
+h4 {
+    margin: auto;
 }

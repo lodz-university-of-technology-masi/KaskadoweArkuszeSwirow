@@ -9,7 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material';
+import {MatInputModule, MatChipsModule, MatTabsModule} from '@angular/material';
 import {AddUserDialog} from './users/users.component';
 import {AddQuestionDialog} from './questions/questions.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -27,7 +27,13 @@ import {ChangePasswordDialog} from './login/login.component';
 import {CreateNewUserDialog} from './users-list/users-list.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-
+import { TestsComponent } from './tests/tests.component';
+import { TestDetailsComponent } from './test-details/test-details.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TestCreateComponent } from './test-create/test-create.component';
+import { TestAddQuestionDialogComponent } from './test-add-question-dialog/test-add-question-dialog.component';
+import { TestsForUserComponent } from './tests-for-user/tests-for-user.component';
+import { SolveTestComponent } from './solve-test/solve-test.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +50,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ChangePasswordDialog,
     CreateNewUserDialog,
     QuestionsComponent,
+    TestsComponent,
+    TestDetailsComponent,
+    TestCreateComponent,
+    TestAddQuestionDialogComponent,
+    TestsForUserComponent,
+    SolveTestComponent
   ],
   imports: [
     BrowserModule,
@@ -59,14 +71,18 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatMenuModule,
     MatIconModule,
     HttpClientModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatTabsModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],
   entryComponents: [AddUserDialog,
     AddQuestionDialog,
     ChangePasswordDialog,
-    CreateNewUserDialog]
+    CreateNewUserDialog,
+    TestAddQuestionDialogComponent]
 })
 export class AppModule {
 }

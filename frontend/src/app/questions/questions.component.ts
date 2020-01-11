@@ -31,31 +31,42 @@ export class QuestionsComponent implements OnInit {
 
   addToList(data: Object): void {
     let i = 0;
+    ELEMENT_DATA.splice(0, ELEMENT_DATA.length);
     while (true) {
       if (data[i] !== undefined) {
-        const question: Question = {id: data[i].id, question: data[i].question, answer: JSON.parse(data[i].answer)};
+        const question: Question = {id: data[i].id, question: data[i].question, answer: data[i].answer, type: data[i].type};
         ELEMENT_DATA.push(question);
       } else {
         break;
       }
       i++;
     }
+    console.log(ELEMENT_DATA);
+    this.ref.tick();
+  }
+
+  deleteQuestion(question: Question) {
+    this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question/${question.id}`)
+        .subscribe(data => {
+          console.log(data)
+            this.removeFromList(question);
+          }
+        );
+  }
+
+  removeFromList(question: Question): void {
+    let position = ELEMENT_DATA.indexOf(question);
+    if (position >= 0)
+      ELEMENT_DATA.splice(position, 1);
     this.ref.tick();
   }
 
   getQuestions(...params: number[]): void {
     if (params.length === 0 || params[0] === 0 || params[0] === undefined) {
-      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/dev/question')
+      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question')
         .subscribe(data => {
           console.log(data)
             this.addToList(data);
-          },
-          () => {
-            console.log('Failed to GET. Retrieving...');
-            this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/dev/question')
-              .subscribe(data => this.addToList(data),
-                err => console.log(err)
-              );
           }
         );
     } else {
@@ -64,9 +75,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddQuestionDialog, {
-      width: '250px'
-    });
+    const dialogRef = this.dialog.open(AddQuestionDialog);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -89,10 +98,16 @@ export class QuestionsComponent implements OnInit {
 @Component({
   selector: 'addQuestionDialog',
   templateUrl: 'addQuestionDialog.html',
+  styleUrls: ['questions.component.css']
 })
 export class AddQuestionDialog {
+  noQuestion: boolean = false;
+  noCorrectAnswer: boolean = false;
+  noAnswer: boolean = false;
 
-  newQuestionForm;
+  newChooseQuestionForm;
+  newNumericalQuestionForm;
+  newOpenQuestionForm;
 
   constructor(
     public dialogRef: MatDialogRef<AddQuestionDialog>,
@@ -101,12 +116,23 @@ export class AddQuestionDialog {
     private http: HttpClient,
     private refresher: RefresherService
   ) {
-    this.newQuestionForm = this.formBuilder.group({
+    this.newChooseQuestionForm = this.formBuilder.group({
       question: '',
       answerA: '',
+      correctA: '',
       answerB: '',
+      correctB: '',
       answerC: '',
-      answerD: ''
+      correctC: '',
+      answerD: '',
+      correctD: ''
+    });
+    this.newNumericalQuestionForm = this.formBuilder.group({
+      question: '',
+      answer: ''
+    });
+    this.newOpenQuestionForm = this.formBuilder.group({
+      question: ''
     });
   }
 
@@ -114,20 +140,54 @@ export class AddQuestionDialog {
     this.dialogRef.close();
   }
 
-  onSubmit(customerData) {
-    const newQuestionId = uuidv4();
-    const answers = [
-      new Answer(customerData.answerA, true),
-      new Answer(customerData.answerB, false),
-      new Answer(customerData.answerC, false),
-      new Answer(customerData.answerD, false)
-    ];
-    console.log({'id': newQuestionId, 'question': customerData.question, 'answer': JSON.stringify(answers)})
-    this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/dev/question',
-      {'id': newQuestionId, 'question': customerData.question, 'answer': JSON.stringify(answers)}).subscribe(
+  onSubmit(customerData, type) {
+    if (!customerData.question)
+      this.noQuestion = true;
+    else 
+      this.noQuestion = false;
+    if (type === 'W') {
+      if (!customerData.answerA || !customerData.answerB || !customerData.answerC || !customerData.answerD)
+        this.noAnswer = true;
+      else
+        this.noAnswer = false;
+      if (!customerData.correctA && !customerData.correctB && !customerData.correctC && !customerData.correctD)
+        this.noCorrectAnswer = true;
+      else 
+        this.noCorrectAnswer = false;
+    } else if (type === 'L') {
+      this.noCorrectAnswer = false;
+      if (!customerData.answer)
+        this.noAnswer = true;
+      else
+        this.noAnswer = false;
+    } else if (type === 'O') {
+      this.noAnswer = false;
+      this.noCorrectAnswer = false;
+    }
+    if (this.noQuestion || this.noAnswer || this.noCorrectAnswer)
+      return;
+
+    let answers: Answer[] = [];
+    if (type === 'W') {
+      answers = [
+        new Answer(customerData.answerA, customerData.correctA, null, null),
+        new Answer(customerData.answerB, customerData.correctB, null, null),
+        new Answer(customerData.answerC, customerData.correctC, null, null),
+        new Answer(customerData.answerD, customerData.correctD, null, null)
+      ];
+    } else if (type === 'L') {
+      answers = [
+        new Answer(customerData.answer, true, null, null)
+      ];
+    } else if (type === 'O') {
+      answers = [];
+    }
+    this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question',
+      {'question': customerData.question, 'answer': answers, 'type': type}).subscribe(
       res => {
-        this.refresher.questionRefreshSubject$.next(newQuestionId);
+        this.refresher.questionRefreshSubject$.next(1);
         console.log(res);
+        this.dialogRef.close();
       }, err => console.log(err)
     );
   }
