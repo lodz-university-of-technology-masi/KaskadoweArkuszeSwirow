@@ -56,3 +56,6 @@ dist/
 node_modules/
 aws-exports.js
 awsconfiguration.json
+
+#cognito codes
+src/app/codes.ts

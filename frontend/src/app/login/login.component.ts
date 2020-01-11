@@ -1,8 +1,9 @@
 import {Component, Inject} from '@angular/core';
-import {AuthenticationService} from '../authentication.service';
+import {AuthenticationService} from '../shared/authentication.service';
 import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+// import { ConsoleReporter } from 'jasmine';
 
 
 export interface DialogData {
@@ -23,6 +24,23 @@ export class LoginComponent {
   constructor(private auth: AuthenticationService,
               private _router: Router,
               public dialog: MatDialog) {
+                console.log('LogIn component');
+
+                if(auth.isLoggedIn()){
+
+                  const role = this.auth.getAuthenticatedUserRole();
+                  console.log(role);
+                  if(role == '0') {
+                    this._router.navigate(['/recruiter']);
+                  }
+                  else if(role =='1') {
+                    this._router.navigate(['/candidate']);
+                  }
+                  else {
+                    console.log('ERROR IN USERS ROLE!');
+                    this._router.navigate(['/error']);
+                  }
+                }
   }
 
   onSubmit(form: NgForm) {
@@ -31,12 +49,25 @@ export class LoginComponent {
     this.logIn(form.value.email, form.value.password, this.newPassword);
   }
 
+  //TODO: CHANGE IT TO WORK PROPERLY AFTER NEW CANDIDATE PASSWORD CHANGE
   logIn(email, password, newPassword) {
     this.auth.signIn(email, password, newPassword).subscribe((data) => {
-      if (data == null) {
-        this._router.navigateByUrl('/usersList');
-      } else {
+      
+      if(data != null) {
         this.openDialog();
+      }
+      else{
+        console.log('Redirecting');
+
+        //make it like in constructor also with throw
+        if(this.auth.getAuthenticatedUserRole() == '0') {
+          console.log('Moving to /recruiter');
+          this._router.navigate(['/recruiter']);
+        }
+        else {
+          console.log('Moving to /candidate');
+          this._router.navigate(['/candidate']);
+        }
       }
     }, (err) => {
       console.log(err);
@@ -51,7 +82,6 @@ export class LoginComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       this.newPassword = result;
       this.logIn(this.email, this.password, result);
     });

@@ -1,0 +1,11 @@
+<button class="btn btn-light" mat-button [matMenuTriggerFor]="menu">
+    Menu
+</button>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="Testy">Testy</button>
+</mat-menu>
+
+<mat-menu #Testy="matMenu">
+    <button mat-menu-item [routerLink]="['/candidate/my-tests']">Przypisane testy</button>
+</mat-menu>
