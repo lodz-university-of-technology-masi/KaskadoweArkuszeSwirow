@@ -1,6 +1,6 @@
 import { Answer } from './Answer.model';
 
-export abstract class Question {
+export class Question {
     constructor(question: string, answer: Answer[], type: String) {
         this.question = question;
         this.answer = answer;

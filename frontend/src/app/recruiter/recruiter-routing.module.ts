@@ -10,7 +10,8 @@ import { TestsComponent } from './tests/tests.component';
 import { TestDetailsComponent } from './tests/test-details/test-details.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { TestCreateComponent } from './tests/test-create/test-create.component';
-
+import { TestsForUsersComponent } from './tests-for-users/tests-for-users.component';
+import { NewOrCheckedTestsComponent } from './tests-for-users/new-or-checked-tests/new-or-checked-tests.component';
 
 export const recruiterRoutes: Routes = [
   {
@@ -44,6 +45,16 @@ export const recruiterRoutes: Routes = [
         component: QuestionsComponent,
         canActivate: [AuthGuard, RecruiterGuard]
       },
+      {
+        path: 'tests-for-users',
+        component: TestsForUsersComponent,
+        canActivate: [AuthGuard, RecruiterGuard]
+      },
+      {
+        path: 'tests-for-users/:status',
+        component: NewOrCheckedTestsComponent,
+        canActivate: [AuthGuard, RecruiterGuard]
+      }
     ]
   }
 ];

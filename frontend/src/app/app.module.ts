@@ -19,6 +19,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
 import {ChangePasswordDialog} from './login/login.component';
 
+
 // import {RegisterComponent} from './register/register.component';
 // import {AuthGuard} from './shared/authentication.service';
 // import {NavbarComponent} from './navbar/navbar.component';

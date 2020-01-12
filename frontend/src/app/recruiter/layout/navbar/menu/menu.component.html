@@ -13,13 +13,17 @@
 </mat-menu>
 
 <mat-menu #Testy="matMenu">
-    <button mat-menu-item [routerLink]="['/recruiter/tests']" routerLinkActive="active">Pokaż testy</button>
-    <button mat-menu-item>Zarządzaj testami</button>
-    <button mat-menu-item>Podsumowania</button>
+    <button mat-menu-item [routerLink]="['/recruiter/tests']" routerLinkActive="active">Pokaż bazę testów</button>
+    <button mat-menu-item [matMenuTriggerFor]="ZarzadzajTestamiKandydatow">Zarządzaj testami kandydatów</button>
+</mat-menu>
+
+<mat-menu #ZarzadzajTestamiKandydatow="matMenu">
+    <button mat-menu-item [routerLink]="['/recruiter/tests-for-users']">Przypisz testy kandydatom</button>
+    <button mat-menu-item [routerLink]="">Sprawdź rozwiązane testy</button>
+    <button mat-menu-item [routerLink]="['/recruiter/tests-for-users/new']">Pokaż aktualne testy</button>
+    <button mat-menu-item [routerLink]="['/recruiter/tests-for-users/checked']">Pokaż sprawdzone testy</button>
 </mat-menu>
 
 <mat-menu #Pytania="matMenu">
-    <button mat-menu-item [routerLink]="['/recruiter/questions']">Pokaż swoje pytania</button>
-    <button mat-menu-item>Pokaż pytania innych egzaminatorów</button>
-    <button mat-menu-item>Zarządzaj pytaniami</button>
+    <button mat-menu-item [routerLink]="['/recruiter/questions']">Pokaż bazę pytań</button>
 </mat-menu>

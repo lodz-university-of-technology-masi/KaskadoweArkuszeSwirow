@@ -40,7 +40,7 @@ export class UsersManagementService {
     });
   }
 
-  getUsers(username) {
+  getAllUsers(username) {
     const params = {
       UserPoolId: this.UserPoolId,
       AttributesToGet: [
@@ -60,15 +60,42 @@ export class UsersManagementService {
           observer.next([]);
           console.log(err, err.stack);
         } else {
+          observer.next(data.Users.filter((element, index, array) => { 
+            return element;
+          }));
+        }
+        
+        observer.complete();
+      });
+    });
+  }
+
+  getAllCandidates(username) {
+    const params = {
+      UserPoolId: this.UserPoolId,
+      AttributesToGet: [
+        'email',
+        'given_name',
+        'family_name',
+        'custom:role',
+        'custom:recruiter'
+      ],
+    };
+    return Observable.create(observer => {
+      this.cognitoidentityserviceprovider.listUsers(params, (err, data) => {
+        if (err) {
+          observer.next([]);
+          console.log(err, err.stack);
+        } else {
           observer.next(data.Users.filter((element, index, array) => {
-            return element.Attributes[2].Value === username;
+            return element.Attributes[1].Value === this.CANDIDATE_ROLE;
           }));
         }
         observer.complete();
       });
     });
-
   }
+
 
   createCandidate(email, firstName, lastName, recruiterUsername) {
     this.createUser(email, firstName, lastName, recruiterUsername, this.CANDIDATE_ROLE);

@@ -1,6 +1,6 @@
 import { Question } from './Question.model';
 
-export abstract class Test {
+export class Test {
     constructor(title: string, questions: Question[]) {
         this.title = title;
         this.questions = questions;
@@ -9,4 +9,13 @@ export abstract class Test {
     id: string;
     title: string;
     questions: Question[];
+}
+
+export class DisplayTest extends Test {
+    constructor(title: string, questions: Question[], selected: boolean){
+        super(title, questions); 
+        this.selected = selected; 
+    }
+
+    selected: boolean;
 }

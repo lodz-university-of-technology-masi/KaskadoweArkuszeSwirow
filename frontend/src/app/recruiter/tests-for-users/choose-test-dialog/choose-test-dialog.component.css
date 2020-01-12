@@ -1,0 +1,19 @@
+
+h1 {
+    margin: auto;
+ }
+
+table {
+    display: block;
+    height: 400px;
+    overflow-y: scroll;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    text-align: left;
+    background: #f5f5ff;
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: #c3c3c3;
+  }
