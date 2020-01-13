@@ -1,88 +1,93 @@
 <div id="dialog">
-<h2 class="display-4">Tworzenie pytania</h2>
+    <h2 class="display-4">Tworzenie pytania</h2>
 
-<div class="row message-row col-lg-12" *ngIf="noQuestion">
-    <div class="col-lg-12">
-        <div class="alert alert-danger">
-            Nie podano treści pytania !!
+    <div class="row message-row col-lg-12" *ngIf="noQuestion">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                Nie podano treści pytania !!
+            </div>
         </div>
     </div>
-</div>
-<div class="row message-row col-lg-12" *ngIf="noAnswer">
-    <div class="col-lg-12">
-        <div class="alert alert-danger">
-            Odpowiedź/odpowiedzi są puste !!
+    <div class="row message-row col-lg-12" *ngIf="noAnswer">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                Odpowiedź/odpowiedzi są puste !!
+            </div>
         </div>
     </div>
-</div>
-<div class="row message-row col-lg-12" *ngIf="noCorrectAnswer">
-    <div class="col-lg-12">
-        <div class="alert alert-danger">
-            Nie zaznaczono żadnej poprawnej odpowiedzi !!
+    <div class="row message-row col-lg-12" *ngIf="noCorrectAnswer">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                Nie zaznaczono żadnej poprawnej odpowiedzi !!
+            </div>
         </div>
     </div>
-</div>
 
-<mat-tab-group>
-    <mat-tab label="Wielokrotnego Wyboru">
-        <form class="form-group" [formGroup]="newChooseQuestionForm" (ngSubmit)="onSubmit(newChooseQuestionForm.value, 'W')">
-            <div>
-                <label for="question">Pytanie</label>
-                <input id="question" type="text" formControlName="question" class="form-control" placeholder="Treść pytania"/>
-            </div>
-            <div>
-                <label for="answerA">Odpowiedź A</label>
-                <input id="answerA" type="text" formControlName="answerA" class="form-control" placeholder="Wpisz tutaj treść odpowiedzi A"/>
-                <section>
-                    <mat-checkbox formControlName="correctA">Poprawna</mat-checkbox>
-                </section>
-            </div>
-            <div>
-                <label for="answerB">Odpowiedź B</label>
-                <input id="answerB" type="text" formControlName="answerB" class="form-control" placeholder="Wpisz tutaj treść odpowiedzi b"/>
-                <section>
-                    <mat-checkbox formControlName="correctB">Poprawna</mat-checkbox>
-                </section>
-            </div>
-            <div>
-                <label for="answerC">Odpowiedź C</label>
-                <input id="answerC" type="text" formControlName="answerC" class="form-control" placeholder="Wpisz tutaj treść odpowiedzi C"/>
-                <section>
-                    <mat-checkbox formControlName="correctC">Poprawna</mat-checkbox>
-                </section>
-            </div>
-            <div>
-                <label for="answerD">Odpowiedź D</label>
-                <input id="answerD" type="text" formControlName="answerD" class="form-control" placeholder="Wpisz tutaj treść odpowiedzi D"/>
-                <section>
-                    <mat-checkbox formControlName="correctD">Poprawna</mat-checkbox>
-                </section>
-            </div>
-
-            <button class="btn btn-success" type="submit">Dodaj</button>
-        </form>
-    </mat-tab>
-    <mat-tab label="Typu liczbowego">
-        <form class="form-group" [formGroup]="newNumericalQuestionForm" (ngSubmit)="onSubmit(newNumericalQuestionForm.value, 'L')">
-            <div>
-                <label for="question">Pytanie</label>
-                <input id="question" type="text" formControlName="question" class="form-control" placeholder="Treść pytania"/>
-            </div>
-            <div>
-                <label for="answer">Odpowiedź</label>
-                <input id="answer" type="number" formControlName="answer" class="form-control"/>
-            </div>
-            <button class="btn btn-success" type="submit">Dodaj</button>
-        </form>
-    </mat-tab>
-    <mat-tab label="Otwarte"> 
-        <form class="form-group" [formGroup]="newOpenQuestionForm" (ngSubmit)="onSubmit(newOpenQuestionForm.value, 'O')">
+    <mat-tab-group>
+        <mat-tab label="Wielokrotnego Wyboru">
+            <form class="form-group" [formGroup]="newChooseQuestionForm" (ngSubmit)="onSubmit(newChooseQuestionForm.value, 'W')">
                 <div>
                     <label for="question">Pytanie</label>
-                    <input id="question" type="text" formControlName="question" class="form-control" placeholder="Treść pytania"/>
+                    <input (mouseup)="copyToTranslate()" id="question" type="text" formControlName="question" class="form-control" placeholder="Treść pytania" />
                 </div>
+                <div>
+                    <label for="answerA">Odpowiedź A</label>
+                    <input (mouseup)="copyToTranslate()" id="answerA" type="text" formControlName="answerA" class="form-control" placeholder="Wpisz tutaj treść odpowiedzi A" />
+                    <section>
+                        <mat-checkbox formControlName="correctA">Poprawna</mat-checkbox>
+                    </section>
+                </div>
+                <div>
+                    <label for="answerB">Odpowiedź B</label>
+                    <input (mouseup)="copyToTranslate()" id="answerB" type="text" formControlName="answerB" class="form-control" placeholder="Wpisz tutaj treść odpowiedzi b" />
+                    <section>
+                        <mat-checkbox formControlName="correctB">Poprawna</mat-checkbox>
+                    </section>
+                </div>
+                <div>
+                    <label for="answerC">Odpowiedź C</label>
+                    <input (mouseup)="copyToTranslate()" id="answerC" type="text" formControlName="answerC" class="form-control" placeholder="Wpisz tutaj treść odpowiedzi C" />
+                    <section>
+                        <mat-checkbox formControlName="correctC">Poprawna</mat-checkbox>
+                    </section>
+                </div>
+                <div>
+                    <label for="answerD">Odpowiedź D</label>
+                    <input (mouseup)="copyToTranslate()" id="answerD" type="text" formControlName="answerD" class="form-control" placeholder="Wpisz tutaj treść odpowiedzi D" />
+                    <section>
+                        <mat-checkbox formControlName="correctD">Poprawna</mat-checkbox>
+                    </section>
+                </div>
+                <div class="text-to-translate">{{selectedText}}</div>
+                <button class="btn btn-success" type="button" (click)="translate()">Tłumacz</button>
                 <button class="btn btn-success" type="submit">Dodaj</button>
             </form>
-    </mat-tab>
-</mat-tab-group>
+        </mat-tab>
+        <mat-tab label="Typu liczbowego">
+            <form class="form-group" [formGroup]="newNumericalQuestionForm" (ngSubmit)="onSubmit(newNumericalQuestionForm.value, 'L')">
+                <div>
+                    <label for="question">Pytanie</label>
+                    <input (mouseup)="copyToTranslate()" id="question" type="text" formControlName="question" class="form-control" placeholder="Treść pytania" />
+                </div>
+                <div>
+                    <label for="answer">Odpowiedź</label>
+                    <input (mouseup)="copyToTranslate()" id="answer" type="number" formControlName="answer" class="form-control" />
+                </div>
+                <div class="text-to-translate">{{selectedText}}</div>
+                <button class="btn btn-success" type="button" (click)="translate()">Tłumacz</button>
+                <button class="btn btn-success" type="submit">Dodaj</button>
+            </form>
+        </mat-tab>
+        <mat-tab label="Otwarte">
+            <form class="form-group" [formGroup]="newOpenQuestionForm" (ngSubmit)="onSubmit(newOpenQuestionForm.value, 'O')">
+                <div>
+                    <label for="question">Pytanie</label>
+                    <input (mouseup)="copyToTranslate()" id="question" type="text" formControlName="question" class="form-control" placeholder="Treść pytania" />
+                </div>
+                <div class="text-to-translate">{{selectedText}}</div>
+                <button class="btn btn-success" type="button" (click)="translate()">Tłumacz</button>
+                <button class="btn btn-success" type="submit">Dodaj</button>
+            </form>
+        </mat-tab>
+    </mat-tab-group>
 </div>

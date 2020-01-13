@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject, ApplicationRef } from '@angular/core';
-import {Question, ChooseQuestion, OpenQuestion, NumericalQuestion} from '../../models/Question.model';
+import { Question, ChooseQuestion, OpenQuestion, NumericalQuestion } from '../../models/Question.model';
 import { Answer } from '../../models/Answer.model';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormBuilder } from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { RefresherService } from '../../refresher.service';
 import { Subscription } from 'rxjs';
+import { codes } from '../../codes';
 
 let ELEMENT_DATA: Question[] = [];
 
@@ -101,7 +102,8 @@ export class AddQuestionDialog {
   noQuestion: boolean = false;
   noCorrectAnswer: boolean = false;
   noAnswer: boolean = false;
-
+  
+  selectedText: string = ""
   newChooseQuestionForm;
   newNumericalQuestionForm;
   newOpenQuestionForm;
@@ -135,6 +137,24 @@ export class AddQuestionDialog {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  translate() {
+    this.http.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + codes.YANDEX_API_KEY + '&text=' + this.selectedText +'&lang=en&format=html')
+      .subscribe(data => {
+        let string = JSON.stringify(data);
+        let text = JSON.parse(string);
+        this.newChooseQuestionForm.question = text.text[0];
+        console.log(this.newChooseQuestionForm.question)
+      })
+  }
+
+  copyToTranslate() {
+    var text = "";
+    if (window.getSelection) {
+        text = window.getSelection().toString();
+    }
+    this.selectedText = text;
   }
 
   onSubmit(customerData, type) {

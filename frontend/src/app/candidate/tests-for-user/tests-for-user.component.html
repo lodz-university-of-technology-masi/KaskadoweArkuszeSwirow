@@ -5,8 +5,8 @@
     <div class="dataBackground col-lg-12 row rounded">
         <div class="col-lg-11 row tests-row">
             <div class="col-lg-3 testDiv" *ngFor="let test of dataSource">
-                <div class="test">
-                    <img src="http://www.liberaldictionary.com/wp-content/uploads/2018/11/test.png" class="test-image"> {{test.title}}
+                <div class="test" id={{test.testForm.id}} routerLink="/candidate/solve-test/{{test.id}}">
+                    <img src="http://www.liberaldictionary.com/wp-content/uploads/2018/11/test.png" class="test-image"> {{test.testForm.title}}
                 </div>
             </div>
         </div>

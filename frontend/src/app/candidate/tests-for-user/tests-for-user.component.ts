@@ -3,8 +3,38 @@ import { HttpClient } from '@angular/common/http';
 import { Test } from '../../models/Test.model';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { RefresherService } from '../../refresher.service';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
+import { Question } from 'src/app/models/Question.model';
 
-let ELEMENT_DATA: Test[] = [];
+export class TestForUser {
+  constructor(id: string, candidateId: string, testStatus: string, testResult: string, testForm: TestForm) {
+    this.id = id;
+    this.candidateId = candidateId;
+    this.testStatus = testStatus;
+    this.testResult = testResult;
+    this.testForm = testForm;
+  }
+  id: string;
+  candidateId: string;
+  testStatus: string;
+  testResult: string;
+  testForm: TestForm;
+}
+
+export class TestForm {
+  constructor (id: string, language: string, title: string, questions: Question[]) {
+    this.id = id;
+    this.language = language;
+    this.title = title;
+    this.questions = questions;
+  }
+  id: string;
+  language: string;
+  title: string;
+  questions: Question[];
+}
+
+let ELEMENT_DATA: TestForUser[] = [];
 
 @Component({
   selector: 'app-tests-for-user',
@@ -18,7 +48,9 @@ export class TestsForUserComponent implements OnInit {
   constructor(
     private ref: ApplicationRef,
     private http: HttpClient,
-    private refresher: RefresherService) { 
+    private refresher: RefresherService,
+    private auth: AuthenticationService
+    ) { 
       this.getTests();
       this.ticker = new Subscription();
     }
@@ -34,8 +66,13 @@ export class TestsForUserComponent implements OnInit {
     ELEMENT_DATA.splice(0, ELEMENT_DATA.length);
     while (true) {
       if (data[i] !== undefined) {
-        const test: Test = {id: data[i].id, title: data[i].title, questions: data[i].questions};
+        // const questions: Question[] = data[i].testForm.questions;
+        // const testForm: TestForm = {id: data[i].testForm.id, language: data[i].testForm.language, 
+        //                             title: data[i].testForm.title, questions: questions}
+        const test: TestForUser = {id: data[i].id, candidateId: data[i].candidateId, testStatus: data[i].testStatus, 
+                                    testResult: data[i].testResult, testForm: data[i].testForm};
         ELEMENT_DATA.push(test);
+        console.log(ELEMENT_DATA)
       } else {
         break;
       }
@@ -46,9 +83,10 @@ export class TestsForUserComponent implements OnInit {
 
   getTests(...params: number[]): void {
     if (params.length === 0 || params[0] === 0 || params[0] === undefined) {
-      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests')
+      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/candidate/' +
+                      this.auth.getAuthenticatedUser().getUsername() + '?status=new')
         .subscribe(data => {
-          console.log(data)
+          // console.log(data)
             this.addToList(data);
           }
         );
