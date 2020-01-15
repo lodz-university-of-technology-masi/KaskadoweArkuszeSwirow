@@ -1,21 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NewOrCheckedTestsComponent } from './new-or-checked-tests.component';
+import { ShowTestsWithStatus } from './show-tests-with-status.component';
 
 
 
 describe('NewOrCheckedTestsComponent', () => {
-  let component: NewOrCheckedTestsComponent;
-  let fixture: ComponentFixture<NewOrCheckedTestsComponent>;
+  let component: ShowTestsWithStatus;
+  let fixture: ComponentFixture<ShowTestsWithStatus>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewOrCheckedTestsComponent ]
+      declarations: [ ShowTestsWithStatus ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewOrCheckedTestsComponent);
+    fixture = TestBed.createComponent(ShowTestsWithStatus);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

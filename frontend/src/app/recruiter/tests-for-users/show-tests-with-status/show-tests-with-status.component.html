@@ -1,0 +1,131 @@
+<div class="container col-lg-12" *ngIf="status == 'new'">
+    <div class="row header">
+        <h1 class="display-4">Tutaj możesz przeglądać, <br>usuwać nierozwiązane testy kandydatów</h1>
+    </div>
+    <div id="panel" class="dataBackground row col-lg-6">
+        <div class="row col-lg-12">
+            <table class="table col-lg-12">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width: 10%" scope="col">#</th>
+                        <th scope="col">Test</th>
+                        <th scope="col">Imie</th>
+                        <th scope="col">Nazwisko</th>
+                        <th scope="col">Email</th>
+                        <th style="width: 10%" scope="col">Akcja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let test of dataSource; index as i">
+                        <th scope="row">{{ i + 1 }}.</th>
+                        <td>
+                            {{test.testForm.title}}
+                        </td>
+                        <td>
+                            {{test.name}}
+                        </td>
+                        <td>
+                            {{test.surname}}
+                        </td>
+                        <td>
+                            {{test.email}}
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" mat-raised-button (click)="removeFromList(test)">Usuń</button> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+        <div *ngIf="!dataSource" class="row col-lg-12">
+            <h4 class="lead">
+                <b>Brak testów</b>
+            </h4>
+        </div>
+    </div>
+</div>
+<div class="container col-lg-12" *ngIf="status == 'solved'">
+    <div class="row header">
+        <h1 class="display-4">Tutaj możesz sprawdzać i oceniać <br>testy kandydatów</h1>
+    </div>
+    <div id="panel" class="dataBackground row col-lg-6">
+        <div class="row col-lg-12">
+            <table class="table col-lg-12">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width: 10%" scope="col">#</th>
+                        <th scope="col">Test</th>
+                        <th scope="col">Imie</th>
+                        <th scope="col">Nazwisko</th>
+                        <th style="width: 10%" scope="col">Akcja</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let test of dataSource; index as i">
+                        <th scope="row">{{ i + 1 }}.</th>
+                        <td >
+                            <a [routerLink]="['/recruiter/check-test/', test.id]">{{test.testForm.title}}</a>
+                        </td>
+                        <td>
+                            {{test.name}}
+                        </td>
+                        <td>
+                            {{test.surname}}
+                        </td>
+                        <td>
+                            <button class="btn btn-warning" mat-raised-button [routerLink]="['/recruiter/check-test/', test.id]">Sprawdź test</button> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="dataSource.length === 0" class="row col-lg-12">
+            <h4 class="lead">
+                <b>Brak testów do sprawdzenia :></b>
+            </h4>
+        </div>
+    </div>
+</div>
+<div class="container col-lg-12" *ngIf="status == 'checked'">
+    <div class="row header">
+        <h1 class="display-4">Tutaj możesz przeglądać, <br>usuwać sprawdzone testy kandydatów</h1>
+    </div>
+    <div id="panel" class="dataBackground row col-lg-6">
+        <div class="row col-lg-12">
+            <table class="table col-lg-12">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width: 10%" scope="col">#</th>
+                        <th scope="col">Test</th>
+                        <th scope="col">Imie</th>
+                        <th scope="col">Nazwisko</th>
+                        <th scope="col">Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let test of dataSource; index as i">
+                        <th scope="row">{{ i + 1 }}.</th>
+                        <td>
+                            {{test.testForm.title}}
+                        </td>
+                        <td>
+                            {{test.name}}
+                        </td>
+                        <td>
+                            {{test.surname}}
+                        </td>
+                        <td>
+                            {{test.email}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="!dataSource" class="row col-lg-12">
+            <h4 class="lead">
+                <b>Brak testów</b>
+            </h4>
+        </div>
+    </div>
+</div>

@@ -1,12 +1,21 @@
 <div class="container col-lg-10">
     <div class="row header">
-        <h1 class="col-lg-8">Twoje testy</h1>
+        <h2 class="display-4">Twoje testy</h2>
     </div>
     <div class="dataBackground col-lg-12 row rounded">
         <div class="col-lg-11 row tests-row">
             <div class="col-lg-3 testDiv" *ngFor="let test of dataSource">
-                <div class="test" id={{test.testForm.id}} routerLink="/candidate/solve-test/{{test.id}}">
-                    <img src="http://www.liberaldictionary.com/wp-content/uploads/2018/11/test.png" class="test-image"> {{test.testForm.title}}
+                <div *ngIf="test.testStatus === 'new'" class="test" id={{test.testForm.id}} routerLink="/candidate/solve-test/{{test.id}}">
+                    <img src="../../../assets/images/test.png" class="test-image"> {{test.testForm.title}}
+                </div>
+                <div *ngIf="test.testStatus === 'solved'" class="test" id={{test.testForm.id}}>
+                    <img src="../../../assets/images/test-solved-waiting.png" class="test-image"> {{test.testForm.title}}
+                </div>
+                <div *ngIf="test.testStatus === 'checked' && test.testResult === 'passed'" class="test" id={{test.testForm.id}} routerLink="/candidate/test-results/{{test.id}}">
+                    <img src="../../../assets/images/test-passed-green.png" class="test-image"> {{test.testForm.title}}
+                </div>
+                <div *ngIf="test.testStatus === 'checked' && test.testResult === 'failed'" class="test" id={{test.testForm.id}} routerLink="/candidate/test-results/{{test.id}}">
+                    <img src="../../../assets/images/test-failed.png" class="test-image"> {{test.testForm.title}}
                 </div>
             </div>
         </div>

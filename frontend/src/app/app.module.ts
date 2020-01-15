@@ -11,7 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatInputModule, MatChipsModule, MatTabsModule} from '@angular/material';
+import {MatInputModule, MatChipsModule, MatTabsModule, MatRadioButton, MatRadioModule} from '@angular/material';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
@@ -79,7 +79,8 @@ import { SolveTestComponent } from './candidate/solve-test/solve-test.component'
     RecruiterModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent],

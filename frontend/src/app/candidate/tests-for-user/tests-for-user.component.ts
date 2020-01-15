@@ -84,7 +84,7 @@ export class TestsForUserComponent implements OnInit {
   getTests(...params: number[]): void {
     if (params.length === 0 || params[0] === 0 || params[0] === undefined) {
       this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/candidate/' +
-                      this.auth.getAuthenticatedUser().getUsername() + '?status=new')
+                      this.auth.getAuthenticatedUser().getUsername() + '?status=any')
         .subscribe(data => {
           // console.log(data)
             this.addToList(data);

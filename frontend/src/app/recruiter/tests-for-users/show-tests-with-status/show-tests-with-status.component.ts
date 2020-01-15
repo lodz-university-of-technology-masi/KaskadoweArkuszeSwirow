@@ -2,17 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
 import { UsersManagementService } from 'src/app/shared/users-management.service';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
+
 
 @Component({
+  
   selector: 'app-new-tests',
-  templateUrl: './new-or-checked-tests.component.html',
-  styleUrls: ['./new-or-checked-tests.component.css']
+  templateUrl: './show-tests-with-status.component.html',
+  styleUrls: ['./show-tests-with-status.component.css']
 })
-export class NewOrCheckedTestsComponent implements OnInit {
-
-  status; 
+export class ShowTestsWithStatus implements OnInit {
+  
+  status;
   dataSource = [];
   users = [];
   private routeSub: Subscription;
@@ -22,15 +24,28 @@ export class NewOrCheckedTestsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient) {
+      this.router.routeReuseStrategy.shouldReuseRoute = function(){
+        return false;
+      }
+      this.router.events.subscribe((evt) => {
+          if (evt instanceof NavigationEnd) {
+            this.router.navigated = false;
+            window.scrollTo(0, 0);
+          }
+      });
   }
 
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       this.status = params['status']});
-    this.getUsersTest();
+    if (this.status !== 'new' && this.status !== 'solved' && this.status !== 'checked') {
+      this.router.navigate(['**']);
+      return;
+    }
+    this.getUsersTests();
   }
 
-  getUsersTest() {
+  getUsersTests() {
     if (this.auth.isLoggedIn()) {
       console.log(this.auth.getAuthenticatedUser().getUsername());
       this.userService.getAllCandidates(this.auth.getAuthenticatedUser().getUsername()).subscribe((data) => {
@@ -42,11 +57,14 @@ export class NewOrCheckedTestsComponent implements OnInit {
               'email' : it.Attributes[4].Value, 
               'role' : it.Attributes[1].Value
             });
-         }
-        }
-      );
+          }
+         console.log(this.users);
+         this.getTests();
+      });
     }
-    console.log(this.users);
+  }
+
+  getTests() {
     this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/status/${this.status}`,
     ).subscribe(
     res => {
@@ -56,7 +74,6 @@ export class NewOrCheckedTestsComponent implements OnInit {
      }
     }, err => console.log(err)
   );
-  
   }
 
   addToList(data): void {

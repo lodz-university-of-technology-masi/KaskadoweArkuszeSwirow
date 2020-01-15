@@ -1,0 +1,64 @@
+.dataBackground {
+    padding: 5vh 5vw 0vh 5vw;
+    margin: auto;
+    margin-bottom: 5vh;
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: black;
+  }
+
+h2 {
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.invalidNumber{
+    background: red;
+    color: white;
+    width: 50px;
+}
+
+.correctNumber{
+    background: green;
+    color: white;
+    width: 50px;
+}
+
+.correct {
+    border: 2px solid green;
+    border-radius: 5px;
+}
+
+
+.openAnswer {
+    margin: auto;
+}
+.numberArea {
+    margin: auto;
+}
+
+.inputnumber {
+    width: 50px;
+}
+
+#panel {
+    margin: auto;
+    padding: 20px;
+}
+
+
+.question {
+    border-style: solid;
+    border-width: 1px;
+}
+
+.question_content {
+    margin: auto;
+    margin-bottom: 2%;
+}
+
+h1 {
+    margin: auto;
+    margin-bottom: 2vw;
+}

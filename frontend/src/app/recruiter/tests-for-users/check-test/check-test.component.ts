@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';  
 import { HttpClient } from '@angular/common/http';
-import { CandidateForm } from '../../models/CandidateForm.model';
+import { CandidateForm } from '../../../models/CandidateForm.model';
 import { Answer } from 'src/app/models/Answer.model';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-solve-test',
-  templateUrl: './solve-test.component.html',
-  styleUrls: ['./solve-test.component.css']
+  selector: 'app-check-test',
+  templateUrl: './check-test.component.html',
+  styleUrls: ['./check-test.component.css']
 })
-export class SolveTestComponent implements OnInit {
+export class CheckTestComponent implements OnInit {
   test: CandidateForm;
 
   constructor(
@@ -34,11 +34,10 @@ export class SolveTestComponent implements OnInit {
   changeAnswerIsSelected(answer: Answer): void {
     answer.isSelected = !answer.isSelected;
   }
-  
+
   finishTest(): void {
-    console.log(this.test);
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
-      'id': this.test.id, 'candidateId': this.test.candidateId, 'testStatus': 'solved', 'testResult': null, 'testForm': {'id': this.test.testForm.id, 'title': this.test.testForm.title, 'questions': this.test.testForm.questions}
+      'id': this.test.id, 'candidateId': this.test.candidateId, 'testStatus': 'checked', 'testResult': 'passed', 'testForm': {'id': this.test.testForm.id, 'title': this.test.testForm.title, 'questions': this.test.testForm.questions}
     }).subscribe( res => {
       console.log(res);
       this.router.navigate(['/candidate/my-tests']);

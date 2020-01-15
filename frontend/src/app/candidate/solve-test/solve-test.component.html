@@ -1,45 +1,41 @@
-<div class="container col-lg-10">
+<div class="container col-lg-6">
     <div class="row header">
-        <h1 class="col-lg-8">Rozwiąż test!</h1>
+        <h2 class="display-4">Rozwiąż test!</h2>
     </div>
-    <div class="dataBackground col-lg-12 row rounded">
-        <div class="col-lg-11 row form-holder">
-            <form [formGroup]="testForm" *ngIf="test">
-                <div *ngFor="let question of test.questions" class="question">
-                    <div class="question_content">{{question.question}}</div>
-                    <div *ngIf="question.type=='L'" class="answer">
-                        <label for="answerA">Twoja odpowiedź</label>
-                        <input id="answerA" type="number" formControlName="answerA">
-                    </div>
-
-                    <div *ngIf="question.type=='O'" class="answer">
-                        <label for="answerA">Twoja odpowiedź</label>
-                        <input id="answerA" type="text" formControlName="answerA">
-                    </div>
-
-                    <div *ngIf="question.type=='W'" class="answer">
-                        <!--zakomentowałem, aby pokazywało cokolwiek. Jak zostaną poprawione typy pytań to podmienię z divem poniżej-->
-                        <!-- <div> -->
-                        <div>
-                            <input id="answerA" type="checkbox" formControlName="answerA" name="{{question.answerA}}">
-                            <label for="answerA">{{question.answer[0].content}}</label>
-                        </div>
-                        <div>
-                            <input id="answerB" type="checkbox" formControlName="answerB" name="{{question.answerB}}">
-                            <label for="answerB">{{question.answer[1].content}}</label>
-                        </div>
-                        <div>
-                            <input id="answerC" type="checkbox" formControlName="answerC" name="{{question.answerC}}">
-                            <label for="answerC">{{question.answer[2].content}}</label>
-                        </div>
-                        <div>
-                            <input id="answerD" type="checkbox" formControlName="answerD" name="{{question.answerD}}">
-                            <label for="answerD">{{question.answer[3].content}}</label>
-                        </div>
-                    </div>
+    <div class="dataBackground" id="panel">
+        <div>
+            <div *ngFor="let question of test.testForm.questions; index as i;">
+                <div class="question_content">
+                <h5>{{ i + 1 }}. {{question.question}}</h5>
                 </div>
-                <button class="button" type="submit">Zatwierdź test</button>
-            </form>
+                <div *ngIf="question.type === 'L'" class="answer">
+                    <div class="numberArea row col-lg-12" >
+                        <div class="col-lg-12">
+                            <label style="margin-right: 20px">Twoja odpowiedź:</label>
+                            <input type="number" class="inputnumber" [(ngModel)]="question.answer[0].candidateAnswer">
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+
+                <div *ngIf="question.type === 'O'" class="answer">
+                    <label for="answer">Twoja odpowiedź:</label>
+                    <textarea class="form-control col-lg-8 openAnswer" type="text" [(ngModel)]="question.answer[0].candidateAnswer"></textarea>
+                </div>
+
+                <div *ngIf="question.type === 'W'" class="answer">
+                <div *ngFor="let answer of question.answer; index as j" >
+                    <mat-checkbox [checked]="answer.isSelected" (change)="changeAnswerIsSelected(answer)" class="btn answerButton" >
+                            {{ j + 1 }}. {{ answer.content }}
+                    </mat-checkbox>
+                </div>
+            </div>
+            <hr/>
         </div>
+        <div class="row col-lg-12">
+            <button class="btn btn-success" (click)="finishTest()">Zatwierdź test</button>
+        </div>
+       
     </div>
 </div>

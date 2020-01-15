@@ -28,12 +28,15 @@
                         <th scope="row">{{ i + 1 }}.</th>
                         <td>
                             <h5>{{ question.question}}</h5>
-                            <div>
+                            <div *ngIf="question.type === 'W'">
                                 <mat-chip-list >
                                     <mat-chip class="correct" *ngFor="let answer of question.answer; index as j" color="warn" selected="{{!answer.isCorrect ? 'true' : 'false'}}">
                                         {{ j + 1 }}. {{ answer.content }}
                                     </mat-chip>
                                 </mat-chip-list>
+                            </div>
+                            <div *ngIf="question.type === 'L'">
+                                Poprawna odpowiedź to: {{ question.answer[0].content }}
                             </div>
                         </td>
                         <td *ngIf="editing">

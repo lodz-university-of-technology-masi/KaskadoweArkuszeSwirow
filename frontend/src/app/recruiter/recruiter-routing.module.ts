@@ -11,7 +11,8 @@ import { TestDetailsComponent } from './tests/test-details/test-details.componen
 import { QuestionsComponent } from './questions/questions.component';
 import { TestCreateComponent } from './tests/test-create/test-create.component';
 import { TestsForUsersComponent } from './tests-for-users/tests-for-users.component';
-import { NewOrCheckedTestsComponent } from './tests-for-users/new-or-checked-tests/new-or-checked-tests.component';
+import { ShowTestsWithStatus } from './tests-for-users/show-tests-with-status/show-tests-with-status.component';
+import { CheckTestComponent } from './tests-for-users/check-test/check-test.component';
 
 export const recruiterRoutes: Routes = [
   {
@@ -52,7 +53,12 @@ export const recruiterRoutes: Routes = [
       },
       {
         path: 'tests-for-users/:status',
-        component: NewOrCheckedTestsComponent,
+        component: ShowTestsWithStatus,
+        canActivate: [AuthGuard, RecruiterGuard]
+      },
+      {
+        path: 'check-test/:id',
+        component: CheckTestComponent,
         canActivate: [AuthGuard, RecruiterGuard]
       }
     ]

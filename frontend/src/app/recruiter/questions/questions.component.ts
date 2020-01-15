@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ApplicationRef } from '@angular/core';
-import { Question, ChooseQuestion, OpenQuestion, NumericalQuestion } from '../../models/Question.model';
+import { Question } from '../../models/Question.model';
 import { Answer } from '../../models/Answer.model';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormBuilder } from '@angular/forms';
@@ -194,10 +194,12 @@ export class AddQuestionDialog {
       ];
     } else if (type === 'L') {
       answers = [
-        new Answer(customerData.answer, true, null, null)
+        new Answer(customerData.answer, false, null, null)
       ];
     } else if (type === 'O') {
-      answers = [];
+      answers = [
+        new Answer(null, false, null, null)
+      ];
     }
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question',
       {'question': customerData.question, 'answer': answers, 'type': type}).subscribe(
