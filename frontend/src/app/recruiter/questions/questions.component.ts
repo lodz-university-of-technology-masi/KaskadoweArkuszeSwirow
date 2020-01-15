@@ -33,7 +33,7 @@ export class QuestionsComponent implements OnInit {
     ELEMENT_DATA.splice(0, ELEMENT_DATA.length);
     while (true) {
       if (data[i] !== undefined) {
-        const question: Question = {id: data[i].id, question: data[i].question, answer: data[i].answer, type: data[i].type};
+        const question: Question = {id: data[i].id, question: data[i].question, isApproved: false, answer: data[i].answer, type: data[i].type};
         ELEMENT_DATA.push(question);
       } else {
         break;

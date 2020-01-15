@@ -78,7 +78,7 @@ export class TestDetailsComponent implements OnInit {
     let i = 0;
     while (true) {
       if (data[i] !== undefined) {
-        const tmp: Question = {id: data[i].id, question: data[i].question, answer: data[i].answer, type: data[i].type};
+        const tmp: Question = {id: data[i].id, question: data[i].question, answer: data[i].answer, type: data[i].type, isApproved: false};
         this.test.questions.push(tmp);
       } else {
         break;

@@ -25,7 +25,14 @@
 
                 <div *ngIf="question.type === 'O'" class="answer">
                     <label for="answer">Podana odpowiedź:</label>
-                    <textarea class="form-control col-lg-8 openAnswer" type="text" [(ngModel)]="question.answer[0].candidateAnswer" disabled></textarea>
+                    <div class="col-lg-1">
+                        <mat-checkbox [checked]="question.isApproved" (change)="changeQuestionIsApproved(question)">
+                            Zalicz
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-lg-11">
+                        <textarea class="form-control col-lg-8 openAnswer" type="text" [(ngModel)]="question.answer[0].candidateAnswer" disabled></textarea>
+                    </div>
                 </div>
 
                 <div *ngIf="question.type === 'W'" class="choiceanswer">
@@ -36,6 +43,7 @@
                         </mat-checkbox>
                     </div>
                 </div>
+
             <hr/>
         </div>
         <div class="row col-lg-12">

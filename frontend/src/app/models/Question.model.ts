@@ -11,6 +11,7 @@ export class Question {
     question: string;
     answer: Answer[];
     type: String;
+    isApproved: boolean = false;
 }
 
 export class DisplayQuestion extends Question {

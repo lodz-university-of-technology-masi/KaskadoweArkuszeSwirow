@@ -1,0 +1,8 @@
+export const codes = {
+    USER_POOL_ID: 'us-east-1_IBVZb8BoB',
+    CLIENT_ID: '5iks8ifh2vbo8g6upr1qg9l4bt',
+    REGION: 'us-east-1',
+    ACCESS_KEY_ID: 'AKIAXHL3HMQ2MJI64XP4',
+    SECRET_ACCESS_KEY: '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',
+    YANDEX_API_KEY: 'trnsl.1.1.20200107T204822Z.3a7208308596eb3a.00aa153bc36ff27eff28f0578ed02272bdc9cc42'
+}
