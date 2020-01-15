@@ -64,7 +64,7 @@
 
                     <tr *ngFor="let test of dataSource; index as i">
                         <th scope="row">{{ i + 1 }}.</th>
-                        <td >
+                        <td>
                             <a [routerLink]="['/recruiter/check-test/', test.id]">{{test.testForm.title}}</a>
                         </td>
                         <td>
@@ -89,7 +89,7 @@
 </div>
 <div class="container col-lg-12" *ngIf="status == 'checked'">
     <div class="row header">
-        <h1 class="display-4">Tutaj możesz przeglądać, <br>usuwać sprawdzone testy kandydatów</h1>
+        <h1 class="display-4">Tutaj możesz przeglądać, <br>sprawdzone testy kandydatów</h1>
     </div>
     <div id="panel" class="dataBackground row col-lg-6">
         <div class="row col-lg-12">
@@ -98,6 +98,8 @@
                     <tr>
                         <th style="width: 10%" scope="col">#</th>
                         <th scope="col">Test</th>
+                        <th scope="col">Wynik</th>
+                        <th scope="col">Punkty</th>
                         <th scope="col">Imie</th>
                         <th scope="col">Nazwisko</th>
                         <th scope="col">Email</th>
@@ -107,7 +109,13 @@
                     <tr *ngFor="let test of dataSource; index as i">
                         <th scope="row">{{ i + 1 }}.</th>
                         <td>
-                            {{test.testForm.title}}
+                            <a [routerLink]="['/recruiter/see-test', test.id]">{{test.testForm.title}}</a>
+                        </td>
+                        <td>
+                            {{test.testStatus.split(';')[0] === 'passed' ? 'Zaliczony' : 'Niezaliczony'}}
+                        </td>
+                        <td>
+                            {{test.testStatus.split(';')[1]}}
                         </td>
                         <td>
                             {{test.name}}

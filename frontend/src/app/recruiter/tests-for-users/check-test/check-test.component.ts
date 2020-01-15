@@ -12,10 +12,16 @@ import { Question } from 'src/app/models/Question.model';
 })
 export class CheckTestComponent implements OnInit {
   test: CandidateForm;
+  checking: boolean;
 
   constructor(
     private http: HttpClient,
     private router: Router) { 
+      let page = window.location.href.split('/');
+      if (page[page.length - 2] === 'check-test') 
+        this.checking = true;
+      else
+        this.checking = false;
       this.getTestWithID();
     }
 
@@ -43,8 +49,6 @@ export class CheckTestComponent implements OnInit {
       else
         it.isApproved = false;
     }
-    console.log('test:');
-    console.log(this.test);
   }
 
   changeAnswerIsSelected(answer: Answer): void {
@@ -57,31 +61,34 @@ export class CheckTestComponent implements OnInit {
 
   calculateResult(): String {
     let result: number = 0;
+    let short: String = 'failed';
     for (let it of this.test.testForm.questions) {
       if (it.isApproved)
         result++;
     }
-
-    return `${result}/2`;
+    if ((result / this.test.testForm.questions.length) > 0.5)
+      short = 'passed'
+    return `${short};${result}/${this.test.testForm.questions.length}`;
   }
 
   finishTest(): void {
-    let result = this.calculateResult();
-    this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
-      'id': this.test.id, 'candidateId': this.test.candidateId, 'testStatus': 'checked', 'testResult': result, 'testForm': {'id': this.test.testForm.id, 'title': this.test.testForm.title, 'questions': this.test.testForm.questions}
-    }).subscribe( res => {
-      console.log(res);
-      this.router.navigate(['/candidate/my-tests']);
-    }, err => console.log(err)
-    );
-    
+    if (this.checking) {
+      console.log(this.test);
+      let result = this.calculateResult();
+      this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
+        'id': this.test.id, 'candidateId': this.test.candidateId, 'testStatus': 'checked', 'testResult': result, 'testForm': {'id': this.test.testForm.id, 'title': this.test.testForm.title, 'questions': this.test.testForm.questions}
+      }).subscribe( res => {
+        console.log(res);
+        this.router.navigate(['/recuiter/tests-for-users/solved']);
+      }, err => console.log(err)
+      );
+    }else console.log('Error. Cannot finish the test. Read-only mode');
   }
 
   getTestWithID(): void {
-    console.log(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/` + 
-    window.location.href.split('/')[window.location.href.split('/').length-1]);
+    let temp = window.location.href.split('/')
     this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/` + 
-                    window.location.href.split('/')[window.location.href.split('/').length-1])
+          temp[temp.length - 1])
       .subscribe(data => {
         if (!('errorMessage' in data)){
           console.log(data);

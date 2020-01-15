@@ -60,13 +60,13 @@ export const recruiterRoutes: Routes = [
         path: 'check-test/:id',
         component: CheckTestComponent,
         canActivate: [AuthGuard, RecruiterGuard]
-      }
+      },
+      {
+        path: 'see-test/:id',
+        component: CheckTestComponent,
+        canActivate: [AuthGuard, RecruiterGuard]
+    }
     ]
   }
 ];
 
-// @NgModule({
-//   imports: [RouterModule.forChild(routes)],
-//   exports: [RouterModule]
-// })
-// export class RecruiterRoutingModule { }

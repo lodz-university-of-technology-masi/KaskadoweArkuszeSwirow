@@ -72,12 +72,12 @@ export class TestsForUserComponent implements OnInit {
         const test: TestForUser = {id: data[i].id, candidateId: data[i].candidateId, testStatus: data[i].testStatus, 
                                     testResult: data[i].testResult, testForm: data[i].testForm};
         ELEMENT_DATA.push(test);
-        console.log(ELEMENT_DATA)
       } else {
         break;
       }
       i++;
     }
+    console.log(ELEMENT_DATA);
     this.ref.tick();
   }
 

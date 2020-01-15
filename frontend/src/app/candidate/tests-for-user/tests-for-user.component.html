@@ -3,21 +3,26 @@
         <h2 class="display-4">Twoje testy</h2>
     </div>
     <div class="dataBackground col-lg-12 row rounded">
-        <div class="col-lg-11 row tests-row">
+        <div class="col-lg-12 row tests-row" *ngIf="dataSource.length > 0" >
             <div class="col-lg-3 testDiv" *ngFor="let test of dataSource">
                 <div *ngIf="test.testStatus === 'new'" class="test" id={{test.testForm.id}} routerLink="/candidate/solve-test/{{test.id}}">
                     <img src="../../../assets/images/test.png" class="test-image"> {{test.testForm.title}}
                 </div>
-                <div *ngIf="test.testStatus === 'solved'" class="test" id={{test.testForm.id}}>
+                <div *ngIf="test.testStatus === 'solved'" class="test" id={{test.testForm.id}} routerLink="/candidate/test-status/{{test.id}}">
                     <img src="../../../assets/images/test-solved-waiting.png" class="test-image"> {{test.testForm.title}}
                 </div>
-                <div *ngIf="test.testStatus === 'checked' && test.testResult === 'passed'" class="test" id={{test.testForm.id}} routerLink="/candidate/test-results/{{test.id}}">
+                <div *ngIf="test.testStatus === 'checked' && test.testResult.includes('passed')" class="test" id={{test.testForm.id}} routerLink="/candidate/test-status/{{test.id}}">
                     <img src="../../../assets/images/test-passed-green.png" class="test-image"> {{test.testForm.title}}
                 </div>
-                <div *ngIf="test.testStatus === 'checked' && test.testResult === 'failed'" class="test" id={{test.testForm.id}} routerLink="/candidate/test-results/{{test.id}}">
+                <div *ngIf="test.testStatus === 'checked' && test.testResult.includes('failed')" class="test" id={{test.testForm.id}} routerLink="/candidate/test-status/{{test.id}}">
                     <img src="../../../assets/images/test-failed.png" class="test-image"> {{test.testForm.title}}
                 </div>
             </div>
+        </div>
+        <div class="col-lg-12 row tests-row" *ngIf="dataSource.length === 0" >
+            <h4 class="lead">
+                <b>Brak testów!</b>
+            </h4>
         </div>
     </div>
 </div>

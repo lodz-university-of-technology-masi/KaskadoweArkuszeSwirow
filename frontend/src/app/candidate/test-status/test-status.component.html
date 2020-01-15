@@ -1,0 +1,36 @@
+<div class="container col-lg-6">
+    <div class="row header">
+        <h2 class="display-4">{{test.testForm.title}}</h2>
+    </div>
+    <div class="dataBackground row" id="panel">
+        <table>
+            <tr>
+            <td>
+                <div *ngIf="test.testStatus === 'new'">
+                    <img src="../../../assets/images/test.png">
+                </div>
+                <div *ngIf="test.testStatus === 'solved'">
+                    <img src="../../../assets/images/test-solved-waiting.png">
+                </div>
+                <div *ngIf="test.testStatus === 'checked' && test.testResult.includes('passed')">
+                    <img src="../../../assets/images/test-passed-green.png">
+                </div>
+                <div *ngIf="test.testStatus === 'checked' && test.testResult.includes('failed')">
+                    <img src="../../../assets/images/test-failed.png">
+                </div>
+            </td>
+            <td>
+                <ul class="list-group" *ngIf="test.testStatus === 'solved'">
+                    <li class="list-group-item">Status: Oczekuje na sprawdzenie</li>
+                    <li class="list-group-item">Info: Test nie został jeszcze przejrzany przez rekrutera.</li>
+                </ul>
+                <ul class="list-group" *ngIf="test.testStatus === 'checked'">
+                    <li class="list-group-item">Status: Oceniony</li>
+                    <li class="list-group-item">Wynik: {{test.testResult.split(';')[0] === 'passed' ? 'Zaliczony' : 'Niezaliczony'}}</li>
+                    <li class="list-group-item">Punkty: {{test.testResult.split(';')[1]}}</li>
+                </ul>
+            </td>
+            </tr>
+        </table>
+    </div>
+</div>

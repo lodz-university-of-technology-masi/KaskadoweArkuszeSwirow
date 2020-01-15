@@ -48,10 +48,9 @@ export class SolveTestComponent implements OnInit {
   }
 
   getTestWithID(): void {
-    console.log(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/` + 
-    window.location.href.split('/')[window.location.href.split('/').length-1]);
+    let temp = window.location.href.split('/');
     this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/` + 
-                    window.location.href.split('/')[window.location.href.split('/').length-1])
+          temp[temp.length - 1])
       .subscribe(data => {
         if (!('errorMessage' in data)){
           console.log(data);

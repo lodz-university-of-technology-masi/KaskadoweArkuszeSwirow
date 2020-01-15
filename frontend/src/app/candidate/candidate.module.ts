@@ -15,7 +15,7 @@ import { candidateRoutes } from './candidate-routing.module';
 import { MenuComponent } from './layout/navbar/menu/menu.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { LayoutComponent } from './layout/layout.component';
-import { TestResultsComponent } from './test-results/test-results.component';
+import { TestStatusComponent } from './test-status/test-status.component';
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { TestResultsComponent } from './test-results/test-results.component';
     MenuComponent, 
     NavbarComponent,
     LayoutComponent,
-    TestResultsComponent, 
+    TestStatusComponent, 
     
   ],
   imports: [

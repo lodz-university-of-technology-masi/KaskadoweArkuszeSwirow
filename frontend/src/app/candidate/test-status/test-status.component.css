@@ -1,0 +1,22 @@
+#panel {
+    margin: auto;
+    padding: 20px;
+}
+
+h2 {
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+img {
+    margin: auto;
+    height: 10vw;
+}
+
+li:hover {
+    background: white;
+}
+table {
+    margin: auto;
+    width: 80%;
+}
