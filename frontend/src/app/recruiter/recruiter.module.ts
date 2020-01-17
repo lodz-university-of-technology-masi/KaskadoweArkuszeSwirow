@@ -6,6 +6,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar'; 
 import {MatButtonModule} from '@angular/material/button'; 
 import {MatFormFieldModule} from '@angular/material/form-field'; 
+import {MatInputModule} from '@angular/material'; 
 import {MatDialogModule, MatCheckbox, MatCheckboxModule, MatRadioButton, MatRadioModule} from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
@@ -44,7 +45,8 @@ import { CheckTestComponent } from './tests-for-users/check-test/check-test.comp
     FormsModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatInputModule
     // RecruiterRoutingModule
   ],
   providers: [
