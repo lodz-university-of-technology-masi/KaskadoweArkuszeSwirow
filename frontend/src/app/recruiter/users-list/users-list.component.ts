@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {UsersManagementService} from '../../shared/users-management.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {ChangePasswordDialog, DialogData} from '../../login/login.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 export interface DialogNewUserData {
@@ -24,7 +25,8 @@ export class UsersListComponent implements OnInit {
   constructor(private auth: AuthenticationService,
               private _router: Router,
               private userService: UsersManagementService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private _snackBar: MatSnackBar) {
   }
 
   addCandidate() {
@@ -57,12 +59,20 @@ export class UsersListComponent implements OnInit {
       this.auth.register(result.email, result.password, result.firstName, result.lastName, '1', this.auth.getAuthenticatedUser().getUsername()).subscribe(
         (res) => {
           console.log(res);
+          this.openSnackBar('Candidate registered!', 'OK');
         },
         (err) => {
           console.log(err);
+          this.openSnackBar(err.message, 'OK');
         }
       );
       // this.userService.createCandidate(result.email, result.firstName, result.lastName, this.auth.getAuthenticatedUser().getUsername());
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 3000,
     });
   }
 }
