@@ -1,0 +1,20 @@
+<div mat-dialog-content>
+    <mat-form-field class="row col-lg-12">
+        <p>Email</p>
+      <input matInput type="text" [(ngModel)]="data.emailConfirm" required>
+    </mat-form-field>
+    <mat-form-field class="row col-lg-12">
+        <p>Confirmation code</p>
+        <input matInput type="text" [(ngModel)]="data.confirmCode" required>
+      </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+  
+    <button mat-button [mat-dialog-close]="data" class="btn btn-success">Submit</button>
+  
+  </div>
+  
+  <!--TODO: ADD ONE MORE INPUT TO CONFIRM THE PASSWORD AND CHECK IF THE VALUES MATCH-->
+  
+  
+  

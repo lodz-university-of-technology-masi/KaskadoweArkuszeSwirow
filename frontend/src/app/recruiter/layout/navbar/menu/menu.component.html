@@ -6,6 +6,7 @@
     <button mat-menu-item [matMenuTriggerFor]="Kandydaci">Kandydaci</button>
     <button mat-menu-item [matMenuTriggerFor]="Testy">Testy</button>
     <button mat-menu-item [matMenuTriggerFor]="Pytania">Pytania</button>
+    <button mat-menu-item [matMenuTriggerFor]="Rekruterzy">Rekruterzy</button>
 </mat-menu>
 
 <mat-menu #Kandydaci="matMenu">
@@ -26,4 +27,9 @@
 
 <mat-menu #Pytania="matMenu">
     <button mat-menu-item [routerLink]="['/recruiter/questions']">Pokaż bazę pytań</button>
+</mat-menu>
+
+
+<mat-menu #Rekruterzy="matMenu">
+    <button mat-menu-item [routerLink]="['/recruiter/register']">Dodaj rekrutera</button>
 </mat-menu>

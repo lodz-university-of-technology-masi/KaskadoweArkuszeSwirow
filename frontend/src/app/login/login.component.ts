@@ -20,6 +20,8 @@ export class LoginComponent {
   email;
   password;
   newPassword = null;
+  emailConfirm = null;
+  confirmCode = null;
 
   constructor(private auth: AuthenticationService,
               private _router: Router,
@@ -54,7 +56,7 @@ export class LoginComponent {
     this.auth.signIn(email, password, newPassword).subscribe((data) => {
       
       if(data != null) {
-        this.openDialog();
+        this.openNewPasswordDialog();
       }
       else{
         console.log('Redirecting');
@@ -71,11 +73,17 @@ export class LoginComponent {
       }
     }, (err) => {
       console.log(err);
-      this.emailVerificationMessage = true;
+
+      if(err.code == "UserNotConfirmedException"){
+        this.openConfirmCodeDialog();
+      }
+      else {
+        this.emailVerificationMessage = true;
+      }
     });
   }
 
-  openDialog(): void {
+  openNewPasswordDialog(): void {
     const dialogRef = this.dialog.open(ChangePasswordDialog, {
       width: '250px',
       data: {newPassword: this.newPassword}
@@ -84,6 +92,32 @@ export class LoginComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.newPassword = result;
       this.logIn(this.email, this.password, result);
+    });
+  }
+
+  openConfirmCodeDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmCodeDialog, {
+      width: '250px',
+      data: {
+        emailConfirm: this.emailConfirm,
+        confirmCode: this.confirmCode
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+        
+    this.auth.confirmAuthCode(result.emailConfirm, result.confirmCode).subscribe(
+      (res) => {
+        console.log(res);
+        //this._router.navigateByUrl('/');
+        // this.codeWasConfirmed = true;
+        // this.confirmCode = false;
+      },
+      (err) => {
+        console.log(err);
+        // this.error = "Confirm Authorization Error has occurred";
+      });
     });
   }
 }
@@ -106,3 +140,21 @@ export class ChangePasswordDialog {
 
 }
 
+@Component({
+  selector: 'confirm-code-dialog',
+  templateUrl: 'confirm-code-dialog.html'
+})
+export class ConfirmCodeDialog {
+  emailConfirm;
+  confirmCode;
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmCodeDialog>,
+    @Inject (MAT_DIALOG_DATA) public data: DialogData
+  ) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}

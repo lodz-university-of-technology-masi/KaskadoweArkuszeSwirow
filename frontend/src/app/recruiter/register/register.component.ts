@@ -19,7 +19,7 @@ export class RegisterComponent {
   register(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    this.auth.register(email, password).subscribe(
+    this.auth.register(email, password, 'anon', 'anon', '0', this.auth.getAuthenticatedUser().getUsername()).subscribe(
       () => {        
         this.confirmCode = true;
       },
@@ -30,18 +30,18 @@ export class RegisterComponent {
     );
   }
 
-  validateAuthCode(form: NgForm) {
-    const code = form.value.code;
+  // validateAuthCode(form: NgForm) {
+  //   const code = form.value.code;
     
-    this.auth.confirmAuthCode(code).subscribe(
-      () => {
-        //this._router.navigateByUrl('/');
-        this.codeWasConfirmed = true;
-        this.confirmCode = false;
-      },
-      (err) => {
-        console.log(err);
-        this.error = "Confirm Authorization Error has occurred";
-      });
-  }
+  //   this.auth.confirmAuthCode(code).subscribe(
+  //     () => {
+  //       //this._router.navigateByUrl('/');
+  //       this.codeWasConfirmed = true;
+  //       this.confirmCode = false;
+  //     },
+  //     (err) => {
+  //       console.log(err);
+  //       this.error = "Confirm Authorization Error has occurred";
+  //     });
+  // }
 }
