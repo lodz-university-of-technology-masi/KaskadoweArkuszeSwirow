@@ -49,12 +49,20 @@ export class UsersListComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CreateNewUserDialog, {width: "350px",
-      data: {email: '', firstName: '', lastName: ''}
+      data: {email: '', firstName: '', lastName: '', password: ''}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.userService.createCandidate(result.email, result.firstName, result.lastName, this.auth.getAuthenticatedUser().getUsername());
+      this.auth.register(result.email, result.password, result.firstName, result.lastName, '1', this.auth.getAuthenticatedUser().getUsername()).subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+      // this.userService.createCandidate(result.email, result.firstName, result.lastName, this.auth.getAuthenticatedUser().getUsername());
     });
   }
 }

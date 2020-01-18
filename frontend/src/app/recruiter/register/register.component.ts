@@ -20,7 +20,8 @@ export class RegisterComponent {
     const email = form.value.email;
     const password = form.value.password;
     this.auth.register(email, password, 'anon', 'anon', '0', this.auth.getAuthenticatedUser().getUsername()).subscribe(
-      () => {        
+      (res) => {        
+        console.log(res)
         this.confirmCode = true;
       },
       (err) => {

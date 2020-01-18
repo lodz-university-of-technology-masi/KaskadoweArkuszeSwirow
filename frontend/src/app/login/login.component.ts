@@ -20,8 +20,6 @@ export class LoginComponent {
   email;
   password;
   newPassword = null;
-  emailConfirm = null;
-  confirmCode = null;
 
   constructor(private auth: AuthenticationService,
               private _router: Router,
@@ -48,7 +46,9 @@ export class LoginComponent {
   onSubmit(form: NgForm) {
     this.email = form.value.email;
     this.password = form.value.password;
-    this.logIn(form.value.email, form.value.password, this.newPassword);
+    // this.logIn(form.value.email, form.value.password, this.newPassword);
+    this.logIn(form.value.email, form.value.password, null);
+
   }
 
   //TODO: CHANGE IT TO WORK PROPERLY AFTER NEW CANDIDATE PASSWORD CHANGE
@@ -86,11 +86,11 @@ export class LoginComponent {
   openNewPasswordDialog(): void {
     const dialogRef = this.dialog.open(ChangePasswordDialog, {
       width: '250px',
-      data: {newPassword: this.newPassword}
+      data: {newPassword: ''}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.newPassword = result;
+      // this.newPassword = result;
       this.logIn(this.email, this.password, result);
     });
   }
@@ -99,8 +99,8 @@ export class LoginComponent {
     const dialogRef = this.dialog.open(ConfirmCodeDialog, {
       width: '250px',
       data: {
-        emailConfirm: this.emailConfirm,
-        confirmCode: this.confirmCode
+        emailConfirm: '',
+        confirmCode: ''
       }
     });
 
