@@ -40,7 +40,7 @@ export class UsersManagementService {
     });
   }
 
-  getAllUsers(username) {
+  getAllUsers() {
     const params = {
       UserPoolId: this.UserPoolId,
       AttributesToGet: [
@@ -70,7 +70,7 @@ export class UsersManagementService {
     });
   }
 
-  getAllCandidates(username) {
+  getAllCandidates() {
     const params = {
       UserPoolId: this.UserPoolId,
       AttributesToGet: [

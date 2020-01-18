@@ -36,7 +36,7 @@ export class UsersListComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.auth.isLoggedIn()) {
-      this.userService.getAllCandidates(this.auth.getAuthenticatedUser().getUsername()).subscribe((data) => {
+      this.userService.getAllCandidates().subscribe((data) => {
           this.usersListCognito = data;
         }
       );
