@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { AuthenticationService } from "../../shared/authentication.service";
 import { Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -9,40 +10,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent { 
-  confirmCode: boolean = false;
-  codeWasConfirmed: boolean = false;
-  error: string = "";
   
   constructor(private auth: AuthenticationService,
-              private _router: Router) { }
+              private _router: Router,
+              private _snackBar: MatSnackBar) { }
 
   register(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
     this.auth.register(email, password, 'anon', 'anon', '0', this.auth.getAuthenticatedUser().getUsername()).subscribe(
       (res) => {        
-        console.log(res)
-        this.confirmCode = true;
+        console.log(res);
+        form.reset();
+        this.openSnackBar('Recruiter registered!', 'OK');
       },
       (err) => {
         console.log(err);
-        this.error = "Registration Error has occurred";
+        this.openSnackBar(err.message, 'OK');
       }
     );
   }
 
-  // validateAuthCode(form: NgForm) {
-  //   const code = form.value.code;
-    
-  //   this.auth.confirmAuthCode(code).subscribe(
-  //     () => {
-  //       //this._router.navigateByUrl('/');
-  //       this.codeWasConfirmed = true;
-  //       this.confirmCode = false;
-  //     },
-  //     (err) => {
-  //       console.log(err);
-  //       this.error = "Confirm Authorization Error has occurred";
-  //     });
-  // }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
 }
