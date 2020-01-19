@@ -1,6 +1,6 @@
 <div class="container col-lg-10">
     <div class="row header">
-        <h1 class="col-lg-9">Zarejestruj się</h1>
+        <h1 class="col-lg-9">Zarejestruj rekrutera</h1>
     </div>
     <div class="dataBackground col-lg-5 row rounded">
         <div *ngIf="!confirmCode" class="row col-lg-12">
@@ -17,21 +17,6 @@
                     <button type="submit" class="btn btn-success">Zarejestruj</button>
                 </form>
             </div>
-        </div>
-        <div *ngIf="confirmCode" class="row message-row col-lg-12">
-            <h3>Wpisz kod potwierdzający, który został wysłany na podany email</h3>
-            <div class="col-lg-12">
-                <form (ngSubmit)="validateAuthCode(codeform)" #codeform="ngForm">
-                    <div class="form-group">
-                        <label for="code">Kod potwierdzający</label>
-                        <input type="text" name="code" id="code" ngModel class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-success">Akceptuj</button>
-                </form>
-            </div>
-        </div>
-        <div *ngIf="codeWasConfirmed" class="row message-row col-lg-12">
-            <h3>Został podany prawidłowy kod. Kliknij <a routerLink="/login">tutaj</a> aby się zalogować</h3>
         </div>
     </div>
 </div>

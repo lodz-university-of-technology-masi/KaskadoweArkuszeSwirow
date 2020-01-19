@@ -6,8 +6,9 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar'; 
 import {MatButtonModule} from '@angular/material/button'; 
 import {MatFormFieldModule} from '@angular/material/form-field'; 
-import {MatInputModule} from '@angular/material'; 
+import {MatInputModule, MatSnackBar} from '@angular/material'; 
 import {MatDialogModule, MatCheckbox, MatCheckboxModule, MatRadioButton, MatRadioModule} from '@angular/material';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 
 
@@ -24,6 +25,7 @@ import { ChooseTestDialogComponent } from './tests-for-users/choose-test-dialog/
 import { ShowTestsWithStatus } from './tests-for-users/show-tests-with-status/show-tests-with-status.component';
 import { TestsForUsersComponent } from './tests-for-users/tests-for-users.component';
 import { CheckTestComponent } from './tests-for-users/check-test/check-test.component';
+import { RegisterComponent } from './register/register.component';
 
 
 
@@ -33,7 +35,8 @@ import { CheckTestComponent } from './tests-for-users/check-test/check-test.comp
     LayoutComponent, 
     NavbarComponent, 
     UsersListComponent, 
-    CreateNewUserDialog, TestsForUsersComponent, ChooseTestDialogComponent, ShowTestsWithStatus, CheckTestComponent
+    RegisterComponent,
+    CreateNewUserDialog, TestsForUsersComponent, ChooseTestDialogComponent, ShowTestsWithStatus, CheckTestComponent,
   ],
   imports: [
     CommonModule,
@@ -46,12 +49,15 @@ import { CheckTestComponent } from './tests-for-users/check-test/check-test.comp
     MatDialogModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule
+    
     // RecruiterRoutingModule
   ],
   providers: [
     AuthGuard,
-    RecruiterGuard
+    RecruiterGuard,
+    // MatSnackBar
   ],
   entryComponents: [
     CreateNewUserDialog,

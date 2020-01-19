@@ -13,6 +13,7 @@ import { TestCreateComponent } from './tests/test-create/test-create.component';
 import { TestsForUsersComponent } from './tests-for-users/tests-for-users.component';
 import { ShowTestsWithStatus } from './tests-for-users/show-tests-with-status/show-tests-with-status.component';
 import { CheckTestComponent } from './tests-for-users/check-test/check-test.component';
+import { RegisterComponent } from './register/register.component';
 
 export const recruiterRoutes: Routes = [
   {
@@ -24,6 +25,11 @@ export const recruiterRoutes: Routes = [
       {
         path: 'candidates',
         component: UsersListComponent,
+        canActivate: [AuthGuard, RecruiterGuard]
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
         canActivate: [AuthGuard, RecruiterGuard]
       },
       {

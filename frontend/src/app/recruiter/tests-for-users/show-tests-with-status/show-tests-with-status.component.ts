@@ -51,7 +51,8 @@ export class ShowTestsWithStatus implements OnInit {
     console.log('token');
     console.log(this.auth.getToken());
     if (this.auth.isLoggedIn()) {
-      this.userService.getAllCandidates(this.auth.getAuthenticatedUser().getUsername()).subscribe((data) => {
+      console.log(this.auth.getAuthenticatedUser().getUsername());
+      this.userService.getAllCandidates().subscribe((data) => {
           for (let it of data) {
             this.users.push({
               'id' : it.Username, 

@@ -16,8 +16,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {HttpClientModule} from '@angular/common/http';
-import {LoginComponent} from './login/login.component';
-import {ChangePasswordDialog} from './login/login.component';
+import {LoginComponent, ConfirmCodeDialog, ChangePasswordDialog} from './login/login.component';
 
 
 // import {RegisterComponent} from './register/register.component';
@@ -47,6 +46,7 @@ import { SolveTestComponent } from './candidate/solve-test/solve-test.component'
     AppComponent,
     LoginComponent,
     ChangePasswordDialog,
+    ConfirmCodeDialog,
     AddQuestionDialog,
     PageNotFoundComponent,
     // CreateNewUserDialog,
@@ -88,6 +88,7 @@ import { SolveTestComponent } from './candidate/solve-test/solve-test.component'
     // AddUserDialog,
     AddQuestionDialog,
     ChangePasswordDialog,
+    ConfirmCodeDialog,
     // CreateNewUserDialog,
     TestAddQuestionDialogComponent]
 })

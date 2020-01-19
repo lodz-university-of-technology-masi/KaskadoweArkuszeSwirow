@@ -27,7 +27,6 @@ export class LoginComponent {
                 console.log('LogIn component');
 
                 if(auth.isLoggedIn()){
-
                   const role = this.auth.getAuthenticatedUserRole();
                   console.log(role);
                   if(role == '0') {
@@ -46,7 +45,9 @@ export class LoginComponent {
   onSubmit(form: NgForm) {
     this.email = form.value.email;
     this.password = form.value.password;
-    this.logIn(form.value.email, form.value.password, this.newPassword);
+    // this.logIn(form.value.email, form.value.password, this.newPassword);
+    this.logIn(form.value.email, form.value.password, null);
+
   }
 
   //TODO: CHANGE IT TO WORK PROPERLY AFTER NEW CANDIDATE PASSWORD CHANGE
@@ -54,7 +55,7 @@ export class LoginComponent {
     this.auth.signIn(email, password, newPassword).subscribe((data) => {
       
       if(data != null) {
-        this.openDialog();
+        this.openNewPasswordDialog();
       }
       else{
         console.log('Redirecting');
@@ -71,19 +72,51 @@ export class LoginComponent {
       }
     }, (err) => {
       console.log(err);
-      this.emailVerificationMessage = true;
+
+      if(err.code == "UserNotConfirmedException"){
+        this.openConfirmCodeDialog();
+      }
+      else {
+        this.emailVerificationMessage = true;
+      }
     });
   }
 
-  openDialog(): void {
+  openNewPasswordDialog(): void {
     const dialogRef = this.dialog.open(ChangePasswordDialog, {
       width: '250px',
-      data: {newPassword: this.newPassword}
+      data: {newPassword: ''}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.newPassword = result;
+      // this.newPassword = result;
       this.logIn(this.email, this.password, result);
+    });
+  }
+
+  openConfirmCodeDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmCodeDialog, {
+      width: '250px',
+      data: {
+        emailConfirm: '',
+        confirmCode: ''
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+        
+    this.auth.confirmAuthCode(result.emailConfirm, result.confirmCode).subscribe(
+      (res) => {
+        console.log(res);
+        //this._router.navigateByUrl('/');
+        // this.codeWasConfirmed = true;
+        // this.confirmCode = false;
+      },
+      (err) => {
+        console.log(err);
+        // this.error = "Confirm Authorization Error has occurred";
+      });
     });
   }
 }
@@ -106,3 +139,21 @@ export class ChangePasswordDialog {
 
 }
 
+@Component({
+  selector: 'confirm-code-dialog',
+  templateUrl: 'confirm-code-dialog.html'
+})
+export class ConfirmCodeDialog {
+  emailConfirm;
+  confirmCode;
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmCodeDialog>,
+    @Inject (MAT_DIALOG_DATA) public data: DialogData
+  ) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}

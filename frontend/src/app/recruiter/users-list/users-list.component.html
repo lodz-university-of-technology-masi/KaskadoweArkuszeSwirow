@@ -21,9 +21,9 @@
         <tbody>
         <tr *ngFor="let element of usersListCognito; index as i">
           <th scope="row">{{ i + 1 }}</th>
-          <td>{{ element.Attributes[0].Value }}</td>
-          <td>{{ element.Attributes[3].Value }}</td>
-          <td>{{ element.Attributes[4].Value }}</td>
+          <td>{{ element.attributes[2].value }}</td>
+          <td>{{ element.attributes[4].value }}</td>
+          <td>{{ element.attributes[6].value }}</td>
           <td><button class="btn-danger" (click)="delete(element.Username)">X</button></td>
         </tr>
         </tbody>

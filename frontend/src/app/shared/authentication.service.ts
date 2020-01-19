@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {AuthenticationDetails, CognitoUser, CognitoUserPool} from 'amazon-cognito-identity-js';
+import {AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserAttribute} from 'amazon-cognito-identity-js';
+// import {Auth} from 'aws-amplify';
 import {Observable} from 'rxjs';
 import decode from 'jwt-decode';
 import {codes} from '../../codes';
@@ -21,9 +22,14 @@ export class AuthenticationService {
   constructor() {
   }
 
-  register(email, password) {
+  register(email, password, firstName, lastName, role, recruiter) {
 
-    const attributeList = [];
+    const attributeList = []
+    attributeList.push(new CognitoUserAttribute({Name: 'email', Value: email}));
+    attributeList.push(new CognitoUserAttribute({Name: 'given_name', Value: firstName}));
+    attributeList.push(new CognitoUserAttribute({Name: 'family_name', Value: lastName}));
+    attributeList.push(new CognitoUserAttribute({Name: 'custom:role', Value: role}));
+    attributeList.push(new CognitoUserAttribute({Name: 'custom:recruiter', Value: recruiter}));
 
     return Observable.create(observer => {
       userPool.signUp(email, password, attributeList, null, (err, result) => {
@@ -40,9 +46,9 @@ export class AuthenticationService {
     });
   }
 
-  confirmAuthCode(code) {
+  confirmAuthCode(username, code) {
     const user = {
-      Username: this.cognitoUser.username,
+      Username: username,
       Pool: userPool
     };
     return Observable.create(observer => {
