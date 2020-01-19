@@ -42,7 +42,7 @@ export class TestsForUsersComponent implements OnInit {
   assignTest(user){ 
     const dialogRef = this.dialog.open(ChooseTestDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
+
       if (result) {
         for (let it of result) {
 
