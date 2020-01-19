@@ -3,6 +3,8 @@ import {AuthenticationService} from '../shared/authentication.service';
 import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 // import { ConsoleReporter } from 'jasmine';
 
 
@@ -23,7 +25,8 @@ export class LoginComponent {
 
   constructor(private auth: AuthenticationService,
               private _router: Router,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private _snackBar: MatSnackBar) {
                 console.log('LogIn component');
 
                 if(auth.isLoggedIn()){
@@ -105,18 +108,24 @@ export class LoginComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-        
-    this.auth.confirmAuthCode(result.emailConfirm, result.confirmCode).subscribe(
-      (res) => {
-        console.log(res);
-        //this._router.navigateByUrl('/');
-        // this.codeWasConfirmed = true;
-        // this.confirmCode = false;
-      },
-      (err) => {
-        console.log(err);
-        // this.error = "Confirm Authorization Error has occurred";
-      });
+
+      if(result) {
+        this.auth.confirmAuthCode(result.emailConfirm, result.confirmCode).subscribe(
+          (res) => {
+            this.openSnackBar('Success!', 'OK');
+            console.log(res);
+          },
+          (err) => {
+            this.openSnackBar(err.message, 'OK');
+            console.log(err);
+          });
+      }
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 3000,
     });
   }
 }
