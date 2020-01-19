@@ -46,20 +46,15 @@ export class ShowTestsWithStatus implements OnInit {
   }
 
   getUsersTests() {
-    console.log('access token');
-    console.log(this.auth.getToken());
-
-
-
     if (this.auth.isLoggedIn()) {
       this.userService.getAllCandidates().subscribe((data) => {
           for (let it of data) {
             this.users.push({
-              'id' : it.Username, 
-              'name' : it.Attributes[0].Value,
-              'surname' : it.Attributes[3].Value, 
-              'email' : it.Attributes[4].Value, 
-              'role' : it.Attributes[1].Value
+              'id' : it.username, 
+              'name' : it.attributes[2].value,
+              'surname' : it.attributes[4].value, 
+              'email' : it.attributes[6].value, 
+              'role' : it.attributes[5].value
             });
           }
          console.log(this.users);
@@ -69,11 +64,12 @@ export class ShowTestsWithStatus implements OnInit {
   }
 
   getTests() {
-    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/status/${this.status}`, 
+    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/status/new`, 
     {
-      headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
-    }
-    ).subscribe(
+      headers: new HttpHeaders({
+        "Authorization" : this.auth.getAccessToken()
+    })
+    }).subscribe(
     res => {
       console.log(res);
       if(res) {
@@ -110,7 +106,7 @@ export class ShowTestsWithStatus implements OnInit {
   deleteTest(id: String): void {
     this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/${id}`,
     {
-      headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+      headers: new HttpHeaders().set("Authorization", this.auth.getAccessToken()),
     }
     ).subscribe(
     res => {

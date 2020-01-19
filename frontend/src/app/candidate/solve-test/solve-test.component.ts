@@ -39,6 +39,11 @@ export class SolveTestComponent implements OnInit {
   
   finishTest(): void {
     console.log(this.test);
+
+    for (let it of this.test.testForm.questions) {
+      delete it.isApproved;
+    }
+    
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
       'id': this.test.id, 'candidateId': this.test.candidateId, 'testStatus': 'solved', 'testResult': null, 'testForm': {'id': this.test.testForm.id, 'title': this.test.testForm.title, 'questions': this.test.testForm.questions}
     },

@@ -23,15 +23,15 @@ export class TestsForUsersComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.isLoggedIn()) {
-      console.log(this.auth.getAuthenticatedUser().getUsername());
+      console.log(this.userService.getAllCandidates());
       this.userService.getAllCandidates().subscribe((data) => {
           for (let it of data) {
             this.users.push({
-              'id' : it.Username, 
-              'name' : it.Attributes[0].Value,
-              'surname' : it.Attributes[3].Value, 
-              'email' : it.Attributes[4].Value, 
-              'role' : it.Attributes[1].Value
+              'id' : it.username, 
+              'name' : it.attributes[2].value,
+              'surname' : it.attributes[4].value, 
+              'email' : it.attributes[6].value, 
+              'role' : it.attributes[5].value
             });
          }
         }
@@ -44,6 +44,11 @@ export class TestsForUsersComponent implements OnInit {
       console.log(result);
       if (result) {
         for (let it of result) {
+
+          for (let x of it.questions) {
+            delete x.isApproved;
+          }
+
           this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
            'candidateId': user.id, 'testStatus': 'new', 'testResult': null, 'testForm': {'id': it.id, 'title': it.title, 'questions': it.questions}
           },

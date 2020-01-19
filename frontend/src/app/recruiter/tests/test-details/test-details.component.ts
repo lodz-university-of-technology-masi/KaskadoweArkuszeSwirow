@@ -105,6 +105,9 @@ export class TestDetailsComponent implements OnInit {
     if (this.test.questions.length === 0)
       this.deleteTest();
     else {
+      for(let it of this.test.questions){
+        delete it.isApproved;
+      }
       this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
           {'id': this.test.id, 'title': this.test.title, 'questions': this.test.questions},
           {

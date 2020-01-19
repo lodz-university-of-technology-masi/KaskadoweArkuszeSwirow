@@ -73,11 +73,17 @@ export class TestCreateComponent implements OnInit {
     this.pressedSaveButton = true;
     if (!this.test.title || this.test.questions.length === 0)
       return;
+
+    for(let it of this.test.questions){
+      delete it.isApproved;
+    }
+
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
-        {'title': this.test.title, 'questions': this.test.questions},
+        {'title': this.test.title, 'language' : null, 'questions': this.test.questions},
         {
           headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
-        }).subscribe(
+        }
+        ).subscribe(
         res => {
           console.log(res);
           this.router.navigate(['/recruiter/tests']);

@@ -77,6 +77,11 @@ export class CheckTestComponent implements OnInit {
     if (this.checking) {
       console.log(this.test);
       let result = this.calculateResult();
+
+      for(let it of this.test.testForm.questions){
+        delete it.isApproved;
+      }
+
       this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
         'id': this.test.id, 'candidateId': this.test.candidateId, 'testStatus': 'checked', 'testResult': result, 'testForm': {'id': this.test.testForm.id, 'title': this.test.testForm.title, 'questions': this.test.testForm.questions}
       },
@@ -84,7 +89,7 @@ export class CheckTestComponent implements OnInit {
         headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
       }).subscribe( res => {
         console.log(res);
-        this.router.navigate(['/recuiter/tests-for-users/solved']);
+        this.router.navigate(['/recruiter/tests-for-users/solved']);
       }, err => console.log(err)
       );
     }else console.log('Error. Cannot finish the test. Read-only mode');

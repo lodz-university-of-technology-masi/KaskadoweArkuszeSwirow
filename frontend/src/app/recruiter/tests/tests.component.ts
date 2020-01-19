@@ -52,12 +52,13 @@ export class TestsComponent implements OnInit {
       ELEMENT_DATA.splice(position, 1);
     this.ref.tick();
   }
-
+ 
   getTests(...params: number[]): void {
+    console.log(this.auth.getToken());
     if (params.length === 0 || params[0] === 0 || params[0] === undefined) {
       this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
       {
-        headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+        headers: new HttpHeaders({'Authorization' : this.auth.getToken()}),
       })
         .subscribe(data => {
           console.log(data)
