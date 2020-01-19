@@ -1,6 +1,5 @@
 import { Component, OnInit, ApplicationRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Test } from '../../models/Test.model';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { RefresherService } from '../../refresher.service';
 import { AuthenticationService } from 'src/app/shared/authentication.service';

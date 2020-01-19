@@ -1,11 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {AuthenticationService} from '../../shared/authentication.service';
-import {Router} from '@angular/router';
-import {UsersManagementService} from '../../shared/users-management.service';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {ChangePasswordDialog, DialogData} from '../../login/login.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
-
+import { Component, Inject, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../shared/authentication.service';
+import { Router } from '@angular/router';
+import { UsersManagementService } from '../../shared/users-management.service';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface DialogNewUserData {
   email: string;

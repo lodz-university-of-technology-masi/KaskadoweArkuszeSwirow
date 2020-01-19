@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Test, DisplayTest } from 'src/app/models/Test.model';
+import { DisplayTest } from 'src/app/models/Test.model';
 import { MatDialogRef } from '@angular/material';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from 'src/app/shared/authentication.service';

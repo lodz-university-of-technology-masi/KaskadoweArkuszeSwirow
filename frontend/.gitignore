@@ -57,6 +57,9 @@ node_modules/
 aws-exports.js
 awsconfiguration.json
 
+codes.ts
+codes.js
+
 #cognito codes
 src/app/codes.ts
 src/app/codes.js
