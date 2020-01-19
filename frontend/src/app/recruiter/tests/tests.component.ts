@@ -1,14 +1,11 @@
-import { Component, OnInit, Inject, ApplicationRef } from '@angular/core';
+import { Component, OnInit, ApplicationRef } from '@angular/core';
 import { Test } from '../../models/Test.model'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RefresherService } from '../../refresher.service';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { FormBuilder } from '@angular/forms';
-import { AddQuestionDialog } from '../questions/questions.component';
-import { DataSource } from '@angular/cdk/table';
+import { MatDialog } from '@angular/material';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
+import { codes } from '../../../app/codes';
 
 let ELEMENT_DATA: Test[] = [];
 
@@ -37,6 +34,7 @@ export class TestsComponent implements OnInit {
     while (true) {
       if (data[i] !== undefined) {
         const test: Test = {id: data[i].id, title: data[i].title, questions: data[i].questions};
+        if(i==3) this.translate(test);
         ELEMENT_DATA.push(test);
       } else {
         break;
@@ -67,6 +65,29 @@ export class TestsComponent implements OnInit {
     } else {
       window.location.reload();
     }
+  }
+
+  translate(test: any) {
+    let textToTranslate: String = '';
+    for(let question of test.questions) {
+      textToTranslate += question.question + '|';
+      if (question.type == "O") {
+        textToTranslate += "||||";
+      } else if (question.type == "L") {
+        textToTranslate += question.answer[0].content + '||||';
+      } else if (question.type == "W") {
+        for(let answer of question.answer) {
+          textToTranslate += answer.content + '|';
+        }
+      }
+    }
+    textToTranslate += test.title;
+    this.http.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + codes.YANDEX_API_KEY + '&text=' + textToTranslate +'&lang=en&format=html')
+      .subscribe(data => {
+        let string = JSON.stringify(data);
+        let text = JSON.parse(string);
+        console.log(text.text[0].split('|'))
+      })
   }
 
   deleteTest(test: Test): void {

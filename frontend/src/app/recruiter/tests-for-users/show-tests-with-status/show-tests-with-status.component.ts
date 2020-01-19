@@ -3,7 +3,7 @@ import { AuthenticationService } from 'src/app/shared/authentication.service';
 import { UsersManagementService } from 'src/app/shared/users-management.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 
 @Component({

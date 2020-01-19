@@ -1,9 +1,9 @@
-import {Component, Inject} from '@angular/core';
-import {AuthenticationService} from '../shared/authentication.service';
-import {NgForm} from '@angular/forms';
-import {Router} from '@angular/router';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { Component } from '@angular/core';
+import { AuthenticationService } from '../shared/authentication.service';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // import { ConsoleReporter } from 'jasmine';
 

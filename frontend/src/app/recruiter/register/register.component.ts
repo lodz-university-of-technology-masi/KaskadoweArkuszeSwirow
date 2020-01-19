@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { AuthenticationService } from "../../shared/authentication.service";
 import { Router } from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',

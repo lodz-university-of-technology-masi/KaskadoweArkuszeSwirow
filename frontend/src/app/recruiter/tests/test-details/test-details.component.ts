@@ -2,7 +2,7 @@ import { Test } from '../../../models/Test.model';
 import { Question } from '../../../models/Question.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, ɵisDefaultChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { TestAddQuestionDialogComponent } from '../test-add-question-dialog/test-add-question-dialog.component';

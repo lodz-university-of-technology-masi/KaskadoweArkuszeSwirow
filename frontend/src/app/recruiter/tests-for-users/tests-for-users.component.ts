@@ -5,6 +5,7 @@ import { User } from 'src/app/models/User.model';
 import { MatDialog } from '@angular/material';
 import { ChooseTestDialogComponent } from './choose-test-dialog/choose-test-dialog.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { codes } from '../../../app/codes';
 
 @Component({
   selector: 'app-tests-for-users',
@@ -41,6 +42,7 @@ export class TestsForUsersComponent implements OnInit {
   assignTest(user){ 
     const dialogRef = this.dialog.open(ChooseTestDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
+
       if (result) {
         for (let it of result) {
 
@@ -48,6 +50,7 @@ export class TestsForUsersComponent implements OnInit {
             delete x.isApproved;
           }
 
+          this.translate(it.testForm)
           this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
            'candidateId': user.id, 'testStatus': 'new', 'testResult': null, 'testForm': {'id': it.id, 'title': it.title, 'questions': it.questions}
           },
@@ -59,6 +62,28 @@ export class TestsForUsersComponent implements OnInit {
          );}
       }
     });
+  }
+
+  translate(test: any) {
+    let textToTranslate: String = '';
+    textToTranslate = test.title + ';';
+    for(let question of test.questions) {
+      textToTranslate += question.question + ';';
+      if (question.type == "O") {
+        textToTranslate += ";;;;";
+      } else if (question.type == "L") {
+        textToTranslate += question.answer[0].content + ';;;';
+      } else if (question.type == "W") {
+        for(let answer of question.answer) {
+          textToTranslate += answer.content + ';';
+        }
+      }
+    }
+    // console.log(textToTranslate);
+    this.http.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + codes.YANDEX_API_KEY + '&text=' + textToTranslate +'&lang=en&format=html')
+      .subscribe(data => {
+        console.log(data)
+      })
   }
 
 }

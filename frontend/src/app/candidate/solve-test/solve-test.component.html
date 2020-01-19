@@ -18,12 +18,11 @@
                     </div>
                     
                 </div>
-
-                <div *ngIf="question.type === 'O'" class="answer">
+                 <div *ngIf="question.type === 'O'" class="answer">
                     <label for="answer">Twoja odpowiedź:</label>
-                    <textarea class="form-control col-lg-8 openAnswer" type="text" [(ngModel)]="question.answer[0].candidateAnswer"></textarea>
+                    <textarea class="form-control col-lg-8 openAnswer" type="text" [(ngModel)]="openAnswers[i]"></textarea>
                 </div>
-
+                
                 <div *ngIf="question.type === 'W'" class="answer">
                 <div *ngFor="let answer of question.answer; index as j" >
                     <mat-checkbox [checked]="answer.isSelected" (change)="changeAnswerIsSelected(answer)" class="btn answerButton" >

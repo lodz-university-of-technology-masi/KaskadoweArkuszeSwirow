@@ -33,8 +33,21 @@
                             Zalicz
                         </mat-checkbox>
                     </div>
+                    <div class="col-lg-3" *ngIf="!checking" style="margin: auto;">
+                        <div *ngIf="question.answer[0].isCorrect">
+                            <p style="background: red">
+                                Nieprawidłowa
+                            </p>
+                        </div>
+                        <div *ngIf="!question.answer[0].isCorrect" style="margin: auto;">
+                            <p style="background: green">
+                               Prawidłowa
+                            </p>
+                        </div>
+                    </div>
                     <div class="col-lg-11">
-                        <textarea class="form-control col-lg-8 openAnswer" type="text" [(ngModel)]="question.answer[0].candidateAnswer" disabled></textarea>
+                        <textarea class="form-control col-lg-8 openAnswer" type="text" [(ngModel)]="openAnswers[i]" disabled>
+                        </textarea>
                     </div>
                 </div>
 

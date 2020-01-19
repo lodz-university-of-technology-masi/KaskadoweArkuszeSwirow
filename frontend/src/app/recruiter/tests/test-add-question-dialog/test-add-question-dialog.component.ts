@@ -1,13 +1,8 @@
-import { Component, OnInit, Inject, ApplicationRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Test } from '../../../models/Test.model'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { RefresherService } from '../../../refresher.service';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { FormBuilder } from '@angular/forms';
-import { DataSource } from '@angular/cdk/table';
-import { Question, DisplayQuestion } from '../../../models/Question.model';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DisplayQuestion } from '../../../models/Question.model';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 @Component({
