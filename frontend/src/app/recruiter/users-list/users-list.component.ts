@@ -62,17 +62,18 @@ export class UsersListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.auth.register(result.email, result.password, result.firstName, result.lastName, '1', this.auth.getAuthenticatedUser().getUsername()).subscribe(
-        (res) => {
-          console.log(res);
-          this.openSnackBar('Candidate registered!', 'OK');
-        },
-        (err) => {
-          console.log(err);
-          this.openSnackBar(err.message, 'OK');
-        }
-      );
-      // this.userService.createCandidate(result.email, result.firstName, result.lastName, this.auth.getAuthenticatedUser().getUsername());
+      if(result){
+        this.auth.register(result.email, result.password, result.firstName, result.lastName, '1', this.auth.getAuthenticatedUser().getUsername()).subscribe(
+          (res) => {
+            console.log(res);
+            this.openSnackBar('Candidate registered!', 'OK');
+          },
+          (err) => {
+            console.log(err);
+            this.openSnackBar(err.message, 'OK');
+          }
+        );
+      }
     });
   }
 

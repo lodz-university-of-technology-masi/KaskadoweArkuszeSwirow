@@ -3,7 +3,7 @@ import {AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserAttribut
 // import {Auth} from 'aws-amplify';
 import {Observable} from 'rxjs';
 import decode from 'jwt-decode';
-import {codes} from '../../app/codes';
+import {codes} from '../codes';
 
 
 const poolData = {
