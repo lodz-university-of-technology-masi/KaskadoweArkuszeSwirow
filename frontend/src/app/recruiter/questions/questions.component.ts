@@ -6,7 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RefresherService } from '../../refresher.service';
 import { Subscription } from 'rxjs';
-import { codes } from '../../codes';
+import { codes } from '../../../codes';
 
 let ELEMENT_DATA: Question[] = [];
 

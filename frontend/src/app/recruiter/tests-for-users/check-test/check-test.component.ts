@@ -30,11 +30,11 @@ export class CheckTestComponent implements OnInit {
 
   setTest(data: any): void {
     const tmp: CandidateForm = {
-      id: data[0].id, 
-      candidateId: data[0].candidateId,
-      testStatus: data[0].testStatus,
-      testResult: data[0].testResult,
-      testForm: data[0].testForm};
+      id: data.id, 
+      candidateId: data.candidateId,
+      testStatus: data.testStatus,
+      testResult: data.testResult,
+      testForm: data.testForm};
     this.test = tmp;
     for (let it of this.test.testForm.questions) {
       if (it.type === 'L' && it.answer[0].content === it.answer[0].candidateAnswer){

@@ -46,8 +46,11 @@ export class ShowTestsWithStatus implements OnInit {
   }
 
   getUsersTests() {
+    console.log('access token');
+    console.log(this.auth.getAccessToken());
+    console.log('token');
+    console.log(this.auth.getToken());
     if (this.auth.isLoggedIn()) {
-      console.log(this.auth.getAuthenticatedUser().getUsername());
       this.userService.getAllCandidates(this.auth.getAuthenticatedUser().getUsername()).subscribe((data) => {
           for (let it of data) {
             this.users.push({
@@ -65,7 +68,7 @@ export class ShowTestsWithStatus implements OnInit {
   }
 
   getTests() {
-    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/status/${this.status}`,
+    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/status/${this.status}`, 
     ).subscribe(
     res => {
       console.log(res);

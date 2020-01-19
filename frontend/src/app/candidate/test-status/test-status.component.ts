@@ -27,11 +27,11 @@ export class TestStatusComponent implements OnInit {
 
   setLocalTestToData(data: any): void {
     this.test = {
-      id: data[0].id, 
-      candidateId: data[0].candidateId,
-      testStatus: data[0].testStatus,
-      testResult: data[0].testResult,
-      testForm: data[0].testForm
+      id: data.id, 
+      candidateId: data.candidateId,
+      testStatus: data.testStatus,
+      testResult: data.testResult,
+      testForm: data.testForm
     }
   }
   
