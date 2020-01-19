@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {AuthenticationService} from './authentication.service';
 import {Observable} from 'rxjs';
 import {codes} from '../codes';
+import { HttpClient } from '@angular/common/http';
+
 
 const AWS = require('aws-sdk');
 
@@ -17,11 +19,11 @@ export class UsersManagementService {
   private UserPoolId = codes.USER_POOL_ID;
   private cognitoidentityserviceprovider: any;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     AWS.config.update({
       region: codes.REGION,
-      accessKeyId: codes.ACCESS_KEY_ID,
-      secretAccessKey: codes.SECRET_ACCESS_KEY
+      // accessKeyId: codes.ACCESS_KEY_ID,
+      // secretAccessKey: codes.SECRET_ACCESS_KEY
     });
     this.cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
   }
@@ -49,50 +51,39 @@ export class UsersManagementService {
         'family_name',
         'custom:role',
         'custom:recruiter'
-
       ],
       // Filter:  `custom:recruiter = \"${username}\"` nie mozna tak :(
     };
 
     return Observable.create(observer => {
-      this.cognitoidentityserviceprovider.listUsers(params, (err, data) => {
-        if (err) {
-          observer.next([]);
-          console.log(err, err.stack);
-        } else {
-          observer.next(data.Users.filter((element, index, array) => { 
-            return element;
-          }));
+      this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/user`).subscribe(
+        (res) => {
+          let temp = res as [];
+          observer.next(res);
+          // return res;
+        }, 
+        (err) => {
+          console.log(err)
         }
-        
-        observer.complete();
-      });
+      )
     });
   }
 
   getAllCandidates() {
-    const params = {
-      UserPoolId: this.UserPoolId,
-      AttributesToGet: [
-        'email',
-        'given_name',
-        'family_name',
-        'custom:role',
-        'custom:recruiter'
-      ],
-    };
+
     return Observable.create(observer => {
-      this.cognitoidentityserviceprovider.listUsers(params, (err, data) => {
-        if (err) {
-          observer.next([]);
-          console.log(err, err.stack);
-        } else {
-          observer.next(data.Users.filter((element, index, array) => {
-            return element.Attributes[1].Value === this.CANDIDATE_ROLE;
-          }));
+      this.getAllUsers().subscribe(
+        (res) => {
+          console.log(res);
+          let candidates = res.filter(user => user.attributes[5].value == "1");
+          observer.next(candidates);
+          observer.complete()
+        }, 
+        (err) => {
+          console.log(err)
+          observer.complete()
         }
-        observer.complete();
-      });
+      );
     });
   }
 

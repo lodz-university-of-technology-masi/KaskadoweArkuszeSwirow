@@ -27,7 +27,6 @@ export class LoginComponent {
                 console.log('LogIn component');
 
                 if(auth.isLoggedIn()){
-
                   const role = this.auth.getAuthenticatedUserRole();
                   console.log(role);
                   if(role == '0') {

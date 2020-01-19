@@ -38,10 +38,16 @@ export class UsersListComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.auth.isLoggedIn()) {
-      this.userService.getAllCandidates().subscribe((data) => {
-          this.usersListCognito = data;
+      this.userService.getAllCandidates().subscribe(
+        (res) => {
+          this.usersListCognito = res;
+        },
+        (err) => {
+          console.log(err);
         }
       );
+
+      // console.log(data);
     }
   }
 
