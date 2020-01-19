@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Test } from '../../../models/Test.model';
 import { Router } from '@angular/router';
 import { Question } from '../../../models/Question.model';
 import { MatDialog } from '@angular/material';
 import { TestAddQuestionDialogComponent } from '../test-add-question-dialog/test-add-question-dialog.component';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 @Component({
   selector: 'app-test-create',
@@ -20,7 +21,8 @@ export class TestCreateComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private auth: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -55,7 +57,10 @@ export class TestCreateComponent implements OnInit {
   }
 
   generateRandomQuestions(number: number=2): void {
-    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question/random/${number}`)
+    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question/random/${number}`,
+    {
+      headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+    })
     .subscribe(
         res => {
           console.log(res);
@@ -69,7 +74,10 @@ export class TestCreateComponent implements OnInit {
     if (!this.test.title || this.test.questions.length === 0)
       return;
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
-        {'title': this.test.title, 'questions': this.test.questions}).subscribe(
+        {'title': this.test.title, 'questions': this.test.questions},
+        {
+          headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+        }).subscribe(
         res => {
           console.log(res);
           this.router.navigate(['/recruiter/tests']);

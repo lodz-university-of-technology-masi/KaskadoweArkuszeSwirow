@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ApplicationRef } from '@angular/core';
 import { Test } from '../../../models/Test.model'
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RefresherService } from '../../../refresher.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormBuilder } from '@angular/forms';
 import { DataSource } from '@angular/cdk/table';
 import { Question, DisplayQuestion } from '../../../models/Question.model';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 @Component({
   selector: 'app-test-add-question-dialog',
@@ -26,6 +27,7 @@ export class TestAddQuestionDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<TestAddQuestionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Test,
     private http: HttpClient,
+    private auth: AuthenticationService
     //private refresher: RefresherService
   ) {
     this.getQuestions();
@@ -53,6 +55,9 @@ export class TestAddQuestionDialogComponent implements OnInit {
 
   getQuestions(): void {
     this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question',
+      {
+        headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+      }
       ).subscribe(
       res => {
 

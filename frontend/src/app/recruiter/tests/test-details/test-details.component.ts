@@ -3,9 +3,10 @@ import { Question } from '../../../models/Question.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, ɵisDefaultChangeDetectionStrategy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { TestAddQuestionDialogComponent } from '../test-add-question-dialog/test-add-question-dialog.component';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 let idOfTest: String;
 
@@ -25,6 +26,7 @@ export class TestDetailsComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
+    private auth: AuthenticationService,
     private http: HttpClient){
     }
 
@@ -40,7 +42,10 @@ export class TestDetailsComponent implements OnInit {
   }
 
   getTestWithID(id: String): void {
-    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${id}`)
+    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${id}`,
+      {
+        headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+      })
       .subscribe(data => {
         if (!('errorMessage' in data)){
           console.log(data);
@@ -101,7 +106,10 @@ export class TestDetailsComponent implements OnInit {
       this.deleteTest();
     else {
       this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
-          {'id': this.test.id, 'title': this.test.title, 'questions': this.test.questions}).subscribe(
+          {'id': this.test.id, 'title': this.test.title, 'questions': this.test.questions},
+          {
+            headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+          }).subscribe(
           res => {
             console.log(res);
             this.router.navigate(['/recruiter/tests']);
@@ -111,7 +119,10 @@ export class TestDetailsComponent implements OnInit {
   }
 
   deleteTest(): void {
-    this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${this.test.id}`)
+    this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${this.test.id}`,
+    {
+      headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+    })
     .subscribe(s => {
       console.log(s);
       this.router.navigate(['/recruiter/tests']);

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Test, DisplayTest } from 'src/app/models/Test.model';
 import { MatDialogRef } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 @Component({
   selector: 'app-choose-test-dialog',
@@ -15,6 +16,7 @@ export class ChooseTestDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ChooseTestDialogComponent>,
     private http: HttpClient,
+    private auth: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -43,6 +45,9 @@ export class ChooseTestDialogComponent implements OnInit {
 
   getTests(): void {
     this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
+    {
+      headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+    }
       ).subscribe(
       res => {
         this.addToList(res);

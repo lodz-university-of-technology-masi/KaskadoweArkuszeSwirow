@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CandidateForm } from 'src/app/models/CandidateForm.model';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 @Component({
   selector: 'app-test-results',
@@ -16,7 +17,8 @@ export class TestStatusComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient){
+    private http: HttpClient,
+    private auth: AuthenticationService){
     }
 
   ngOnInit() {
@@ -36,7 +38,10 @@ export class TestStatusComponent implements OnInit {
   }
   
   getTestWithID(id: String): void {
-    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/${id}`)
+    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/${id}`,
+    {
+      headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+    })
     .subscribe(data => {
       if (!('errorMessage' in data)){
         console.log(data);

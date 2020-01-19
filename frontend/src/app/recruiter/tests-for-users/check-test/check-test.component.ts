@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';  
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CandidateForm } from '../../../models/CandidateForm.model';
 import { Answer } from 'src/app/models/Answer.model';
 import { Router } from '@angular/router';
 import { Question } from 'src/app/models/Question.model';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 @Component({
   selector: 'app-check-test',
@@ -16,7 +17,8 @@ export class CheckTestComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router) { 
+    private router: Router,
+    private auth: AuthenticationService) { 
       let page = window.location.href.split('/');
       if (page[page.length - 2] === 'check-test') 
         this.checking = true;
@@ -77,6 +79,9 @@ export class CheckTestComponent implements OnInit {
       let result = this.calculateResult();
       this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
         'id': this.test.id, 'candidateId': this.test.candidateId, 'testStatus': 'checked', 'testResult': result, 'testForm': {'id': this.test.testForm.id, 'title': this.test.testForm.title, 'questions': this.test.testForm.questions}
+      },
+      {
+        headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
       }).subscribe( res => {
         console.log(res);
         this.router.navigate(['/recuiter/tests-for-users/solved']);
@@ -88,7 +93,10 @@ export class CheckTestComponent implements OnInit {
   getTestWithID(): void {
     let temp = window.location.href.split('/')
     this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/` + 
-          temp[temp.length - 1])
+          temp[temp.length - 1],
+          {
+            headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+          })
       .subscribe(data => {
         if (!('errorMessage' in data)){
           console.log(data);

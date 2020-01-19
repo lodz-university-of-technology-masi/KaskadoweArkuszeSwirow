@@ -3,10 +3,11 @@ import { Question } from '../../models/Question.model';
 import { Answer } from '../../models/Answer.model';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RefresherService } from '../../refresher.service';
 import { Subscription } from 'rxjs';
-import { codes } from '../../../codes';
+import { codes } from '../../../../src/codes';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 let ELEMENT_DATA: Question[] = [];
 
@@ -23,6 +24,7 @@ export class QuestionsComponent implements OnInit {
     public dialog: MatDialog,
     private http: HttpClient,
     private ref: ApplicationRef,
+    private auth: AuthenticationService,
     private refresher: RefresherService) {
       this.getQuestions(0);
       this.ticker = new Subscription();
@@ -45,7 +47,10 @@ export class QuestionsComponent implements OnInit {
   }
 
   deleteQuestion(question: Question) {
-    this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question/${question.id}`)
+    this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question/${question.id}`,
+        {
+          headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+        })
         .subscribe(data => {
           console.log(data)
             this.removeFromList(question);
@@ -62,7 +67,10 @@ export class QuestionsComponent implements OnInit {
 
   getQuestions(...params: number[]): void {
     if (params.length === 0 || params[0] === 0 || params[0] === undefined) {
-      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question')
+      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question',
+        {
+          headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+        })
         .subscribe(data => {
           console.log(data)
             this.addToList(data);
@@ -113,7 +121,8 @@ export class AddQuestionDialog {
     @Inject(MAT_DIALOG_DATA) public data: Question,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private refresher: RefresherService
+    private refresher: RefresherService,
+    private auth: AuthenticationService
   ) {
     this.newChooseQuestionForm = this.formBuilder.group({
       question: '',
@@ -140,7 +149,10 @@ export class AddQuestionDialog {
   }
 
   translate() {
-    this.http.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + codes.YANDEX_API_KEY + '&text=' + this.selectedText +'&lang=en&format=html')
+    this.http.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + codes.YANDEX_API_KEY + '&text=' + this.selectedText +'&lang=en&format=html',
+      {
+        headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+      })
       .subscribe(data => {
         let string = JSON.stringify(data);
         let text = JSON.parse(string);
@@ -202,7 +214,11 @@ export class AddQuestionDialog {
       ];
     }
     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/question',
-      {'question': customerData.question, 'answer': answers, 'type': type}).subscribe(
+      {'question': customerData.question, 'answer': answers, 'type': type},
+      {
+        headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+      }
+      ).subscribe(
       res => {
         this.refresher.questionRefreshSubject$.next(1);
         console.log(res);

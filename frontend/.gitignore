@@ -60,3 +60,5 @@ awsconfiguration.json
 #cognito codes
 src/app/codes.ts
 src/app/codes.js
+src/codes.ts
+src/codes.js

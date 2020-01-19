@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ApplicationRef } from '@angular/core';
 import { Test } from '../../models/Test.model'
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RefresherService } from '../../refresher.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormBuilder } from '@angular/forms';
 import { AddQuestionDialog } from '../questions/questions.component';
 import { DataSource } from '@angular/cdk/table';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 let ELEMENT_DATA: Test[] = [];
 
@@ -24,6 +25,7 @@ export class TestsComponent implements OnInit {
     public dialog: MatDialog,
     private http: HttpClient,
     private ref: ApplicationRef,
+    private auth: AuthenticationService,
     private refresher: RefresherService) {
       this.getTests();
       this.ticker = new Subscription();
@@ -53,7 +55,10 @@ export class TestsComponent implements OnInit {
 
   getTests(...params: number[]): void {
     if (params.length === 0 || params[0] === 0 || params[0] === undefined) {
-      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests')
+      this.http.get('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests',
+      {
+        headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+      })
         .subscribe(data => {
           console.log(data)
             this.addToList(data);
@@ -65,7 +70,10 @@ export class TestsComponent implements OnInit {
   }
 
   deleteTest(test: Test): void {
-    this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${test.id}`)
+    this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/tests/${test.id}`,
+    {
+      headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+    })
     .subscribe(s => {
       this.removeFromList(test);
     })

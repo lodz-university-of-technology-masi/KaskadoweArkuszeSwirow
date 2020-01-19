@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
 import { UsersManagementService } from 'src/app/shared/users-management.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 
@@ -47,11 +47,11 @@ export class ShowTestsWithStatus implements OnInit {
 
   getUsersTests() {
     console.log('access token');
-    console.log(this.auth.getAccessToken());
-    console.log('token');
     console.log(this.auth.getToken());
+
+
+
     if (this.auth.isLoggedIn()) {
-      console.log(this.auth.getAuthenticatedUser().getUsername());
       this.userService.getAllCandidates().subscribe((data) => {
           for (let it of data) {
             this.users.push({
@@ -70,6 +70,9 @@ export class ShowTestsWithStatus implements OnInit {
 
   getTests() {
     this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/status/${this.status}`, 
+    {
+      headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+    }
     ).subscribe(
     res => {
       console.log(res);
@@ -106,6 +109,9 @@ export class ShowTestsWithStatus implements OnInit {
 
   deleteTest(id: String): void {
     this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/${id}`,
+    {
+      headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+    }
     ).subscribe(
     res => {
       console.log(res);
