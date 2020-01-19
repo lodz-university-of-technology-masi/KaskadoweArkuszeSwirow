@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AuthenticationService} from './authentication.service';
 import {Observable} from 'rxjs';
-import {codes} from '../../../src/codes';
+import {codes} from '../codes';
 import { HttpClient } from '@angular/common/http';
 
 const AWS = require('aws-sdk');
