@@ -33,7 +33,6 @@ export class UsersListComponent implements OnInit {
   addCandidate() {
     if (this.auth.isLoggedIn()) {
       this.openDialog();
-
     }
   }
 
@@ -47,8 +46,6 @@ export class UsersListComponent implements OnInit {
           console.log(err);
         }
       );
-
-      // console.log(data);
     }
   }
 

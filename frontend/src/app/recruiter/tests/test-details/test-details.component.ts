@@ -58,8 +58,9 @@ export class TestDetailsComponent implements OnInit {
   showAddQuestionDialog() {
     const dialogRef = this.dialog.open(TestAddQuestionDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.addToList(result);
+      if(result) {
+        this.addToList(result);
+      }
     });
   }
 

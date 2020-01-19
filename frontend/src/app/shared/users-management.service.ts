@@ -21,8 +21,6 @@ export class UsersManagementService {
   constructor(private http: HttpClient) {
     AWS.config.update({
       region: codes.REGION,
-      // accessKeyId: codes.ACCESS_KEY_ID,
-      // secretAccessKey: codes.SECRET_ACCESS_KEY
     });
     this.cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
   }
@@ -51,13 +49,11 @@ export class UsersManagementService {
         'custom:role',
         'custom:recruiter'
       ],
-      // Filter:  `custom:recruiter = \"${username}\"` nie mozna tak :(
     };
 
     return Observable.create(observer => {
       this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/user`).subscribe(
         (res) => {
-          let temp = res as [];
           observer.next(res);
           // return res;
         }, 

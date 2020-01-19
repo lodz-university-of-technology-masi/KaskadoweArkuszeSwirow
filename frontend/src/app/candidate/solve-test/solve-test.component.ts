@@ -60,11 +60,10 @@ export class SolveTestComponent implements OnInit {
 
   getTestWithID(): void {
     let temp = window.location.href.split('/');
-    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/` + 
-        temp[temp.length - 1],
-        {
-          headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
-        })
+    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/` + temp[temp.length - 1],
+      {
+        headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+      })
       .subscribe(data => {
         if (!('errorMessage' in data)){
           console.log(data);

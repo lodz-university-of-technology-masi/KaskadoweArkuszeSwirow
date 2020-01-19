@@ -18,17 +18,20 @@ export class RegisterComponent {
   register(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    this.auth.register(email, password, 'anon', 'anon', '0', this.auth.getAuthenticatedUser().getUsername()).subscribe(
-      (res) => {        
-        console.log(res);
-        form.reset();
-        this.openSnackBar('Recruiter registered!', 'OK');
-      },
-      (err) => {
-        console.log(err);
-        this.openSnackBar(err.message, 'OK');
-      }
-    );
+
+    if(form.status == "VALID"){
+      this.auth.register(email, password, 'anon', 'anon', '0', this.auth.getAuthenticatedUser().getUsername()).subscribe(
+        (res) => {        
+          console.log(res);
+          form.reset();
+          this.openSnackBar('Recruiter registered!', 'OK');
+        },
+        (err) => {
+          console.log(err);
+          this.openSnackBar(err.message, 'OK');
+        }
+      );
+    }
   }
 
   openSnackBar(message: string, action: string) {
