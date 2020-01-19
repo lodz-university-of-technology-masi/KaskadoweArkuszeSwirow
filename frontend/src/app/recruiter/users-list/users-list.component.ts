@@ -11,6 +11,7 @@ export interface DialogNewUserData {
   email: string;
   firstName: string;
   lastName: string;
+  password: string;
 }
 
 @Component({
@@ -92,8 +93,7 @@ export class CreateNewUserDialog {
   constructor(
     public dialogRef: MatDialogRef<CreateNewUserDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogNewUserData
-  ) {
-  }
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
