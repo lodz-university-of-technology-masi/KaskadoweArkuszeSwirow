@@ -107,7 +107,7 @@ export class ShowTestsWithStatus implements OnInit {
   deleteTest(id: String): void {
     this.http.delete(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/${id}`,
     {
-      headers: new HttpHeaders().set("Authorization", this.auth.getAccessToken()),
+      headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
     }
     ).subscribe(
     res => {
