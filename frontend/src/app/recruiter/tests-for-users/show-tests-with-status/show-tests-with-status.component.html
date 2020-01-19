@@ -112,10 +112,10 @@
                             <a [routerLink]="['/recruiter/see-test', test.id]">{{test.testForm.title}}</a>
                         </td>
                         <td>
-                            {{test.testStatus.split(';')[0] === 'passed' ? 'Zaliczony' : 'Niezaliczony'}}
+                            {{test.testResult.split(';')[0] == 'passed' ? 'Zaliczony' : 'Niezaliczony'}}
                         </td>
                         <td>
-                            {{test.testStatus.split(';')[1]}}
+                            {{test.testResult.split(';')[1]}}
                         </td>
                         <td>
                             {{test.name}}

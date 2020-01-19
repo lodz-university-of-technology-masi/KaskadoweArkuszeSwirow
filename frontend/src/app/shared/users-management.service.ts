@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 import {codes} from '../codes';
 import { HttpClient } from '@angular/common/http';
 
-
 const AWS = require('aws-sdk');
 
 @Injectable({
