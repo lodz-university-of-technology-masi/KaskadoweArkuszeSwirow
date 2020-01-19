@@ -14,6 +14,7 @@ import { AuthenticationService } from 'src/app/shared/authentication.service';
 export class CheckTestComponent implements OnInit {
   test: CandidateForm;
   checking: boolean;
+  openAnswers = [];
 
   constructor(
     private http: HttpClient,
@@ -38,6 +39,14 @@ export class CheckTestComponent implements OnInit {
       testResult: data.testResult,
       testForm: data.testForm};
     this.test = tmp;
+
+    for (let i = 0; i < this.test.testForm.questions.length; i++) {
+      if (this.test.testForm.questions[i].type === 'O') {
+        this.openAnswers.push(this.test.testForm.questions[i].answer[0].candidateAnswer);
+      }else
+        this.openAnswers.push(null);
+    }
+
     for (let it of this.test.testForm.questions) {
       if (it.type === 'L' && it.answer[0].content === it.answer[0].candidateAnswer){
         it.isApproved = true;
@@ -51,6 +60,7 @@ export class CheckTestComponent implements OnInit {
       else
         it.isApproved = false;
     }
+
   }
 
   changeAnswerIsSelected(answer: Answer): void {
@@ -78,8 +88,16 @@ export class CheckTestComponent implements OnInit {
       console.log(this.test);
       let result = this.calculateResult();
 
-      for(let it of this.test.testForm.questions){
-        delete it.isApproved;
+      for (let i = 0; i < this.test.testForm.questions.length; i++) {
+        if (this.test.testForm.questions[i].type === 'O') {
+          this.test.testForm.questions[i].answer[0] = {
+            candidateAnswer: this.openAnswers[i],
+            content: null,
+            isCorrect: this.test.testForm.questions[i].isApproved,
+            isSelected: null
+          }
+        }
+        delete this.test.testForm.questions[i].isApproved;
       }
 
       this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
