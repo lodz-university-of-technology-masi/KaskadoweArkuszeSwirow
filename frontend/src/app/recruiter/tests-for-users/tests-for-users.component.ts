@@ -42,7 +42,6 @@ export class TestsForUsersComponent implements OnInit {
   assignTest(user){ 
     const dialogRef = this.dialog.open(ChooseTestDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
       if (result) {
         for (let it of result) {
 
@@ -50,7 +49,7 @@ export class TestsForUsersComponent implements OnInit {
             delete x.isApproved;
           }
 
-          this.translate(it.testForm)
+          this.translate(it);
           this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
            'candidateId': user.id, 'testStatus': 'new', 'testResult': null, 'testForm': {'id': it.id, 'title': it.title, 'questions': it.questions}
           },
