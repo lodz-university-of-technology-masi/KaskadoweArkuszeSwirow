@@ -1,16 +1,15 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {AuthenticationService} from '../../shared/authentication.service';
-import {Router} from '@angular/router';
-import {UsersManagementService} from '../../shared/users-management.service';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {ChangePasswordDialog, DialogData} from '../../login/login.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
-
+import { Component, Inject, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../shared/authentication.service';
+import { Router } from '@angular/router';
+import { UsersManagementService } from '../../shared/users-management.service';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface DialogNewUserData {
   email: string;
   firstName: string;
   lastName: string;
+  password: string;
 }
 
 @Component({
@@ -92,8 +91,7 @@ export class CreateNewUserDialog {
   constructor(
     public dialogRef: MatDialogRef<CreateNewUserDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogNewUserData
-  ) {
-  }
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

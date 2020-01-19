@@ -1,9 +1,9 @@
-import {Component, Inject} from '@angular/core';
-import {AuthenticationService} from '../shared/authentication.service';
-import {NgForm} from '@angular/forms';
-import {Router} from '@angular/router';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { Component } from '@angular/core';
+import { AuthenticationService } from '../shared/authentication.service';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // import { ConsoleReporter } from 'jasmine';
 
@@ -135,12 +135,12 @@ export class LoginComponent {
   templateUrl: 'change-password-dialog.html'
 })
 export class ChangePasswordDialog {
-  newPassword;
-  constructor(
-    public dialogRef: MatDialogRef<ChangePasswordDialog>,
-    @Inject (MAT_DIALOG_DATA) public data: DialogData
-  ) {
+  data = {
+    newPassword: null
   }
+  constructor(
+    public dialogRef: MatDialogRef<ChangePasswordDialog>
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -153,13 +153,13 @@ export class ChangePasswordDialog {
   templateUrl: 'confirm-code-dialog.html'
 })
 export class ConfirmCodeDialog {
-  emailConfirm;
-  confirmCode;
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmCodeDialog>,
-    @Inject (MAT_DIALOG_DATA) public data: DialogData
-  ) {
+  data = {
+    emailConfirm: null, 
+    confirmCode: null
   }
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmCodeDialog>
+    ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

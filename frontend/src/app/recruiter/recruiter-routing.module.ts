@@ -1,9 +1,6 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
+import { Routes } from '@angular/router';
 import { AuthGuard } from '../shared/guards/auth-guard.service';
 import { RecruiterGuard } from '../shared/guards/recruiter-guard.service'
-// import {SampleComponent} from './sample/sample.component'
 import { LayoutComponent } from './layout/layout.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { TestsComponent } from './tests/tests.component';
@@ -14,6 +11,7 @@ import { TestsForUsersComponent } from './tests-for-users/tests-for-users.compon
 import { ShowTestsWithStatus } from './tests-for-users/show-tests-with-status/show-tests-with-status.component';
 import { CheckTestComponent } from './tests-for-users/check-test/check-test.component';
 import { RegisterComponent } from './register/register.component';
+
 
 export const recruiterRoutes: Routes = [
   {
