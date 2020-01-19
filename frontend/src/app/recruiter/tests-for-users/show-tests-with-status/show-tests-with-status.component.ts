@@ -64,7 +64,8 @@ export class ShowTestsWithStatus implements OnInit {
   }
 
   getTests() {
-    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/status/new`, 
+
+    this.http.get(`https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform/status/${this.status}`, 
     {
       headers: new HttpHeaders({
         "Authorization" : this.auth.getAccessToken()
