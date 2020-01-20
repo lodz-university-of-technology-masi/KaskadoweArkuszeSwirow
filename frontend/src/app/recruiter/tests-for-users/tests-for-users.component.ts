@@ -27,7 +27,7 @@ export class TestsForUsersComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.isLoggedIn()) {
-      console.log(this.userService.getAllCandidates());
+      // console.log(this.userService.getAllCandidates());
       this.userService.getAllCandidates().subscribe((data) => {
           for (let it of data) {
             this.users.push({
@@ -44,9 +44,14 @@ export class TestsForUsersComponent implements OnInit {
   }
   assignTest(user){ 
     const dialogRef = this.dialog.open(ChooseTestDialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(res => {
       // console.log(result);
-      this.translate(result);
+      let result;
+      if(res.ifTranslate) {
+        result = this.translate(res.selectedTests);
+      } else {
+        result = res.selectedTests
+      }
 
       if (result) {
         for (let it of result) {
@@ -61,7 +66,7 @@ export class TestsForUsersComponent implements OnInit {
           {
             headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
           }).subscribe( res => {
-            console.log(res);
+            // console.log(res);
           }, err => console.log(err)
          );}
       }
@@ -73,14 +78,14 @@ export class TestsForUsersComponent implements OnInit {
     for(let test of result){
       let textToTranslate: String = '';
       for(let question of test.questions) {
-        textToTranslate += question.question + '|';
+        textToTranslate += question.question + '\|';
         if (question.type == "O") {
-          textToTranslate += "||||";
+          textToTranslate += "\|\|\|\|";
         } else if (question.type == "L") {
-          textToTranslate += question.answer[0].content + '||||';
+          textToTranslate += question.answer[0].content + '\|\|\|\|';
         } else if (question.type == "W") {
           for(let answer of question.answer) {
-            textToTranslate += answer.content + '|';
+            textToTranslate += answer.content + ' \|';
           }
         }
       }
@@ -89,9 +94,10 @@ export class TestsForUsersComponent implements OnInit {
         .subscribe(data => {
           let string = JSON.stringify(data);
           let text = JSON.parse(string);
-          // console.log(test.id)
+          // console.log(text)
           // console.log(test)
-          let splittedText = text.text[0].split('|');
+          let splittedText = text.text[0].split('\|');
+          // console.log(splittedText)
           let translattedTest: DisplayTest = new DisplayTest(splittedText[splittedText.length - 1], [], test.id, true);
           for(let i = 0; i < Math.floor(splittedText.length/5); i++) {
             let answer: Answer[] = [];
@@ -101,11 +107,12 @@ export class TestsForUsersComponent implements OnInit {
             let quest: Question = new Question(splittedText[i*5], answer, test.questions[i].type);
             translattedTest.questions.push(quest);
           }
-          console.log(translattedTest)
+          // console.log(translattedTest)
           translattedResult.push(translattedTest)
         })
       }
-      console.log(translattedResult)
+      // console.log(translattedResult)
+      return translattedResult;
   }
 
 }

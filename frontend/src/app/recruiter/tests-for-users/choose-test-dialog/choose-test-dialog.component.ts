@@ -9,8 +9,9 @@ import { AuthenticationService } from 'src/app/shared/authentication.service';
   templateUrl: './choose-test-dialog.component.html',
   styleUrls: ['./choose-test-dialog.component.css']
 })
-export class ChooseTestDialogComponent implements OnInit {
-
+export class ChooseTestDialogComponent implements OnInit {o
+  
+  public translate: Boolean = false;
   tests: DisplayTest[] = [];
 
   constructor(
@@ -39,7 +40,7 @@ export class ChooseTestDialogComponent implements OnInit {
       }
       i++;
     }
-    console.log(this.tests);
+    // console.log(this.tests);
     //this.ref.tick();
   }
 
@@ -51,7 +52,7 @@ export class ChooseTestDialogComponent implements OnInit {
       ).subscribe(
       res => {
         this.addToList(res);
-        console.log(res);
+        // console.log(res);
       }, err => console.log(err)
     );
   }
@@ -62,11 +63,17 @@ export class ChooseTestDialogComponent implements OnInit {
       if (it.selected == true)
         selectedTests.push(it);
     }
-    this.dialogRef.close(selectedTests);
+    const ifTranslate = this.translate;
+    this.dialogRef.close({selectedTests, ifTranslate});
   }
 
   changeTestSelected(test: DisplayTest) {
     test.selected = !test.selected;
+  }
+
+
+  changeTranslate() {
+    this.translate = !this.translate;
   }
 
 
