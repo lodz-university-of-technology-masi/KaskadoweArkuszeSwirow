@@ -34,12 +34,12 @@
                         </mat-checkbox>
                     </div>
                     <div class="col-lg-3" *ngIf="!checking" style="margin: auto;">
-                        <div *ngIf="question.answer[0].isCorrect">
+                        <div *ngIf="!question.answer[0].isCorrect">
                             <p style="background: red">
                                 Nieprawidłowa
                             </p>
                         </div>
-                        <div *ngIf="!question.answer[0].isCorrect" style="margin: auto;">
+                        <div *ngIf="question.answer[0].isCorrect" style="margin: auto;">
                             <p style="background: green">
                                Prawidłowa
                             </p>

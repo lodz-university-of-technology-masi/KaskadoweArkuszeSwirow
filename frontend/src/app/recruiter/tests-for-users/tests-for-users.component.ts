@@ -48,24 +48,23 @@ export class TestsForUsersComponent implements OnInit {
       // console.log(result);
       this.translate(result);
 
-      // if (result) {
-      //   for (let it of result) {
+      if (result) {
+        for (let it of result) {
 
-      //     for (let x of it.questions) {
-      //       delete x.isApproved;
-      //     }
+          for (let x of it.questions) {
+            delete x.isApproved;
+          }
 
-      //     this.translate(it.testForm)
-      //     this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
-      //      'candidateId': user.id, 'testStatus': 'new', 'testResult': null, 'testForm': {'id': it.id, 'title': it.title, 'questions': it.questions}
-      //     },
-      //     {
-      //       headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
-      //     }).subscribe( res => {
-      //       console.log(res);
-      //     }, err => console.log(err)
-      //    );}
-      // }
+          this.http.post('https://kn0z5zq8j2.execute-api.us-east-1.amazonaws.com/new/candidateform', {
+           'candidateId': user.id, 'testStatus': 'new', 'testResult': null, 'testForm': {'id': it.id, 'title': it.title, 'questions': it.questions}
+          },
+          {
+            headers: new HttpHeaders().set("Authorization", this.auth.getToken()),
+          }).subscribe( res => {
+            console.log(res);
+          }, err => console.log(err)
+         );}
+      }
     });
   }
 
