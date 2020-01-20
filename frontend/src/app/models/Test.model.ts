@@ -1,8 +1,9 @@
 import { Question } from './Question.model';
 
 export class Test {
-    constructor(title: string, questions: Question[]) {
+    constructor(title: string, questions: Question[], id: string) {
         this.title = title;
+        this.id = id;
         this.questions = questions;
     }
 
@@ -13,8 +14,8 @@ export class Test {
 }
 
 export class DisplayTest extends Test {
-    constructor(title: string, questions: Question[], selected: boolean){
-        super(title, questions); 
+    constructor(title: string, questions: Question[], id: string, selected: boolean){
+        super(title, questions, id); 
         this.selected = selected; 
     }
 
